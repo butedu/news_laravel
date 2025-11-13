@@ -3,7 +3,7 @@
     <div class="widget-content">
         <div class="video-thumb">
             <a href="https://www.youtube.com/@truongduy8517" target="_blank">
-                <img src="{{ asset('storage/placeholders/video-placeholder.jpg') }}" 
+                <img src="{{ asset('storage/placeholders/placeholder-image.jpg') }}" 
                      onerror="this.src='https://via.placeholder.com/400x250/dc3545/ffffff?text=Video+Hot'" 
                      alt="Video nổi bật">
                 <div class="play-overlay">
