@@ -1,7 +1,7 @@
 @props([
     'headline' => __('Không bỏ lỡ bản tin nóng'),
-    'subheadline' => __('Khám phá kho nội dung chọn lọc, nhận thông báo cá nhân hóa và quản lý trải nghiệm đọc tin của bạn chỉ với một tài khoản TDQ News.'),
-    'tagline' => __('TDQ News'),
+    'subheadline' => __('Khám phá kho nội dung chọn lọc, nhận thông báo cá nhân hóa và quản lý trải nghiệm đọc tin của bạn chỉ với một tài khoản VN News.'),
+    'tagline' => __(' VN News'),
     'image' => asset('kcnew/frontend/img/bg_website.PNG'),
 ])
 

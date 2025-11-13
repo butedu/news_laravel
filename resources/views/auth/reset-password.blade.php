@@ -1,7 +1,7 @@
 <x-guest-layout>
     <x-auth-card
         :headline="__('Đặt lại mật khẩu an toàn')"
-        :subheadline="__('Tạo mật khẩu mới đủ mạnh để bảo vệ tài khoản TDQ News của bạn và tiếp tục cập nhật tin tức mỗi ngày.')"
+        :subheadline="__('Tạo mật khẩu mới đủ mạnh để bảo vệ tài khoản VN News News của bạn và tiếp tục cập nhật tin tức mỗi ngày.')"
         :tagline="__('Bảo mật tối đa')"
     >
         <x-slot name="logo">

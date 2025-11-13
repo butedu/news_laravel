@@ -33,7 +33,7 @@ $posts_new[3] = Post::latest()->approved()
 ?>
 @extends('main_layouts.master')
 
-@section('title','TDQ - Thông tin tài khoản')
+@section('title','VN News - Thông tin tài khoản')
 @section('content')
 
 @auth

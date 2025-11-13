@@ -1,8 +1,8 @@
 <x-guest-layout>
     <x-auth-card
         :headline="__('Đọc báo thông minh, cập nhật tức thời')"
-        :subheadline="__('Đăng nhập để nhận bản tin cá nhân hóa, lưu bài viết hay và tương tác cùng cộng đồng độc giả TDQ News.')"
-        :tagline="__('TDQ News')"
+        :subheadline="__('Đăng nhập để nhận bản tin cá nhân hóa, lưu bài viết hay và tương tác cùng cộng đồng độc giả VN News.')"
+        :tagline="__('VN News')"
     >
         <x-slot name="logo">
             <a href="/">

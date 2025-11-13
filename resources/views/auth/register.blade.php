@@ -1,7 +1,7 @@
 <x-guest-layout>
     <x-auth-card
         :headline="__('Gia nhập cộng đồng độc giả thông minh')"
-        :subheadline="__('Tạo tài khoản TDQ News để tùy biến trải nghiệm đọc tin, lưu bài viết ưa thích và nhận nhắc nhở nội dung phù hợp mỗi ngày.')"
+        :subheadline="__('Tạo tài khoản VN News để tùy biến trải nghiệm đọc tin, lưu bài viết ưa thích và nhận nhắc nhở nội dung phù hợp mỗi ngày.')"
         :tagline="__('Thành viên mới')"
     >
         <x-slot name="logo">
@@ -11,7 +11,7 @@
         </x-slot>
 
         <div class="auth-form-header">
-            <h1 class="auth-title">{{ __('Tạo tài khoản TDQ News') }}</h1>
+            <h1 class="auth-title">{{ __('Tạo tài khoản VN News') }}</h1>
             <p class="auth-subtitle">{{ __('Chỉ mất vài bước để mở khóa kho nội dung và các tiện ích cá nhân hóa dành riêng cho bạn.') }}</p>
         </div>
 

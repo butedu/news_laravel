@@ -1,6 +1,6 @@
 @extends('main_layouts.master')
 
-@section('title','TDQ - Trang Tin Tức Việt Nam')
+@section('title','VN News - Trang Tin Tức Việt Nam')
 
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('css/mystyle.css') }}">

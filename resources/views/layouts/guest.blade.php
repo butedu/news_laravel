@@ -7,7 +7,7 @@
         
         <link rel="icon" type="image/png" href="{{ asset('kcnew/frontend/img/image_iconLogo.png') }}"  sizes="160x160">
         <!-- <title>{{ config('app.name', 'Laravel') }}</title> -->
-        <title>TDQ News | Tài khoản</title>
+        <title>VN News | Tài khoản</title>
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
