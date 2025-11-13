@@ -1,59 +1,54 @@
-<x-guest-layout >
-    <x-auth-card>
+<x-guest-layout>
+    <x-auth-card
+        :headline="__('Gia nhập cộng đồng độc giả thông minh')"
+        :subheadline="__('Tạo tài khoản TDQ News để tùy biến trải nghiệm đọc tin, lưu bài viết ưa thích và nhận nhắc nhở nội dung phù hợp mỗi ngày.')"
+        :tagline="__('Thành viên mới')"
+    >
         <x-slot name="logo">
             <a href="/">
-                <x-application-logo/>
+                <x-application-logo />
             </a>
         </x-slot>
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+        <div class="auth-form-header">
+            <h1 class="auth-title">{{ __('Tạo tài khoản TDQ News') }}</h1>
+            <p class="auth-subtitle">{{ __('Chỉ mất vài bước để mở khóa kho nội dung và các tiện ích cá nhân hóa dành riêng cho bạn.') }}</p>
+        </div>
 
-        <form method="POST" action="{{ route('register') }}">
+        <x-auth-validation-errors class="auth-alert" :errors="$errors" />
+
+        <form method="POST" action="{{ route('register') }}" class="auth-form">
             @csrf
 
-            <!-- Name -->
-            <div>
-                <x-label for="name" :value="__('Họ và tên')" />
-
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+            <div class="auth-field">
+                <x-label for="name" :value="__('Họ và tên đầy đủ')" class="auth-label" />
+                <x-input id="name" class="auth-input" type="text" name="name" :value="old('name')" required autofocus placeholder="Nguyễn Văn A" />
             </div>
 
-            <!-- Email Address -->
-            <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+            <div class="auth-field">
+                <x-label for="email" :value="__('Email liên hệ')" class="auth-label" />
+                <x-input id="email" class="auth-input" type="email" name="email" :value="old('email')" required placeholder="name@example.com" />
             </div>
 
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Mật khẩu')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
+            <div class="auth-field">
+                <x-label for="password" :value="__('Mật khẩu mới')" class="auth-label" />
+                <x-input id="password" class="auth-input" type="password" name="password" required autocomplete="new-password" placeholder="Ít nhất 8 ký tự" />
+                <p class="auth-helper">{{ __('Sử dụng tối thiểu 8 ký tự, kết hợp chữ hoa, chữ thường và số để tăng độ an toàn.') }}</p>
             </div>
 
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Nhập lại mật khẩu')" />
-
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
+            <div class="auth-field">
+                <x-label for="password_confirmation" :value="__('Xác nhận mật khẩu')" class="auth-label" />
+                <x-input id="password_confirmation" class="auth-input" type="password" name="password_confirmation" required placeholder="Nhập lại mật khẩu" />
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Đã có tài khoản?') }}
-                </a>
-
-                <x-button class="ml-4">
-                    {{ __('Đăng ký') }}
-                </x-button>
-            </div>
+            <x-button class="auth-button">
+                {{ __('Đăng ký tài khoản') }}
+            </x-button>
         </form>
+
+        <x-slot name="footer">
+            <span>{{ __('Đã có tài khoản?') }}</span>
+            <a class="auth-link" href="{{ route('login') }}">{{ __('Đăng nhập ngay') }}</a>
+        </x-slot>
     </x-auth-card>
 </x-guest-layout>
