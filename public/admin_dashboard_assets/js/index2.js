@@ -9,7 +9,7 @@ $(function() {
             barWidth: '2',
             resize: true,
             barSpacing: '2',
-            barColor: '#008cff'
+      barColor: '#0959AB'
         });
 		
 	// chart 2
@@ -20,7 +20,7 @@ $(function() {
             barWidth: '2',
             resize: true,
             barSpacing: '2',
-            barColor: '#fd3550'
+    barColor: '#dc3545'
         });
 		
 	// chart 3	
@@ -31,7 +31,7 @@ $(function() {
             barWidth: '2',
             resize: true,
             barSpacing: '2',
-            barColor: '#15ca20'
+    barColor: '#2C85DF'
         });
 		
 	// chart 4	
@@ -227,7 +227,7 @@ jQuery('#dashboard-map').vectorMap(
     borderOpacity: 0.25,
     borderWidth: 1,
     zoomOnScroll: false,
-    color: '#009efb',
+    color: '#0959AB',
     regionStyle : {
         initial : {
           fill : '#ff9700'
@@ -244,7 +244,7 @@ jQuery('#dashboard-map').vectorMap(
                 },
                 },
     enableZoom: true,
-    hoverColor: '#009efb',
+    hoverColor: '#2C85DF',
     markers : [{
         latLng : [21.00, 78.00],
         name : 'Lorem Ipsum Dollar'
@@ -291,9 +291,9 @@ jQuery('#dashboard-map').vectorMap(
             width: '100%',
             height: '40',
             lineWidth: '2',
-            lineColor: '#15ca20',
-            fillColor: 'rgba(21, 202, 32, 0.2)',
-            spotColor: '#15ca20',
+            lineColor: '#2C85DF',
+            fillColor: 'rgba(44, 133, 223, 0.2)',
+            spotColor: '#2C85DF',
     }); 
 
  // chart 11 
@@ -312,7 +312,7 @@ jQuery('#dashboard-map').vectorMap(
 			value: 20
 		}],
 		resize: true,
-		colors:['#008cff', '#15ca20', '#fd3550']
+    colors:['#0959AB', '#2C85DF', '#dc3545']
 	});
 	
 	

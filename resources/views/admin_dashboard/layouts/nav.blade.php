@@ -17,9 +17,9 @@ function checkPermission($name) {
                     <img src="{{ asset('kcnew/frontend/img/image_iconLogo.png') }}" class="logo-icon" alt="logo icon">
                 </div>
                 <div>
-                    <h4 style="color: #00b249" class="logo-text">VN News - News</h4>
+                    <h4 style="color: #2C85DF" class="logo-text">VN News - News</h4>
                 </div>
-                <div style="color: #00b249" class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i>
+                <div style="color: #2C85DF" class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i>
             </div>
         </div>
         <!--navigation-->

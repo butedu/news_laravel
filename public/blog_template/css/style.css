@@ -43,12 +43,12 @@ body {
       content: ""; }
 
 a {
-  color: #4586ff;
+  color: #2C85DF;
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
   transition: 0.5s; }
   a:hover, a:active, a:focus {
-    color: #4586ff;
+    color: #2C85DF;
     outline: none;
     text-decoration: none; }
 
@@ -63,15 +63,15 @@ h1, h2, h3, h4, h5, h6, figure {
 
 ::-webkit-selection {
   color: #fff;
-  background: #4586ff; }
+  background: #2C85DF; }
 
 ::-moz-selection {
   color: #fff;
-  background: #4586ff; }
+  background: #2C85DF; }
 
 ::selection {
   color: #fff;
-  background: #4586ff; }
+  background: #2C85DF; }
 
 .about-img-1,
 .about-img-2,
@@ -172,7 +172,7 @@ h1, h2, h3, h4, h5, h6, figure {
         -o-transition: 0.5s;
         transition: 0.5s; }
         .colorlib-nav ul li a:hover {
-          color: #4586ff; }
+          color: #2C85DF; }
       .colorlib-nav ul li.has-dropdown {
         position: relative; }
         .colorlib-nav ul li.has-dropdown .dropdown {
@@ -224,12 +224,12 @@ h1, h2, h3, h4, h5, h6, figure {
               .colorlib-nav ul li.has-dropdown .dropdown li a:hover {
                 color: #fff; }
         .colorlib-nav ul li.has-dropdown:hover a, .colorlib-nav ul li.has-dropdown:focus a {
-          color: #4586ff; }
+          color: #2C85DF; }
       .colorlib-nav ul li.btn-cta a {
         padding: 30px 0px !important;
         color: #fff; }
         .colorlib-nav ul li.btn-cta a span {
-            background: #4586ff;
+            background: #2C85DF;
             padding: 8px 15px;
             display: -moz-inline-stack;
             display: inline-block;
@@ -246,7 +246,7 @@ h1, h2, h3, h4, h5, h6, figure {
           -moz-box-shadow: 0px 14px 20px -9px rgba(0, 0, 0, 0.75);
           box-shadow: 0px 14px 20px -9px rgba(0, 0, 0, 0.75); }
       .colorlib-nav ul li.active > a {
-        color: #4586ff;
+        color: #2C85DF;
         position: relative;
         position: relative; }
         .colorlib-nav ul li.active > a:after {
@@ -294,7 +294,7 @@ h1, h2, h3, h4, h5, h6, figure {
       display: table-cell;
       vertical-align: middle;
       font-size: 40px;
-      color: #4586ff; }
+      color: #2C85DF; }
   .colorlib-video .overlay {
     position: absolute;
     top: 0;
@@ -340,7 +340,7 @@ h1, h2, h3, h4, h5, h6, figure {
         #colorlib-hero .btn.btn-primary .icon i {
           display: table-cell;
           vertical-align: middle;
-          color: #4586ff !important; }
+          color: #2C85DF !important; }
   #colorlib-hero .flexslider {
     border: none;
     z-index: 1;
@@ -374,7 +374,7 @@ h1, h2, h3, h4, h5, h6, figure {
         #colorlib-hero .flexslider .flex-control-nav li a.flex-active {
           cursor: pointer;
           background: transparent;
-          background: #4586ff; }
+          background: #2C85DF; }
     #colorlib-hero .flexslider .flex-direction-nav {
       display: none; }
     #colorlib-hero .flexslider .slider-text {
@@ -481,7 +481,7 @@ h1, h2, h3, h4, h5, h6, figure {
   .colorlib-form .form-control:active, .colorlib-form .form-control:focus {
     -webkit-box-shadow: none;
     box-shadow: none;
-    border: 2px solid #4586ff;
+    border: 2px solid #2C85DF;
     background: transparent; }
   .colorlib-form .form-control::-webkit-input-placeholder {
     /* Chrome/Opera/Safari */
@@ -535,7 +535,7 @@ h1, h2, h3, h4, h5, h6, figure {
   font-weight: 400;
   font-size: 14px;
   text-transform: uppercase;
-  background-color: #4586ff;
+  background-color: #2C85DF;
   color: #fff;
   position: relative;
   -webkit-box-shadow: none !important;
@@ -590,7 +590,7 @@ h1, h2, h3, h4, h5, h6, figure {
     width: 40px;
     height: 40px;
     display: table;
-    background: #4586ff;
+    background: #2C85DF;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     -ms-border-radius: 50%;
@@ -602,7 +602,7 @@ h1, h2, h3, h4, h5, h6, figure {
   #colorlib-services .btn-discover:hover .icon {
     background: #fff; }
     #colorlib-services .btn-discover:hover .icon i {
-      color: #4586ff; }
+      color: #2C85DF; }
 
 .services {
   margin-bottom: 30px;
@@ -640,9 +640,9 @@ h1, h2, h3, h4, h5, h6, figure {
     box-shadow: 0px 16px 78px -34px rgba(0, 0, 0, 0.52);
     margin-top: -5px; }
     .services:hover .icon i {
-      color: #4586ff; }
+      color: #2C85DF; }
     .services:hover .desc h3 {
-      color: #4586ff; }
+      color: #2C85DF; }
 
 #colorlib-counter {
   position: relative;
@@ -715,7 +715,7 @@ h1, h2, h3, h4, h5, h6, figure {
   .colorlib-counters .colorlib-counter {
     font-size: 40px;
     display: block;
-    color: #4586ff;
+    color: #2C85DF;
     font-family: "Rubik", Arial, sans-serif;
     width: 100%;
     font-weight: 500;
@@ -770,7 +770,7 @@ h1, h2, h3, h4, h5, h6, figure {
     background: rgba(255, 255, 255, 0.5); }
 
 .colorlib-classes .owl-theme .owl-dots .owl-dot.active span, .colorlib-classes .owl-theme .owl-dots .owl-dot:hover span {
-  background: #4586ff; }
+  background: #2C85DF; }
 
 .classes {
   margin-bottom: 30px;
@@ -793,7 +793,7 @@ h1, h2, h3, h4, h5, h6, figure {
       padding: 1.5em;
       position: relative; }
       .classes .wrap .desc .teacher {
-        color: #4586ff;
+        color: #2C85DF;
         display: block;
         margin-bottom: 10px;
         font-size: 14px;
@@ -810,7 +810,7 @@ h1, h2, h3, h4, h5, h6, figure {
       .classes .wrap .pricing p {
         margin-bottom: 0; }
         .classes .wrap .pricing p span.price {
-          color: #4586ff;
+          color: #2C85DF;
           font-weight: 400; }
           .classes .wrap .pricing p span.price.old-price {
             margin-left: 10px;
@@ -884,7 +884,7 @@ h1, h2, h3, h4, h5, h6, figure {
   background: whitesmoke; }
 
 .aside-stretch {
-  background: #4586ff; }
+  background: #2C85DF; }
   .aside-stretch:after {
     position: absolute;
     top: 0;
@@ -892,7 +892,7 @@ h1, h2, h3, h4, h5, h6, figure {
     bottom: 0;
     content: '';
     width: 360%;
-    background: #4586ff; }
+    background: #2C85DF; }
   @media screen and (max-width: 768px) {
     .aside-stretch {
       background: transparent; }
@@ -942,7 +942,7 @@ h1, h2, h3, h4, h5, h6, figure {
     #colorlib-testimony .testimony-flex .one-fifth {
       width: 20%;
       position: relative;
-      background: #4586ff; }
+      background: #2C85DF; }
       #colorlib-testimony .testimony-flex .one-fifth .icon {
         position: absolute;
         top: -20px;
@@ -959,7 +959,7 @@ h1, h2, h3, h4, h5, h6, figure {
         #colorlib-testimony .testimony-flex .one-fifth .icon i {
           display: table-cell;
           vertical-align: middle;
-          color: #4586ff; }
+          color: #2C85DF; }
       @media screen and (max-width: 768px) {
         #colorlib-testimony .testimony-flex .one-fifth {
           width: 100%; } }
@@ -1025,7 +1025,7 @@ h1, h2, h3, h4, h5, h6, figure {
       .event-entry .desc .meta span {
         display: block;
         font-weight: 400;
-        color: #4586ff; }
+        color: #2C85DF; }
       .event-entry .desc .meta .day {
         font-size: 20px; }
       .event-entry .desc .meta .month {
@@ -1074,7 +1074,7 @@ h1, h2, h3, h4, h5, h6, figure {
       .block-21 .text .heading a {
         color: #000; }
         .block-21 .text .heading a:hover, .block-21 .text .heading a:active, .block-21 .text .heading a:focus {
-          color: #4586ff; }
+          color: #2C85DF; }
     .block-21 .text .meta > div {
       display: inline-block;
       font-size: 12px;
@@ -1111,8 +1111,8 @@ h1, h2, h3, h4, h5, h6, figure {
           -ms-transform: translateY(-50%);
           transform: translateY(-50%); }
         .sidebar .block-24 ul li a:hover, .sidebar .block-24 ul li a:focus {
-          color: #4586ff;
-          border-left: 4px solid #4586ff; }
+          color: #2C85DF;
+          border-left: 4px solid #2C85DF; }
   .sidebar .block-26 ul {
     padding: 0;
     margin: 0; }
@@ -1126,7 +1126,7 @@ h1, h2, h3, h4, h5, h6, figure {
         padding: 0 10px;
         border-radius: 4px;
         display: inline-block;
-        background: #00b249;; }
+        background: #2C85DF; }
   .sidebar .f-blog {
     position: relative;
     padding: 0;
@@ -1182,7 +1182,7 @@ h1, h2, h3, h4, h5, h6, figure {
     margin-bottom: 0;
     color: #000; }
     .contact-info-wrap-flex p span i {
-      color: #4586ff; }
+      color: #2C85DF; }
     .contact-info-wrap-flex p a {
       color: #000; }
 
@@ -1203,7 +1203,7 @@ h1, h2, h3, h4, h5, h6, figure {
     background: transparent;
     -webkit-box-shadow: none;
     box-shadow: none;
-    border: 1px solid #4586ff; }
+    border: 1px solid #2C85DF; }
 
 input[type="text"] {
   height: 50px; }
@@ -1505,7 +1505,7 @@ input[type="text"] {
       #colorlib-offcanvas ul li.btn-cta {
         margin-top: 5px; }
         #colorlib-offcanvas ul li.btn-cta a {
-          border-bottom: 1px solid #4586ff;
+          border-bottom: 1px solid #2C85DF;
           padding-bottom: 5px; }
 
 .gototop {
@@ -1653,18 +1653,18 @@ input[type="text"] {
     outline: none !important; }
 
 .btn-primary {
-  background: #4586ff;
+  background: #2C85DF;
   color: #fff;
-  border: 1px solid #4586ff; }
+  border: 1px solid #2C85DF; }
   .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
-    background: #5f97ff !important;
-    border-color: #5f97ff !important; }
+    background: #58A6E8 !important;
+    border-color: #58A6E8 !important; }
   .btn-primary.btn-outline {
     background: transparent;
-    color: #4586ff;
-    border: 1px solid #4586ff; }
+    color: #2C85DF;
+    border: 1px solid #2C85DF; }
     .btn-primary.btn-outline:hover, .btn-primary.btn-outline:focus, .btn-primary.btn-outline:active {
-      background: #4586ff;
+      background: #2C85DF;
       color: #fff; }
 
 .btn-success {

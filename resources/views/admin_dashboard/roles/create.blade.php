@@ -8,7 +8,7 @@
 			font-size: 15px;
 			margin: 2px 10px;
 			cursor: pointer;
-			color: green;
+			color: #0959AB;
 		}
 	</style>
 @endsection

@@ -1,3 +1,16 @@
+:root {
+    --tdq-primary: #0959AB;
+    --tdq-primary-soft: rgba(9, 89, 171, 0.18);
+    --tdq-secondary: #2C85DF;
+    --tdq-accent: #dc3545;
+    --bs-primary: var(--tdq-primary);
+    --bs-blue: var(--tdq-primary);
+    --bs-success: var(--tdq-secondary);
+    --bs-green: var(--tdq-secondary);
+    --bs-danger: var(--tdq-accent);
+    --bs-red: var(--tdq-accent);
+}
+
 .general-message{
     position: fixed;
     bottom: 10px;
@@ -6,4 +19,83 @@
     min-width: 500px;
     border-radius: 50px;
     color: #525252;
+}
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: var(--tdq-primary) !important;
+    border-color: var(--tdq-primary) !important;
+}
+
+.text-primary,
+.page-link,
+a {
+    color: var(--tdq-primary);
+}
+
+a:hover {
+    color: var(--tdq-accent);
+}
+
+.btn-success,
+.btn-success:hover,
+.btn-success:focus,
+.bg-success,
+.badge-success,
+.progress-bar.bg-success,
+.alert-success,
+.text-success,
+.list-group-item-success,
+.form-check-input:checked {
+    background-color: var(--tdq-secondary) !important;
+    border-color: var(--tdq-secondary) !important;
+    color: #ffffff !important;
+}
+
+.text-success {
+    color: var(--tdq-secondary) !important;
+}
+
+.btn-inverse-success,
+.btn-inverse-success:hover,
+.btn-inverse-success:focus {
+    color: var(--tdq-primary) !important;
+    background-color: var(--tdq-primary-soft) !important;
+    border-color: var(--tdq-primary-soft) !important;
+    box-shadow: 0 0 0 .25rem rgba(9, 89, 171, 0.24) !important;
+}
+
+.btn-danger,
+.btn-danger:hover,
+.btn-danger:focus,
+.bg-danger,
+.badge-danger,
+.alert-danger {
+    background-color: var(--tdq-accent) !important;
+    border-color: var(--tdq-accent) !important;
+}
+
+.btn-outline-success,
+.btn-outline-success:hover,
+.btn-outline-success:focus {
+    color: var(--tdq-secondary) !important;
+    border-color: var(--tdq-secondary) !important;
+}
+
+.btn-outline-success:hover,
+.btn-outline-success:focus {
+    background-color: var(--tdq-secondary) !important;
+    color: #ffffff !important;
+}
+
+.badge-primary,
+.bg-primary {
+    background-color: var(--tdq-primary) !important;
+}
+
+.sidebar-wrapper .metismenu a:active,
+.sidebar-wrapper .metismenu a:focus,
+.sidebar-wrapper .metismenu a:hover {
+    color: var(--tdq-primary) !important;
 }

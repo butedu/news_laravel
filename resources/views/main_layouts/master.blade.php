@@ -48,7 +48,7 @@ $categoryFooter  = Category::where('name','!=','Chưa phân loại')->withCount(
 	<link rel="stylesheet" href="{{ asset('blog_template/css/flexslider.css') }}">
 
 	<!-- Owl Carousel -->
-	<!-- <link rel="stylesheet" href="{{ asset('blog_template/css/owl.carousel.min.') }}"> -->
+	<!-- <link rel="stylesheet" href="{{ asset('blog_template/css/owl.carousel.min.css') }}"> -->
 	<link rel="stylesheet" href="{{ asset('blog_template/css/owl.theme.default.min.css') }}">
 	
 	<!-- Flaticons  -->
@@ -93,10 +93,10 @@ $categoryFooter  = Category::where('name','!=','Chưa phân loại')->withCount(
     <!-- ==== Custom Stylesheet ==== -->
     <link rel="stylesheet" href="{{ asset('kcnew/frontend/css/custom.css') }}">
 
-    @yield('custom_css')
+	@yield('custom_css')
 
 </head>
-<body class="boxed" data-bg-img="{{ asset('kcnew/frontend/img/bg_website.png') }}">
+<body class="boxed">
 		
 	<header class="header--section header--style-3">
 		<!-- Header Topbar Start -->
@@ -108,7 +108,7 @@ $categoryFooter  = Category::where('name','!=','Chưa phân loại')->withCount(
 					<ul class="header--topbar-info nav">
 						<li>
 							<a href="{{ route('home') }}">
-								<img style="border-radius: 12px; height: 40px;" src="{{ asset('kcnew/frontend/img/image_logo.png') }}" alt="logo">
+								<img style="border-radius: 12px; height: 40px;" src="{{ asset('kcnew/frontend/img/image_iconLogo.png') }}" alt="logo">
 							</a>
 						</li>
 						<li><i class="fa fm fa-map-marker"></i>Hồ Chí Minh</li>
@@ -300,7 +300,7 @@ $categoryFooter  = Category::where('name','!=','Chưa phân loại')->withCount(
 					<div class="col-lg-3 col-md-6 footer-col">
 						<div class="footer-logo">
 							<a href="{{ route('home') }}">
-								<img src="{{ asset('kcnew/frontend/img/image_logo.png') }}" alt="Logo">
+								<img src="{{ asset('kcnew/frontend/img/image_iconLogo.png') }}" alt="Logo">
 							</a>
 						</div>
 						<p class="footer-desc">Báo điện tử hàng đầu Việt Nam - Cập nhật tin tức 24/7</p>

@@ -44,7 +44,7 @@ a:focus,
 .checkout--billing-info .table tbody tr td span,
 .contact--cats .nav > li > a:hover .title .h5,
 .portfolio--item:hover .title .h4 .btn-link {
-    color: #00b249;
+    color: #2C85DF;
 }
 
 /*------------------------------------*\
@@ -118,15 +118,15 @@ a:focus,
 #backToTop a:hover,
 .header--navbar .navbar-collapse:before,
 .feature--item .icon {
-    background-color: #00b249;
+    background-color: #2C85DF;
 }
 
 ::-moz-selection {
-    background-color: #00b249;
+    background-color: #2C85DF;
 }
 
 ::selection {
-    background-color: #00b249;
+    background-color: #2C85DF;
 }
 
 /*------------------------------------*\
@@ -176,11 +176,11 @@ a:focus,
 .coming-soon--content .subscribe--widget input:focus + .input-group-btn:before,
 .checkout--info-form .form-control:focus,
 .checkout--billing-info .form-control:focus {
-    border-color: #00b249;
+    border-color: #2C85DF;
 }
 
 .post--items-title {
-    border-top-color: #00b249;
+    border-top-color: #2C85DF;
 }
 
 .header--menu-links > li > a:hover,
@@ -188,5 +188,5 @@ a:focus,
 .header--menu-links > li.open > a,
 .header--menu-links > li.open > a:hover,
 .header--menu-links > li.open > a:focus {
-    border-bottom-color: #00b249;
+    border-bottom-color: #2C85DF;
 }

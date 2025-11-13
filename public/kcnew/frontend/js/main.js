@@ -646,7 +646,7 @@ Author URI  : https://themeforest.net/user/themelooks
                     bgColor: '#8cbeb2',
                     filepath: 'css/colors/theme-color-8.css'
                 }, {
-                    bgColor: '#00b249',
+                    bgColor: '#2C85DF',
                     filepath: 'css/colors/theme-color-9.css'
                 }, {
                     bgColor: '#924cf3',

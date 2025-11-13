@@ -62,13 +62,13 @@ a {
 	margin-left: 10px;
 	margin-bottom: 0;
 	letter-spacing: 1px;
-	color: #008cff
+	color: #2C85DF
 }
 
 .toggle-icon {
 	font-size: 22px;
 	cursor: pointer;
-	color: #008cff
+	color: #2C85DF
 }
 
 .topbar {
@@ -222,7 +222,7 @@ a {
 .sidebar-wrapper .metismenu a:active,
 .sidebar-wrapper .metismenu a:focus,
 .sidebar-wrapper .metismenu a:hover {
-	color: #008cff;
+	color: #2C85DF;
 	text-decoration: none;
 	background: rgb(13 110 253 / .12)
 }
@@ -343,7 +343,7 @@ a {
 	border-radius: 10px;
 	bottom: 20px;
 	right: 12px;
-	background-color: #008cff;
+	background-color: #2C85DF;
 	z-index: 5
 }
 
@@ -541,7 +541,7 @@ a {
 }
 
 .fm-menu .list-group a:hover {
-	background: #008cff;
+	background: #2C85DF;
 	color: #fff;
 	transition: all .2s ease-out
 }
@@ -887,7 +887,7 @@ a {
 .invoice header {
 	padding: 10px 0;
 	margin-bottom: 20px;
-	border-bottom: 1px solid #008cff
+	border-bottom: 1px solid #2C85DF
 }
 
 .invoice .company-details {
@@ -918,7 +918,7 @@ a {
 
 .invoice .invoice-details .invoice-id {
 	margin-top: 0;
-	color: #008cff
+	color: #2C85DF
 }
 
 .invoice main {
@@ -933,7 +933,7 @@ a {
 
 .invoice main .notices {
 	padding-left: 6px;
-	border-left: 6px solid #008cff;
+	border-left: 6px solid #2C85DF;
 	background: #e7f2ff;
 	padding: 10px
 }
@@ -965,7 +965,7 @@ a {
 .invoice table td h3 {
 	margin: 0;
 	font-weight: 400;
-	color: #008cff;
+	color: #2C85DF;
 	font-size: 1.2em
 }
 
@@ -979,7 +979,7 @@ a {
 .invoice table .no {
 	color: #fff;
 	font-size: 1.6em;
-	background: #008cff
+	background: #2C85DF
 }
 
 .invoice table .unit {
@@ -987,7 +987,7 @@ a {
 }
 
 .invoice table .total {
-	background: #008cff;
+	background: #2C85DF;
 	color: #fff
 }
 
@@ -1010,9 +1010,9 @@ a {
 }
 
 .invoice table tfoot tr:last-child td {
-	color: #008cff;
+	color: #2C85DF;
 	font-size: 1.4em;
-	border-top: 1px solid #008cff
+	border-top: 1px solid #2C85DF
 }
 
 .invoice table tfoot tr td:first-child {
@@ -1174,7 +1174,7 @@ a {
 
 .chat-tab-menu .nav-pills .nav-link.active,
 .chat-tab-menu .nav-pills .show>.nav-link {
-	color: #008cff;
+	color: #2C85DF;
 	background-color: rgb(0 123 255 / 0%)
 }
 
@@ -1469,8 +1469,8 @@ a {
 }
 
 .nav-primary.nav-tabs .nav-link.active {
-	color: #008cff;
-	border-color: #008cff #008cff #fff
+	color: #2C85DF;
+	border-color: #2C85DF #2C85DF #fff
 }
 
 .nav-danger.nav-tabs .nav-link.active {
@@ -1824,22 +1824,22 @@ a {
 
 
 .btn-inverse-primary {
-	color: #008cff;
-    background-color: rgba(0, 140, 255, 0.18);
-    border-color: rgb(209, 234, 255);
+	color: #2C85DF;
+	background-color: rgba(44, 133, 223, 0.18);
+	border-color: rgba(44, 133, 223, 0.18);
 }
 
 .btn-inverse-primary:hover {
-	color: #008cff;
-    background-color: rgba(0, 140, 255, 0.18);
-    border-color: rgba(0, 140, 255, 0.18);
+	color: #2C85DF;
+	background-color: rgba(44, 133, 223, 0.18);
+	border-color: rgba(44, 133, 223, 0.18);
 }
 
 .btn-inverse-primary:focus {
-	color: #008cff;
-    background-color: rgba(0, 140, 255, 0.18);
-    border-color: rgba(0, 140, 255, 0.18);
-	box-shadow: 0 0 0 .25rem rgba(49, 132, 253, .3)
+	color: #2C85DF;
+	background-color: rgba(44, 133, 223, 0.18);
+	border-color: rgba(44, 133, 223, 0.18);
+	box-shadow: 0 0 0 .25rem rgba(44, 133, 223, .3)
 }
 
 
@@ -1856,39 +1856,39 @@ a {
 }
 
 .btn-inverse-success {
-	color: #15ca20;
-    background-color: rgba(21, 202, 32, 0.18);
-    border-color: rgb(212, 246, 214);
+	color: #0959AB;
+	background-color: rgba(9, 89, 171, 0.18);
+	border-color: rgba(9, 89, 171, 0.18);
 }
 
 .btn-inverse-success:hover {
-	color: #15ca20;
-    background-color: rgba(21, 202, 32, 0.18);
-    border-color: rgba(21, 202, 32, 0.18);
+	color: #0959AB;
+	background-color: rgba(9, 89, 171, 0.18);
+	border-color: rgba(9, 89, 171, 0.18);
 }
 .btn-inverse-success:focus {
-	color: #15ca20;
-    background-color: rgba(21, 202, 32, 0.18);
-    border-color: rgba(21, 202, 32, 0.18);
-	box-shadow: 0 0 0 .25rem rgb(23 160 14 / 32%)
+	color: #0959AB;
+	background-color: rgba(9, 89, 171, 0.18);
+	border-color: rgba(9, 89, 171, 0.18);
+	box-shadow: 0 0 0 .25rem rgba(9, 89, 171, 0.32)
 }
 
 .btn-inverse-danger {
-	color: #fd3550;
-    background-color: rgba(253, 53, 80, 0.18);
-    border-color: rgb(255, 218, 223);
+	color: #dc3545;
+	background-color: rgba(220, 53, 69, 0.18);
+	border-color: rgba(220, 53, 69, 0.18);
 }
 
 .btn-inverse-danger:hover {
-	color: #fd3550;
-    background-color: rgba(253, 53, 80, 0.18);
-    border-color: rgba(253, 53, 80, 0.18);
+	color: #dc3545;
+	background-color: rgba(220, 53, 69, 0.18);
+	border-color: rgba(220, 53, 69, 0.18);
 }
 .btn-inverse-danger:focus {
-	color: #fd3550;
-    background-color: rgba(253, 53, 80, 0.18);
-    border-color: rgba(253, 53, 80, 0.18);
-	box-shadow: 0 0 0 .25rem rgba(225, 83, 97, .3)
+	color: #dc3545;
+	background-color: rgba(220, 53, 69, 0.18);
+	border-color: rgba(220, 53, 69, 0.18);
+	box-shadow: 0 0 0 .25rem rgba(220, 53, 69, .3)
 }
 
 
@@ -1933,25 +1933,6 @@ a {
 	color: #a7aaaa;
     background-color: rgba(233, 234, 234, 0.2);
     border-color: rgba(233, 234, 234, 0.2);
-}
-
-.btn-inverse-dark {
-	color: #223035;
-    background-color: rgba(34, 48, 53, 0.2);
-    border-color: #d7d9da;
-}
-
-.btn-inverse-dark:hover {
-	color: #223035;
-    background-color: rgba(34, 48, 53, 0.2);
-    border-color: rgba(34, 48, 53, 0.2);
-}
-
-.btn-facebook {
-	box-shadow: 0 2px 2px 0 rgba(59, 89, 152, .14), 0 3px 1px -2px rgba(59, 89, 152, .2), 0 1px 5px 0 rgba(59, 89, 152, .12);
-	background-color: #3b5998;
-	border-color: #3b5998;
-	color: #fff
 }
 
 .btn-facebook:hover {
@@ -2351,7 +2332,7 @@ input.search-control-2::placeholder {
 	height: 40px;
 	line-height: 40px;
 	font-size: 24px;
-	background: #008cff;
+	background: #2C85DF;
 	box-shadow: 0 .3rem .6rem rgba(0, 0, 0, .13);
 	color: #fff;
 	text-align: center;
