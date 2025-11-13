@@ -13,71 +13,104 @@ use App\Models\Category;
  ?>
 
 @props(['outstanding_posts'] )
-   <!-- Widget Start -->
-<div class="widget">
-    <div class="widget--title">
-        <h2 class="h4">Tin tức nổi bật</h2>
-        <i class="icon fa fa-newspaper-o"></i>
-    </div>
+<div class="sidebar-widget sidebar-widget-featured">
+    <h3 class="widget-title"><i class="fa fa-newspaper-o"></i> Tin tức nổi bật</h3>
+    <div class="widget-content">
+        <style>
+            .featured-tabs-wrapper {
+                background: var(--widget-tab-bg, #fff);
+                border: 1px solid rgba(15, 23, 42, 0.08);
+                border-radius: 16px;
+                box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+                padding: 6px;
+                margin-bottom: 20px;
+            }
 
-    <!-- List Widgets Start -->
-    <div class="list--widget list--widget-1">
-        <div class="list--widget-nav" data-ajax="tab">
-            <ul class="nav nav-justified">
+            .featured-tabs {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 6px;
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
+
+            .featured-tabs button {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 9px 12px;
+                border-radius: 12px;
+                border: none;
+                background: transparent;
+                font-size: 14px;
+                font-weight: 600;
+                color: #1e293b;
+                white-space: nowrap;
+                cursor: pointer;
+                transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+            }
+
+            .featured-tabs button:hover {
+                background: rgba(44, 133, 223, 0.15);
+                color: #0959ab;
+            }
+
+            .featured-tabs button.active {
+                background: #fff;
+                color: #0959ab;
+                box-shadow: 0 10px 24px rgba(44, 133, 223, 0.18);
+                transform: translateY(-1px);
+            }
+
+            @media (max-width: 600px) {
+                .featured-tabs {
+                    grid-template-columns: 1fr;
+                }
+
+                .featured-tabs button {
+                    padding: 11px 14px;
+                    font-size: 13px;
+                }
+            }
+        </style>
+        <div class="featured-tabs-wrapper">
+            <ul class="featured-tabs" data-ajax="tab">
                 <li>
-                    <a  class="outstandPosts" href="#" data-ajax-action="load_widget_hot_news">Tin nóng</a>
-                </li>
-                <li class="active">
-                    <a class="outstandPosts" href="" data-ajax-action="load_widget_trendy_news">Xu hướng</a>
+                    <button type="button" class="outstandPosts" data-ajax-action="load_widget_hot_news">Tin nóng</button>
                 </li>
                 <li>
-                    <a class="outstandPosts" href="" data-ajax-action="load_widget_most_watched">Xem nhiều nhất</a>
+                    <button type="button" class="outstandPosts active" data-ajax-action="load_widget_trendy_news">Xu hướng</button>
+                </li>
+                <li>
+                    <button type="button" class="outstandPosts" data-ajax-action="load_widget_most_watched">Xem nhiều</button>
                 </li>
             </ul>
         </div>
 
-        <!-- Post Items Start -->
-        <div class="post--items post--items-3" data-ajax-content="outer">
-            <ul class="nav listPost" data-ajax-content="inner">
-                @foreach($outstanding_posts as $outstanding_post)
-                    <li>
-                        <!-- Post Item Start -->
-                        <div class="post--item post--layout-3">
-                            <div class="post--img">
-                                <a href="{{ route('posts.show', $outstanding_post) }}" class="thumb"><img
-                                        src="{{ asset($outstanding_post->image ? 'storage/' .$outstanding_post->image->path : 'storage/placeholders/placeholder-image.png')}}"
-                                        alt=""></a>
-                                <div class="post--info">
-                                    <ul class="nav meta">
-                                        <li><a href="javascript:;">{{ $outstanding_post->created_at->locale('vi')->diffForHumans() }}</a></li>
-                                        <li><a  href="javascript:;"><i class="fa fm fa-comments"></i>{{ count($outstanding_post->comments) }}</a></li>
-                                        <li><span><i class="fa fm fa-eye"></i>{{ $outstanding_post->views }}</span></li>
-                                    </ul>
-
-                                    <div class="title">
-                                        <h3 class="h4"><a href="{{ route('posts.show', $outstanding_post) }}"
-                                                class="btn-link">{{ $outstanding_post->title}}</a>
-                                        </h3>
-                                    </div>
-                                </div>
+        <div class="widget-posts" data-ajax-content="outer">
+            <ul class="list-unstyled widget-post-list listPost" data-ajax-content="inner">
+            @foreach($outstanding_posts as $outstanding_post)
+                <li>
+                    <div class="sidebar-post-item-simple featured">
+                        <a href="{{ route('posts.show', $outstanding_post) }}" class="thumb-sm">
+                            <img src="{{ asset($outstanding_post->image ? 'storage/' .$outstanding_post->image->path : 'storage/placeholders/placeholder-image.png')}}" alt="">
+                        </a>
+                        <div class="post-info">
+                            <h4><a href="{{ route('posts.show', $outstanding_post) }}">{{ $outstanding_post->title}}</a></h4>
+                            <div class="meta-sm">
+                                <span><i class="fa fa-clock-o"></i> {{ $outstanding_post->created_at->locale('vi')->diffForHumans() }}</span>
+                                <span><i class="fa fa-comments"></i> {{ count($outstanding_post->comments) }}</span>
+                                <span><i class="fa fa-eye"></i> {{ $outstanding_post->views }}</span>
                             </div>
                         </div>
-                        <!-- Post Item End -->
-                    </li>
-                    @endforeach
-                </ul>
-
-            <!-- Preloader Start -->
-            <!-- <div class="preloader bg--color-0--b" data-preloader="1">
-                <div class="preloader--inner"></div>
-            </div> -->
-            <!-- Preloader End -->
+                    </div>
+                </li>
+            @endforeach
+            </ul>
         </div>
-        <!-- Post Items End -->
     </div>
-    <!-- List Widgets End -->
 </div>
-<!-- Widget End -->
 
 @section('custom_js')
 
@@ -90,7 +123,11 @@ use App\Models\Category;
 <script>
         const outstandPosts = document.querySelectorAll('.outstandPosts');
         outstandPosts.forEach((item, index)=>{
-            $(item).click(function(e){
+            $(item).on('click', function(e){
+                e.preventDefault();
+
+                outstandPosts.forEach(btn => btn.classList.remove('active'));
+                item.classList.add('active');
 
                 const ListPost=  $('.listPost');
                 const ListPost_item = $('.listPost li');
@@ -100,23 +137,16 @@ use App\Models\Category;
                     return `
                         @foreach($outstanding_posts_hots as $outstanding_posts_hot)
                             <li>
-                                <div class="post--item post--layout-3">
-                                    <div class="post--img">
-                                        <a href="{{ route('posts.show', $outstanding_posts_hot) }}" class="thumb"><img
-                                                src="{{ asset($outstanding_posts_hot->image ? 'storage/' .$outstanding_posts_hot->image->path : 'storage/placeholders/placeholder-image.png')}}"
-                                                alt=""></a>
-                                        <div class="post--info">
-                                            <ul class="nav meta">
-                                                <li><a href="javascript:;">{{ $outstanding_posts_hot->created_at->locale('vi')->diffForHumans() }}</a></li>
-                                                <li><a  href="javascript:;"><i class="fa fm fa-comments"></i>{{ count($outstanding_posts_hot->comments) }}</a></li>
-                                                <li><span><i class="fa fm fa-eye"></i>{{ $outstanding_posts_hot->views }}</span></li>
-                                            </ul>
-
-                                            <div class="title">
-                                                <h3 class="h4"><a href="{{ route('posts.show', $outstanding_posts_hot) }}"
-                                                        class="btn-link">{{ $outstanding_posts_hot->title}}</a>
-                                                </h3>
-                                            </div>
+                                <div class="sidebar-post-item-simple featured">
+                                    <a href="{{ route('posts.show', $outstanding_posts_hot) }}" class="thumb-sm"><img
+                                            src="{{ asset($outstanding_posts_hot->image ? 'storage/' .$outstanding_posts_hot->image->path : 'storage/placeholders/placeholder-image.png')}}"
+                                            alt=""></a>
+                                    <div class="post-info">
+                                        <h4><a href="{{ route('posts.show', $outstanding_posts_hot) }}">{{ $outstanding_posts_hot->title}}</a></h4>
+                                        <div class="meta-sm">
+                                            <span><i class="fa fa-clock-o"></i> {{ $outstanding_posts_hot->created_at->locale('vi')->diffForHumans() }}</span>
+                                            <span><i class="fa fa-comments"></i> {{ count($outstanding_posts_hot->comments) }}</span>
+                                            <span><i class="fa fa-eye"></i> {{ $outstanding_posts_hot->views }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -131,28 +161,19 @@ use App\Models\Category;
                     return `
                         @foreach($outstanding_posts as $outstanding_post)
                             <li>
-                                <!-- Post Item Start -->
-                                <div class="post--item post--layout-3">
-                                    <div class="post--img">
-                                        <a href="{{ route('posts.show', $outstanding_post) }}" class="thumb"><img
-                                                src="{{ asset($outstanding_post->image ? 'storage/' .$outstanding_post->image->path : 'storage/placeholders/placeholder-image.png')}}"
-                                                alt=""></a>
-                                        <div class="post--info">
-                                            <ul class="nav meta">
-                                                <li><a href="javascript:;">{{ $outstanding_post->created_at->locale('vi')->diffForHumans() }}</a></li>
-                                                <li><a  href="javascript:;"><i class="fa fm fa-comments"></i>{{ count($outstanding_post->comments) }}</a></li>
-                                                <li><span><i class="fa fm fa-eye"></i>{{ $outstanding_post->views }}</span></li>
-                                            </ul>
-
-                                            <div class="title">
-                                                <h3 class="h4"><a href="{{ route('posts.show', $outstanding_post) }}"
-                                                        class="btn-link">{{ $outstanding_post->title}}</a>
-                                                </h3>
-                                            </div>
+                                <div class="sidebar-post-item-simple featured">
+                                    <a href="{{ route('posts.show', $outstanding_post) }}" class="thumb-sm"><img
+                                            src="{{ asset($outstanding_post->image ? 'storage/' .$outstanding_post->image->path : 'storage/placeholders/placeholder-image.png')}}"
+                                            alt=""></a>
+                                    <div class="post-info">
+                                        <h4><a href="{{ route('posts.show', $outstanding_post) }}">{{ $outstanding_post->title}}</a></h4>
+                                        <div class="meta-sm">
+                                            <span><i class="fa fa-clock-o"></i> {{ $outstanding_post->created_at->locale('vi')->diffForHumans() }}</span>
+                                            <span><i class="fa fa-comments"></i> {{ count($outstanding_post->comments) }}</span>
+                                            <span><i class="fa fa-eye"></i> {{ $outstanding_post->views }}</span>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Post Item End -->
                             </li>
                         @endforeach
                     `
@@ -164,23 +185,16 @@ use App\Models\Category;
                     return `
                          @foreach($outstanding_posts_views as $outstanding_posts_view)
                             <li>
-                                <div class="post--item post--layout-3">
-                                    <div class="post--img">
-                                        <a href="{{ route('posts.show', $outstanding_posts_view) }}" class="thumb"><img
-                                                src="{{ asset($outstanding_posts_view->image ? 'storage/' .$outstanding_posts_view->image->path : 'storage/placeholders/placeholder-image.png')}}"
-                                                alt=""></a>
-                                        <div class="post--info">
-                                            <ul class="nav meta">
-                                                <li><a href="javascript:;">{{ $outstanding_posts_view->created_at->locale('vi')->diffForHumans() }}</a></li>
-                                                <li><a  href="javascript:;"><i class="fa fm fa-comments"></i>{{ count($outstanding_posts_view->comments) }}</a></li>
-                                                <li><span><i class="fa fm fa-eye"></i>{{ $outstanding_posts_view->views }}</span></li>
-                                            </ul>
-
-                                            <div class="title">
-                                                <h3 class="h4"><a href="{{ route('posts.show', $outstanding_posts_view) }}"
-                                                        class="btn-link">{{ $outstanding_posts_view->title}}</a>
-                                                </h3>
-                                            </div>
+                                <div class="sidebar-post-item-simple featured">
+                                    <a href="{{ route('posts.show', $outstanding_posts_view) }}" class="thumb-sm"><img
+                                            src="{{ asset($outstanding_posts_view->image ? 'storage/' .$outstanding_posts_view->image->path : 'storage/placeholders/placeholder-image.png')}}"
+                                            alt=""></a>
+                                    <div class="post-info">
+                                        <h4><a href="{{ route('posts.show', $outstanding_posts_view) }}">{{ $outstanding_posts_view->title}}</a></h4>
+                                        <div class="meta-sm">
+                                            <span><i class="fa fa-clock-o"></i> {{ $outstanding_posts_view->created_at->locale('vi')->diffForHumans() }}</span>
+                                            <span><i class="fa fa-comments"></i> {{ count($outstanding_posts_view->comments) }}</span>
+                                            <span><i class="fa fa-eye"></i> {{ $outstanding_posts_view->views }}</span>
                                         </div>
                                     </div>
                                 </div>

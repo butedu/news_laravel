@@ -221,6 +221,7 @@ figure {
 	margin: 0 0 1rem
 }
 img, svg {
+	display: inline-block;
 	vertical-align: middle
 }
 table {
@@ -271,7 +272,8 @@ select {
 	display: none
 }
 [type=button], [type=reset], [type=submit], button {
-	-webkit-appearance: button
+	-webkit-appearance: button;
+	appearance: button
 }
 [type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
 	cursor: pointer
@@ -313,7 +315,8 @@ legend+* {
 }
 [type=search] {
 	outline-offset: -2px;
-	-webkit-appearance: textfield
+	-webkit-appearance: textfield;
+	appearance: textfield
 }
 ::-webkit-search-decoration {
 	-webkit-appearance: none
@@ -1896,7 +1899,6 @@ textarea.form-control-lg {
 	width: 1em;
 	height: 1em;
 	margin-top: .25em;
-	vertical-align: top;
 	background-color: #fff;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -1906,7 +1908,7 @@ textarea.form-control-lg {
 	-moz-appearance: none;
 	appearance: none;
 	-webkit-print-color-adjust: exact;
-	color-adjust: exact;
+	print-color-adjust: exact;
 	transition: background-color .15s ease-in-out, background-position .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out
 }
 @media (prefers-reduced-motion:reduce) {

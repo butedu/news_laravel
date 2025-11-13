@@ -56,7 +56,7 @@
 		<!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
 		<!--End Back To Top Button-->
 		<footer class="page-footer">
-			<p class="mb-0">Copyright © 2021. Tất cả các quyền.</p>
+			<p class="mb-0">Copyright © 2025. Tất cả các quyền.</p>
 		</footer>
 	</div>
 	<!--end wrapper-->
