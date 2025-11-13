@@ -91,11 +91,14 @@ return [
     */
 
     'from' => [
-        'address' => 'hutechnews@gmail.com',
-        'name' => "Hutech News - Liên Hệ",
+        'address' => env('MAIL_FROM_ADDRESS', 'mbf2907.ntkh@gmail.com'),
+        'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'TDQ News')),
     ],
 
-    'reply_to' => ['address' => 'hutechnews@gmail.com', 'name' => 'Hutech News - Liên hệ'],
+    'reply_to' => [
+        'address' => env('MAIL_REPLY_TO_ADDRESS', env('MAIL_FROM_ADDRESS', 'mbf2907.ntkh@gmail.com')),
+        'name' => env('MAIL_REPLY_TO_NAME', env('MAIL_FROM_NAME', env('APP_NAME', 'TDQ News'))),
+    ],
     /*
     |--------------------------------------------------------------------------
     | Markdown Mail Settings
