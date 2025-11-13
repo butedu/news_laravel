@@ -12,18 +12,20 @@ function checkPermission($name) {
 ?>
 <!--sidebar wrapper -->
 <div class="sidebar-wrapper" data-simplebar="true">
-            <div class="sidebar-header">
-                <div>
-                    <img src="{{ asset('kcnew/frontend/img/image_iconLogo.png') }}" class="logo-icon" alt="logo icon">
-                </div>
-                <div>
-                    <h4 style="color: #2C85DF" class="logo-text">VN News - News</h4>
-                </div>
-                <div style="color: #2C85DF" class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i>
+    <div class="sidebar-header">
+        <div class="logo-brand">
+            <img src="{{ asset('kcnew/frontend/img/image_iconLogo.png') }}" class="logo-icon" alt="VN News logo">
+            <div class="brand-text">
+                <span class="brand-title">VN News</span>
+                <span class="brand-tagline">Dashboard</span>
             </div>
         </div>
-        <!--navigation-->
-        <ul class="metismenu" id="menu">
+        <div class="toggle-icon ms-auto">
+            <i class='bx bx-arrow-to-left'></i>
+        </div>
+    </div>
+    <!--navigation-->
+    <ul class="metismenu" id="menu">
                 @if(checkPermission("admin.index"))
                 <li>
                     <a href="{{ route('admin.index') }}" >
@@ -186,7 +188,7 @@ function checkPermission($name) {
                 </li>
 
            
-            </ul>
-            <!--end navigation-->
-        </div>
-        <!--end sidebar wrapper -->
+        </ul>
+        <!--end navigation-->
+    </div>
+    <!--end sidebar wrapper -->

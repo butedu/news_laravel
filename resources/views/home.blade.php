@@ -231,9 +231,6 @@
                             </div>
                         </div>
 
-                        <!-- Quảng cáo 1 -->
-                        <x-blog.side-ad_banner />
-
                         <!-- Chuyên mục -->
                         <div class="sidebar-widget">
                             <h3 class="widget-title"><i class="fa fa-list-ul"></i> Chuyên mục</h3>
@@ -307,14 +304,8 @@
                             </div>
                         </div>
 
-                        <!-- Quảng cáo 2 -->
-                        <div class="sidebar-widget">
-                            <div class="ad-banner">
-                                <a href="https://mwc.com.vn/" target="_blank">
-                                    <img src="{{ asset('kcnew/frontend/img/ads-img/banner_quangcao.png') }}" alt="Quảng cáo">
-                                </a>
-                            </div>
-                        </div>
+                        <!-- Quảng cáo -->
+                        <x-blog.side-ad_banner />
                     </aside>
                 </div>
             </div>
