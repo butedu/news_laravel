@@ -28,6 +28,10 @@
             --ds-border: rgba(226, 232, 240, 0.14);
         }
 
+        .page-content.dashboard-page {
+            padding-top: 1rem;
+        }
+
         .dashboard-page {
             display: flex;
             flex-direction: column;

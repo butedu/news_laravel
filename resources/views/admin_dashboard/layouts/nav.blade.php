@@ -21,11 +21,13 @@ function checkPermission($name) {
             <img src="{{ asset('kcnew/frontend/img/image_iconLogo.png') }}" class="logo-icon" alt="VN News logo">
             <div class="brand-text">
                 <span class="brand-title">VN News</span>
-                <span class="brand-tagline">Dashboard</span>
             </div>
         </div>
-        <div class="toggle-icon ms-auto">
-            <i class='bx bx-arrow-to-left'></i>
+        <div class="sidebar-header-controls">
+            <span class="brand-tagline">Dashboard</span>
+            <button type="button" class="toggle-icon sidebar-toggle" aria-label="Thu gọn sidebar">
+                <i class='bx bx-chevron-left'></i>
+            </button>
         </div>
     </div>
 

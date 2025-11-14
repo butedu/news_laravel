@@ -12,7 +12,13 @@ html.semi-dark .sidebar-wrapper .sidebar-header .logo-text {
 	color: #e7e9ec
 }
 html.semi-dark .sidebar-wrapper .sidebar-header .toggle-icon {
-	color: #e7e9ec
+	background: rgba(96, 165, 250, 0.14);
+	border-color: rgba(96, 165, 250, 0.3);
+	color: #e7e9ec;
+	box-shadow: 0 18px 32px rgba(0, 0, 0, 0.4);
+}
+html.semi-dark .sidebar-wrapper .sidebar-header .toggle-icon:hover {
+	background: rgba(148, 197, 255, 0.28);
 }
 html.semi-dark .sidebar-wrapper .metismenu a {
 	color: #9ea4aa
