@@ -10,9 +10,11 @@ class CheckPermission
     public function handle(Request $request, Closure $next)
     {
      
-        // Nếu là quản trị viện thì được cho phép tất cả mọi quyền
-        if(auth()->user()->role->name === 'admin')
+        // Nếu là quản trị viên thì được cho phép tất cả mọi quyền
+        $roleName = strtolower(auth()->user()->role->name ?? '');
+        if (in_array($roleName, ['admin', 'administrator'], true)) {
             return $next($request);
+        }
         // 1. Lấy tên điều hướng 
         $route_name = $request->route()->getName();
 

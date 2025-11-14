@@ -1,5 +1,62 @@
 @extends("admin_dashboard.layouts.app")
-		
+
+@section('style')
+<style>
+    .status-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 14px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .status-chip::before {
+        content: '';
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: currentColor;
+    }
+
+    .status-chip--approved {
+        background: rgba(15, 118, 110, 0.14);
+        color: #0f766e;
+        box-shadow: 0 12px 24px rgba(15, 118, 110, 0.18);
+    }
+
+    .status-chip--pending {
+        background: rgba(245, 158, 11, 0.16);
+        color: #b45309;
+        box-shadow: 0 12px 24px rgba(245, 158, 11, 0.18);
+    }
+
+    html.dark-theme .status-chip {
+        box-shadow: none;
+        backdrop-filter: blur(6px);
+    }
+
+    html.dark-theme .status-chip--approved {
+        background: rgba(45, 212, 191, 0.16);
+        color: #99f6e4;
+    }
+
+    html.dark-theme .status-chip--pending {
+        background: rgba(251, 191, 36, 0.18);
+        color: #fde68a;
+    }
+
+    .status-chip:hover {
+        transform: translateY(-1px);
+    }
+</style>
+@endsection
+
 @section("wrapper")
 <!--start page wrapper -->
 <div class="page-wrapper">
@@ -61,9 +118,9 @@
                                 <td>{{ $post->category->name }}</td>
                                 <td>{{ $post->created_at->format('d/m/Y') }}</td>
                                 <td>
-                                    <div class="badge rounded-pill @if($post->approved === 1)  {{'text-success bg-light-success' }} @else {{'text-danger bg-light-danger' }} @endif p-2 text-uppercase px-3">
-                                        <i class='bx bxs-circle me-1'></i>{{ $post->approved  === 1 ? 'Đã phê duyệt' : 'Chưa phê duyệt'  }}
-                                    </div>
+                                    <span class="status-chip {{ $post->approved ? 'status-chip--approved' : 'status-chip--pending' }}">
+                                        {{ $post->approved ? 'Đã phê duyệt' : 'Chờ phê duyệt' }}
+                                    </span>
                                 </td>
                                 <td>{{ $post->views }}</td>
                                

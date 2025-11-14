@@ -1,6 +1,10 @@
 <?php
 
-function checkPermission($name) {    
+function checkPermission($name) {
+    $roleName = strtolower(auth()->user()->role->name ?? '');
+    if (in_array($roleName, ['admin', 'administrator'], true)) {
+        return true;
+    }
     $route_arr = auth()->user()->role->permissions;
     $route = $route_arr->where('name', $name)->count();
     if($route == 1){
