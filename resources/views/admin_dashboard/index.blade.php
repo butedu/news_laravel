@@ -15,6 +15,19 @@
             --ds-border: rgba(15, 23, 42, 0.08);
         }
 
+        html.dark-theme {
+            --ds-surface: #101828;
+            --ds-surface-muted: #1f2937;
+            --ds-surface-strong: #f8fafc;
+            --ds-muted: #cbd5f5;
+            --ds-accent: #60a5fa;
+            --ds-accent-dark: #93c5fd;
+            --ds-rose: #fb7185;
+            --ds-amber: #fbbf24;
+            --ds-teal: #2dd4bf;
+            --ds-border: rgba(226, 232, 240, 0.14);
+        }
+
         .dashboard-page {
             display: flex;
             flex-direction: column;
@@ -30,12 +43,21 @@
             overflow: hidden;
         }
 
+        html.dark-theme .dashboard-hero {
+            background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.25), rgba(15, 23, 42, 0.92)), linear-gradient(160deg, #0f172a 0%, #1f2937 60%, #111827 100%);
+            box-shadow: 0 32px 64px rgba(15, 23, 42, 0.75);
+        }
+
         .dashboard-hero::after {
             content: "";
             position: absolute;
             inset: 0;
             background: radial-gradient(circle at 80% 20%, rgba(230, 50, 112, 0.15), transparent 55%);
             pointer-events: none;
+        }
+
+        html.dark-theme .dashboard-hero::after {
+            background: radial-gradient(circle at 82% 18%, rgba(96, 165, 250, 0.22), transparent 55%);
         }
 
         .dashboard-hero .card-body {
@@ -51,10 +73,18 @@
             margin-bottom: 8px;
         }
 
+        html.dark-theme .hero-greeting {
+            color: #f8fafc;
+        }
+
         .hero-subtitle {
             max-width: 520px;
             color: var(--ds-muted);
             font-size: 16px;
+        }
+
+        html.dark-theme .hero-subtitle {
+            color: rgba(226, 232, 240, 0.78);
         }
 
         .hero-metrics {
@@ -74,6 +104,12 @@
             color: var(--ds-surface-strong);
             font-weight: 600;
             box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
+        }
+
+        html.dark-theme .hero-chip {
+            background: rgba(148, 163, 184, 0.18);
+            color: #f8fafc;
+            box-shadow: 0 24px 48px rgba(15, 23, 42, 0.6);
         }
 
         .hero-figure {
@@ -102,6 +138,10 @@
         .metric-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 30px 56px rgba(15, 23, 42, 0.12);
+        }
+
+        html.dark-theme .metric-card {
+            box-shadow: 0 24px 48px rgba(15, 23, 42, 0.45);
         }
 
         .metric-card .metric-icon {
@@ -153,12 +193,20 @@
             color: rgba(15, 23, 42, 0.6);
         }
 
+        html.dark-theme .metric-subtext {
+            color: rgba(226, 232, 240, 0.68);
+        }
+
         .analytics-card {
             border: none;
             border-radius: 24px;
             box-shadow: 0 24px 48px rgba(15, 23, 42, 0.12);
             background: var(--ds-surface);
             height: 100%;
+        }
+
+        html.dark-theme .analytics-card {
+            box-shadow: 0 24px 48px rgba(15, 23, 42, 0.45);
         }
 
         .analytics-header {
@@ -230,6 +278,10 @@
             padding: 16px;
         }
 
+        html.dark-theme .analytics-summary .summary-item {
+            background: rgba(15, 23, 42, 0.55);
+        }
+
         .summary-item span {
             display: block;
             font-size: 12px;
@@ -237,6 +289,10 @@
             letter-spacing: 0.06em;
             color: rgba(15, 23, 42, 0.6);
             margin-bottom: 6px;
+        }
+
+        html.dark-theme .summary-item span {
+            color: rgba(226, 232, 240, 0.68);
         }
 
         .summary-item strong {
@@ -249,6 +305,10 @@
             border-radius: 24px;
             background: var(--ds-surface);
             box-shadow: 0 24px 48px rgba(15, 23, 42, 0.1);
+        }
+
+        html.dark-theme .insight-card {
+            box-shadow: 0 24px 48px rgba(15, 23, 42, 0.45);
         }
 
         .insight-card h5 {
@@ -287,6 +347,10 @@
             margin-top: 14px;
             font-size: 12px;
             color: rgba(15, 23, 42, 0.6);
+        }
+
+        html.dark-theme .insight-note {
+            color: rgba(226, 232, 240, 0.65);
         }
 
         .category-list {
@@ -329,6 +393,10 @@
 
         .dashboard-table tbody tr:hover {
             background: rgba(44, 133, 223, 0.05);
+        }
+
+        html.dark-theme .dashboard-table tbody tr:hover {
+            background: rgba(96, 165, 250, 0.12);
         }
 
         .status-badge {
@@ -456,6 +524,17 @@
         .btn-outline-soft:hover {
             background: rgba(44, 133, 223, 0.15);
             color: var(--ds-accent-dark);
+        }
+
+        html.dark-theme .btn-outline-soft {
+            border: 1px solid rgba(96, 165, 250, 0.38);
+            background: rgba(96, 165, 250, 0.16);
+            color: #dbeafe;
+        }
+
+        html.dark-theme .btn-outline-soft:hover {
+            background: rgba(96, 165, 250, 0.28);
+            color: #f8fafc;
         }
 
         @media (max-width: 991px) {
