@@ -21,7 +21,7 @@ h4, body h4 { font-size: 1.25rem !important; line-height: 1.3 !important; }
 h5, body h5 { font-size: 1.1rem !important; line-height: 1.3 !important; }
 h6, body h6 { font-size: 1rem !important; line-height: 1.3 !important; }
 
-.h4, h4 { color: #dcdcdc !important; }
+.h4, h4 { color: #c60000 !important; }
 .widget--title .h4 { color: #0959AB !important; }
 
 .header--menu-links, .header--menu-links.nav, .header--menu-links.nav.navbar-nav, .header--menu-links li {
