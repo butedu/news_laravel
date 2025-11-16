@@ -58,8 +58,11 @@ $posts_new[3] = Post::latest()->approved()
 
                     <!-- left column -->
                     <div class="col-md-4 col-sm-6 col-xs-12">
+                        @php
+                            $avatarUrl = auth()->user()->image ? auth()->user()->image->url : asset('storage/placeholders/user_placeholder.jpg');
+                        @endphp
                         <div class="text-center">
-                            <img style="    border: 4px solid #979993; border-radius: 50%; margin: auto; background-size: cover ;  width: 180px; height: 180px;   background-image: url({{ auth()->user()->image ?  asset('storage/' . auth()->user()->image->path) : asset('storage/placeholders/user_placeholder.jpg') }})"  alt="">
+                            <img src="{{ $avatarUrl }}" style="border: 4px solid #979993; border-radius: 50%; margin: auto; width: 180px; height: 180px; object-fit: cover; object-position: center;"  alt="Ảnh đại diện" onerror="this.onerror=null;this.src='{{ asset('storage/placeholders/user_placeholder.jpg') }}';">
                             <div class="mb-3">
                             <label for="input_image" class="form-label">Ảnh đai diện</label>
                             <input style="background-color: #ffffff; color: black;"  name="image" type="file" class="form-control text-center center-block well well-sm" id="input_image" >

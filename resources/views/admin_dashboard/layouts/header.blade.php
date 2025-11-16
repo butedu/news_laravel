@@ -218,19 +218,29 @@
                         </ul>
                     </div>
                     <div class="user-box dropdown">
+                        @php
+                            $navAvatar = auth()->user()->image ? auth()->user()->image->url : asset('storage/placeholders/user_placeholder.jpg');
+                        @endphp
                         <a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img class="img_admn--user img-avatar " width="50" height="50" style="border-radius: 50% ; margin: auto; background-size: cover ;  background-image: url({{ auth()->user()->image ?  asset('storage/' . auth()->user()->image->path) : asset('storage/placeholders/user_placeholder.jpg') }})" alt="">
+                            <img class="img_admn--user img-avatar" width="50" height="50" style="border-radius: 50%; margin: auto; object-fit: cover; object-position: center;" src="{{ $navAvatar }}" alt="Ảnh đại diện" onerror="this.onerror=null;this.src='{{ asset('storage/placeholders/user_placeholder.jpg') }}';">
                             <div class="user-info ps-3">
                                 <p class="user-name mb-0">{{ auth()->user()->name }}</p>
                                 <p class="designattion mb-0">{{ auth()->user()->role->name }}</p>
                             </div>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="javascript:;"><i class="bx bx-user"></i><span>Hồ sơ</span></a>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('profile') }}">
+                                    <i class="bx bx-user"></i><span>Hồ sơ</span>
+                                </a>
                             </li>
-                            <li><a class="dropdown-item" href="javascript:;"><i class="bx bx-cog"></i><span>Cài đặt</span></a>
+                            @if(function_exists('checkPermission') ? checkPermission('admin.setting.edit') : true)
+                            <li>
+                                <a class="dropdown-item" href="{{ route('admin.setting.edit') }}">
+                                    <i class="bx bx-cog"></i><span>Cài đặt</span>
+                                </a>
                             </li>
-                            </li>
+                            @endif
                             <li>
                                 <div class="dropdown-divider mb-0"></div>
                             </li>

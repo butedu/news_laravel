@@ -80,10 +80,20 @@ function checkPermission($name) {
                 </a>
                 <ul>
                     @if(checkPermission('admin.posts.index'))
-                        <li><a href="{{ route('admin.posts.index') }}"><i class="bx bx-right-arrow-alt"></i>Tất cả bài viết</a></li>
+                        <li>
+                            <a href="{{ route('admin.posts.index') }}">
+                                <i class="bx bx-chevron-right menu-sub-icon"></i>
+                                <span>Tất cả bài viết</span>
+                            </a>
+                        </li>
                     @endif
                     @if(checkPermission('admin.posts.create'))
-                        <li><a href="{{ route('admin.posts.create') }}"><i class="bx bx-right-arrow-alt"></i>Thêm bài viết mới</a></li>
+                        <li>
+                            <a href="{{ route('admin.posts.create') }}">
+                                <i class="bx bx-chevron-right menu-sub-icon"></i>
+                                <span>Thêm bài viết mới</span>
+                            </a>
+                        </li>
                     @endif
                 </ul>
             </li>
@@ -97,10 +107,20 @@ function checkPermission($name) {
                 </a>
                 <ul>
                     @if(checkPermission('admin.categories.index'))
-                        <li><a href="{{ route('admin.categories.index') }}"><i class="bx bx-right-arrow-alt"></i>Tất cả danh mục</a></li>
+                        <li>
+                            <a href="{{ route('admin.categories.index') }}">
+                                <i class="bx bx-chevron-right menu-sub-icon"></i>
+                                <span>Tất cả danh mục</span>
+                            </a>
+                        </li>
                     @endif
                     @if(checkPermission('admin.categories.create'))
-                        <li><a href="{{ route('admin.categories.create') }}"><i class="bx bx-right-arrow-alt"></i>Thêm danh mục mới</a></li>
+                        <li>
+                            <a href="{{ route('admin.categories.create') }}">
+                                <i class="bx bx-chevron-right menu-sub-icon"></i>
+                                <span>Thêm danh mục mới</span>
+                            </a>
+                        </li>
                     @endif
                 </ul>
             </li>
@@ -123,10 +143,20 @@ function checkPermission($name) {
                 </a>
                 <ul>
                     @if(checkPermission('admin.comments.index'))
-                        <li><a href="{{ route('admin.comments.index') }}"><i class="bx bx-right-arrow-alt"></i>Tất cả bình luận</a></li>
+                        <li>
+                            <a href="{{ route('admin.comments.index') }}">
+                                <i class="bx bx-chevron-right menu-sub-icon"></i>
+                                <span>Tất cả bình luận</span>
+                            </a>
+                        </li>
                     @endif
                     @if(checkPermission('admin.comments.create'))
-                        <li><a href="{{ route('admin.comments.create') }}"><i class="bx bx-right-arrow-alt"></i>Thêm bình luận mới</a></li>
+                        <li>
+                            <a href="{{ route('admin.comments.create') }}">
+                                <i class="bx bx-chevron-right menu-sub-icon"></i>
+                                <span>Thêm bình luận mới</span>
+                            </a>
+                        </li>
                     @endif
                 </ul>
             </li>
@@ -144,10 +174,20 @@ function checkPermission($name) {
                 </a>
                 <ul>
                     @if(checkPermission('admin.roles.index'))
-                        <li><a href="{{ route('admin.roles.index') }}"><i class="bx bx-right-arrow-alt"></i>Tất cả quyền</a></li>
+                        <li>
+                            <a href="{{ route('admin.roles.index') }}">
+                                <i class="bx bx-chevron-right menu-sub-icon"></i>
+                                <span>Tất cả quyền</span>
+                            </a>
+                        </li>
                     @endif
                     @if(checkPermission('admin.roles.create'))
-                        <li><a href="{{ route('admin.roles.create') }}"><i class="bx bx-right-arrow-alt"></i>Thêm quyền mới</a></li>
+                        <li>
+                            <a href="{{ route('admin.roles.create') }}">
+                                <i class="bx bx-chevron-right menu-sub-icon"></i>
+                                <span>Thêm quyền mới</span>
+                            </a>
+                        </li>
                     @endif
                 </ul>
             </li>
@@ -161,10 +201,20 @@ function checkPermission($name) {
                 </a>
                 <ul>
                     @if(checkPermission('admin.users.index'))
-                        <li><a href="{{ route('admin.users.index') }}"><i class="bx bx-right-arrow-alt"></i>Tất cả tài khoản</a></li>
+                        <li>
+                            <a href="{{ route('admin.users.index') }}">
+                                <i class="bx bx-chevron-right menu-sub-icon"></i>
+                                <span>Tất cả tài khoản</span>
+                            </a>
+                        </li>
                     @endif
                     @if(checkPermission('admin.users.create'))
-                        <li><a href="{{ route('admin.users.create') }}"><i class="bx bx-right-arrow-alt"></i>Thêm tài khoản mới</a></li>
+                        <li>
+                            <a href="{{ route('admin.users.create') }}">
+                                <i class="bx bx-chevron-right menu-sub-icon"></i>
+                                <span>Thêm tài khoản mới</span>
+                            </a>
+                        </li>
                     @endif
                 </ul>
             </li>

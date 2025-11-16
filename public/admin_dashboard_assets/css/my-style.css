@@ -176,8 +176,9 @@ a:hover {
 
     .sidebar-username {
         margin: 0;
-        font-size: 18px;
+        font-size: px;
         font-weight: 700;
+        color: #ffffff;
     }
 
     .sidebar-role {
@@ -188,6 +189,8 @@ a:hover {
         display: inline-flex;
         align-items: center;
         gap: 6px;
+        margin: 6px;
+
     }
 
     .sidebar-chips {
@@ -295,12 +298,39 @@ a:hover {
         color: rgba(15, 23, 42, 0.7);
         padding: 8px 12px;
         text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .sidebar-nav li ul li a .menu-sub-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 9px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(15, 23, 42, 0.08);
+        color: rgba(15, 23, 42, 0.55);
+        font-size: 14px;
+        transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+        flex-shrink: 0;
+    }
+
+    .sidebar-nav li ul li a span {
+        flex: 1;
     }
 
     .sidebar-nav li ul li a:hover {
         background: rgba(44, 133, 223, 0.12);
         color: #0959ab;
         text-decoration: none;
+    }
+
+    .sidebar-nav li ul li a:hover .menu-sub-icon {
+        background: rgba(9, 89, 171, 0.18);
+        color: #0959ab;
+        transform: translateX(3px);
     }
 
     .sidebar-footer-actions {
@@ -399,6 +429,8 @@ a:hover {
     display: flex;
     align-items: center;
     gap: 12px;
+    top: 10px;
+    left: 10px;
 }
 
 .sidebar-wrapper .sidebar-header .logo-icon {

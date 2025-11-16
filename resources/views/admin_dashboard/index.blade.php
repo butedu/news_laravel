@@ -29,7 +29,10 @@
         }
 
         .page-content.dashboard-page {
-            padding-top: 1rem;
+            padding-top: 0.35rem;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            background: linear-gradient(180deg, rgba(236, 242, 255, 0.9) 0%, #ffffff 65%);
         }
 
         .dashboard-page {
@@ -41,40 +44,75 @@
         .dashboard-hero {
             position: relative;
             border: none;
-            border-radius: 26px;
-            background: radial-gradient(circle at top left, rgba(44, 133, 223, 0.2), rgba(9, 89, 171, 0.08)), linear-gradient(150deg, #ffffff 0%, #f4f8ff 100%);
-            box-shadow: 0 24px 48px rgba(15, 23, 42, 0.12);
+            border-radius: 28px;
+            background: linear-gradient(135deg, rgba(44, 133, 223, 0.16) 0%, rgba(9, 89, 171, 0.08) 45%, rgba(255, 255, 255, 0.9) 100%);
+            box-shadow: 0 32px 64px rgba(15, 23, 42, 0.14);
             overflow: hidden;
+            backdrop-filter: blur(12px);
         }
 
         html.dark-theme .dashboard-hero {
-            background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.25), rgba(15, 23, 42, 0.92)), linear-gradient(160deg, #0f172a 0%, #1f2937 60%, #111827 100%);
-            box-shadow: 0 32px 64px rgba(15, 23, 42, 0.75);
+            background: linear-gradient(140deg, rgba(59, 130, 246, 0.32) 0%, rgba(15, 23, 42, 0.88) 65%, rgba(15, 23, 42, 0.95) 100%);
+            box-shadow: 0 40px 80px rgba(15, 23, 42, 0.8);
         }
 
         .dashboard-hero::after {
             content: "";
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at 80% 20%, rgba(230, 50, 112, 0.15), transparent 55%);
+            background: radial-gradient(circle at 88% 18%, rgba(230, 50, 112, 0.16), transparent 56%);
             pointer-events: none;
         }
 
         html.dark-theme .dashboard-hero::after {
-            background: radial-gradient(circle at 82% 18%, rgba(96, 165, 250, 0.22), transparent 55%);
+            background: radial-gradient(circle at 82% 22%, rgba(96, 165, 250, 0.28), transparent 58%);
         }
 
         .dashboard-hero .card-body {
             position: relative;
             z-index: 1;
-            padding: 40px;
+            padding: 42px 44px;
+        }
+
+        .hero-top-row {
+            display: flex;
+            align-items: stretch;
+            justify-content: space-between;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .hero-copy {
+            flex: 1 1 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 999px;
+            background: rgba(44, 133, 223, 0.2);
+            color: var(--ds-accent-dark);
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: 0.06em;
+            width: fit-content;
+        }
+
+        html.dark-theme .hero-badge {
+            background: rgba(96, 165, 250, 0.25);
+            color: #dbeafe;
         }
 
         .hero-greeting {
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 700;
             color: var(--ds-surface-strong);
-            margin-bottom: 8px;
+            margin: 0;
         }
 
         html.dark-theme .hero-greeting {
@@ -82,7 +120,7 @@
         }
 
         .hero-subtitle {
-            max-width: 520px;
+            max-width: 540px;
             color: var(--ds-muted);
             font-size: 16px;
         }
@@ -91,39 +129,180 @@
             color: rgba(226, 232, 240, 0.78);
         }
 
-        .hero-metrics {
-            margin-top: 26px;
+        .hero-meta {
+            font-size: 13px;
+            color: rgba(15, 23, 42, 0.55);
+        }
+
+        html.dark-theme .hero-meta {
+            color: rgba(226, 232, 240, 0.62);
+        }
+
+        .hero-actions {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
+            margin-top: 8px;
         }
 
-        .hero-chip {
+        .hero-actions .btn {
+            border-radius: 999px;
+            padding: 10px 22px;
+            font-weight: 600;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 10px 16px;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.72);
+        }
+
+        .hero-actions .btn-primary {
+            border: none;
+            background: linear-gradient(135deg, var(--ds-accent-dark), var(--ds-accent));
+            box-shadow: 0 20px 36px rgba(9, 89, 171, 0.28);
+        }
+
+        .hero-actions .btn-primary:hover {
+            box-shadow: 0 26px 44px rgba(9, 89, 171, 0.35);
+        }
+
+        .hero-actions .btn-outline-soft {
+            border: 1px solid rgba(44, 133, 223, 0.3);
+            background: rgba(44, 133, 223, 0.12);
+            color: var(--ds-accent-dark);
+        }
+
+        html.dark-theme .hero-actions .btn-outline-soft {
+            border-color: rgba(96, 165, 250, 0.35);
+            background: rgba(96, 165, 250, 0.2);
+            color: #dbeafe;
+        }
+
+        .hero-side {
+            flex: 0 1 280px;
+            display: grid;
+            gap: 12px;
+            align-content: flex-start;
+        }
+
+        .hero-summary-card {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            padding: 18px 20px;
+            box-shadow: 0 24px 46px rgba(15, 23, 42, 0.12);
+            backdrop-filter: blur(8px);
+        }
+
+        html.dark-theme .hero-summary-card {
+            background: rgba(15, 23, 42, 0.65);
+            box-shadow: 0 26px 52px rgba(15, 23, 42, 0.7);
+        }
+
+        .hero-summary-card span {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(15, 23, 42, 0.55);
+            margin-bottom: 6px;
+        }
+
+        html.dark-theme .hero-summary-card span {
+            color: rgba(226, 232, 240, 0.65);
+        }
+
+        .hero-summary-card strong {
+            display: block;
+            font-size: 26px;
             color: var(--ds-surface-strong);
-            font-weight: 600;
-            box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
         }
 
-        html.dark-theme .hero-chip {
-            background: rgba(148, 163, 184, 0.18);
+        html.dark-theme .hero-summary-card strong {
             color: #f8fafc;
-            box-shadow: 0 24px 48px rgba(15, 23, 42, 0.6);
         }
 
-        .hero-figure {
-            position: absolute;
-            right: -60px;
-            bottom: -60px;
-            width: 260px;
-            height: 260px;
-            background: radial-gradient(circle, rgba(9, 89, 171, 0.32), rgba(9, 89, 171, 0));
-            border-radius: 50%;
+        .hero-summary-card small {
+            font-size: 12px;
+            color: rgba(15, 23, 42, 0.52);
+        }
+
+        html.dark-theme .hero-summary-card small {
+            color: rgba(226, 232, 240, 0.6);
+        }
+
+        .hero-metrics {
+            margin-top: 32px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .hero-metric-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px 20px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 24px 48px rgba(15, 23, 42, 0.12);
+        }
+
+        html.dark-theme .hero-metric-card {
+            background: rgba(15, 23, 42, 0.65);
+            box-shadow: 0 28px 54px rgba(15, 23, 42, 0.75);
+        }
+
+        .hero-metric-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            background: rgba(44, 133, 223, 0.18);
+            color: var(--ds-accent-dark);
+            box-shadow: 0 16px 32px rgba(44, 133, 223, 0.2);
+        }
+
+        .hero-metric-card:nth-child(2) .hero-metric-icon {
+            background: rgba(230, 50, 112, 0.18);
+            color: var(--ds-rose);
+            box-shadow: 0 16px 32px rgba(230, 50, 112, 0.22);
+        }
+
+        .hero-metric-card:nth-child(3) .hero-metric-icon {
+            background: rgba(45, 212, 191, 0.18);
+            color: var(--ds-teal);
+            box-shadow: 0 16px 32px rgba(45, 212, 191, 0.22);
+        }
+
+        .hero-metric-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(15, 23, 42, 0.52);
+        }
+
+        html.dark-theme .hero-metric-label {
+            color: rgba(226, 232, 240, 0.7);
+        }
+
+        .hero-metric-card strong {
+            display: block;
+            font-size: 22px;
+            color: var(--ds-surface-strong);
+        }
+
+        html.dark-theme .hero-metric-card strong {
+            color: #f8fafc;
+        }
+
+        .hero-metric-subtext {
+            font-size: 12px;
+            color: rgba(15, 23, 42, 0.55);
+        }
+
+        html.dark-theme .hero-metric-subtext {
+            color: rgba(226, 232, 240, 0.62);
         }
 
         .metric-card {
@@ -542,12 +721,30 @@
         }
 
         @media (max-width: 991px) {
+            .page-content.dashboard-page {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
             .dashboard-hero .card-body {
-                padding: 28px;
+                padding: 32px;
             }
 
             .hero-greeting {
-                font-size: 24px;
+                font-size: 26px;
+            }
+
+            .hero-top-row {
+                flex-direction: column;
+            }
+
+            .hero-side {
+                width: 100%;
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            }
+
+            .hero-actions {
+                justify-content: flex-start;
             }
 
             .metric-card {
@@ -560,12 +757,17 @@
         }
 
         @media (max-width: 575px) {
-            .hero-metrics {
-                flex-direction: column;
+            .dashboard-hero .card-body {
+                padding: 26px 22px;
             }
 
-            .dashboard-hero .card-body {
-                padding: 24px;
+            .hero-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .hero-metrics {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -576,14 +778,61 @@
         <div class="page-content dashboard-page">
             <div class="card dashboard-hero">
                 <div class="card-body">
-                    <h2 class="hero-greeting">Xin chào, {{ auth()->user()->name ?? 'Quản trị viên' }} 👋</h2>
-                    <p class="hero-subtitle">Theo dõi hiệu suất nội dung, tương tác của độc giả và tiến độ vận hành chỉ trong một bảng điều khiển duy nhất.</p>
-                    <div class="hero-metrics">
-                        <span class="hero-chip"><i class='bx bx-edit-alt'></i> {{ $postsLast7 }} bài viết mới / 7 ngày</span>
-                        <span class="hero-chip"><i class='bx bx-message-rounded-dots'></i> {{ $commentsLast7 }} bình luận mới</span>
-                        <span class="hero-chip"><i class='bx bx-user-plus'></i> {{ $usersLast7 }} thành viên đăng ký</span>
+                    <div class="hero-top-row">
+                        <div class="hero-copy">
+                            <span class="hero-badge"><i class='bx bx-pulse'></i> BẢNG ĐIỀU KHIỂN</span>
+                            <h2 class="hero-greeting">Xin chào, {{ auth()->user()->name ?? 'Quản trị viên' }} 👋</h2>
+                            <p class="hero-subtitle">Theo dõi hiệu suất nội dung, tương tác của độc giả và tiến độ vận hành chỉ trong một bảng điều khiển duy nhất.</p>
+                            <div class="hero-meta">Lần cập nhật gần nhất: {{ now('Asia/Ho_Chi_Minh')->format('d/m/Y H:i') }}</div>
+                            <div class="hero-actions">
+                                <a href="{{ route('admin.posts.create') }}" class="btn btn-primary"><i class='bx bx-pencil'></i> Viết bài mới</a>
+                                <a href="{{ route('admin.posts.index') }}" class="btn btn-outline-soft"><i class='bx bx-line-chart'></i> Quản lý nội dung</a>
+                            </div>
+                        </div>
+                        <div class="hero-side">
+                            <div class="hero-summary-card">
+                                <span>Tổng bài viết</span>
+                                <strong>{{ number_format($countPost) }}</strong>
+                                <small>Bài viết đang hoạt động</small>
+                            </div>
+                            <div class="hero-summary-card">
+                                <span>Lượt xem toàn hệ thống</span>
+                                <strong>{{ number_format($countView) }}</strong>
+                                <small>Cộng dồn tới hiện tại</small>
+                            </div>
+                            <div class="hero-summary-card">
+                                <span>Độc giả đã đăng ký</span>
+                                <strong>{{ number_format($countUser) }}</strong>
+                                <small>Thành viên & subscriber</small>
+                            </div>
+                        </div>
                     </div>
-                    <div class="hero-figure"></div>
+                    <div class="hero-metrics">
+                        <div class="hero-metric-card">
+                            <div class="hero-metric-icon"><i class='bx bx-edit-alt'></i></div>
+                            <div>
+                                <span class="hero-metric-label">Bài viết tuần này</span>
+                                <strong>{{ number_format($postsLast7) }}</strong>
+                                <span class="hero-metric-subtext">Được xuất bản trong 7 ngày gần nhất</span>
+                            </div>
+                        </div>
+                        <div class="hero-metric-card">
+                            <div class="hero-metric-icon"><i class='bx bx-message-rounded-dots'></i></div>
+                            <div>
+                                <span class="hero-metric-label">Bình luận mới</span>
+                                <strong>{{ number_format($commentsLast7) }}</strong>
+                                <span class="hero-metric-subtext">Từ độc giả và cộng đồng</span>
+                            </div>
+                        </div>
+                        <div class="hero-metric-card">
+                            <div class="hero-metric-icon"><i class='bx bx-user-plus'></i></div>
+                            <div>
+                                <span class="hero-metric-label">Thành viên mới</span>
+                                <strong>{{ number_format($usersLast7) }}</strong>
+                                <span class="hero-metric-subtext">Đăng ký trong 7 ngày qua</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
