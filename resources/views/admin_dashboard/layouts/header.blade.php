@@ -25,10 +25,15 @@
                     <div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
                     </div>
                     <div class="search-bar flex-grow-1">
-                        <div class="position-relative search-bar-box">
-                            <input type="text" class="form-control search-control" placeholder="Nhập để tìm kiếm..."> <span class="position-absolute top-50 search-show translate-middle-y"><i class='bx bx-search'></i></span>
-                            <span class="position-absolute top-50 search-close translate-middle-y"><i class='bx bx-x'></i></span>
-                        </div>
+                        <form class="position-relative search-bar-box" method="GET" action="{{ route('admin.posts.index') }}">
+                            <input type="search" name="search" value="{{ request('search') }}" class="form-control search-control" placeholder="Nhập để tìm kiếm bài viết...">
+                            <button type="submit" class="position-absolute top-50 search-show translate-middle-y border-0 bg-transparent p-0"><i class='bx bx-search'></i></button>
+                            @if(request('search'))
+                                <a href="{{ route('admin.posts.index') }}" class="position-absolute top-50 search-close translate-middle-y"><i class='bx bx-x'></i></a>
+                            @else
+                                <span class="position-absolute top-50 search-close translate-middle-y"><i class='bx bx-x'></i></span>
+                            @endif
+                        </form>
                     </div>
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">

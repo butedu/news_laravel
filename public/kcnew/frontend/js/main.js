@@ -37,7 +37,8 @@ Author URI  : https://themeforest.net/user/themelooks
         /* ------------------------------------------------------------------------- *
          * RETINAJS
          * ------------------------------------------------------------------------- */
-        $('img').attr('data-rjs', 2);
+        $('img').not('.post--content img').attr('data-rjs', 2);
+        $('.post--content img').attr('data-rjs', 'ignore');
 
         retinajs();
         

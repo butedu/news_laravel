@@ -79,9 +79,10 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-lg-flex align-items-center mb-4 gap-3">
-                    <div class="position-relative">
-                        <input type="text" class="form-control ps-5 radius-30" placeholder="Tìm kiếm bài viết"> <span class="position-absolute top-50 product-show translate-middle-y"><i class="bx bx-search"></i></span>
-                    </div>
+                    <form method="GET" action="{{ route('admin.posts.index') }}" class="position-relative">
+                        <input type="search" name="search" value="{{ old('search', $searchTerm ?? request('search')) }}" class="form-control ps-5 radius-30" placeholder="Tìm kiếm bài viết">
+                        <button type="submit" class="position-absolute top-50 product-show translate-middle-y border-0 bg-transparent"><i class="bx bx-search"></i></button>
+                    </form>
                     <div class="ms-auto"><a href="{{ route('admin.posts.create') }}" class="btn btn-primary radius-30 mt-2 mt-lg-0"><i class="bx bxs-plus-square"></i>Thêm bài viết mới</a></div>
                 </div>
                 <div class="table-responsive">
@@ -99,7 +100,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($posts as $post)
+                            @forelse ($posts as $post)
                             <tr>
                                 <td>
                                     <div class="d-flex align-items-center">
@@ -137,7 +138,13 @@
                                     </div>
                                 </td>
                             </tr>
-                            @endforeach
+                            @empty
+                            <tr>
+                                <td colspan="8" class="text-center py-4 text-muted">
+                                    Không tìm thấy bài viết phù hợp với từ khóa.
+                                </td>
+                            </tr>
+                            @endforelse
                           
                         </tbody>
                     </table>

@@ -133,13 +133,18 @@
 											@enderror
 										</div>
 
-										<div class="mb-3">
-											<div class="form-check form-switch">
-												<input name="approved" {{  $post->approved ? 'checked' : '' }} class="form-check-input" type="checkbox" id="flexSwitchChecked">
-												<label class="form-check-label {{  $post->approved ? 'text-success' : 'text-warning' }}" for="flexSwitchChecked">
-													{{ $post->approved ? 'Đã phê duyệt' : 'Chưa phê duyệt' }}
-												</label>
+										<div class="mb-4">
+											<span class="form-label d-block mb-2">Trạng thái duyệt</span>
+											<div class="d-flex flex-wrap align-items-center gap-3 p-3 border rounded-3 bg-light">
+												<div class="form-check form-switch m-0">
+													<input name="approved" {{  $post->approved ? 'checked' : '' }} class="form-check-input" type="checkbox" id="flexSwitchChecked">
+												</div>
+												<div class="status-badge status-badge--outlined {{ $post->approved ? 'status-badge--approved' : 'status-badge--pending' }}">
+													<i class='bx {{ $post->approved ? 'bx-check-circle' : 'bx-time-five' }}'></i>
+													<span>{{ $post->approved ? 'Đã phê duyệt' : 'Chưa phê duyệt' }}</span>
+												</div>
 											</div>
+											<small class="text-muted d-block mt-2">Bật công tắc để cho phép bài viết hiển thị công khai.</small>
 										</div>
 
 										<button class="btn btn-primary" type="submit">Sửa bài viết</button>

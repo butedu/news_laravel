@@ -15,6 +15,24 @@
             color: #ffffff !important;
         }
 
+        .post--tags .nav li a.text.capitalize,
+        .post--cats .nav li a.text.capitalize{
+            border: 1px solid rgba(15, 23, 42, 0.15) !important;
+            color: #0f172a !important;
+            background: rgba(240, 246, 255, 0.92) !important;
+            padding: 6px 14px !important;
+            border-radius: 999px !important;
+            font-weight: 600 !important;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .post--tags .nav li a.text.capitalize:hover,
+        .post--cats .nav li a.text.capitalize:hover{
+            background: linear-gradient(135deg, #0959AB, #2C85DF) !important;
+            color: #ffffff !important;
+            box-shadow: 0 12px 24px rgba(9, 89, 171, 0.25);
+        }
+
 		.author-info,
 		.post-time{
 			margin: 0;

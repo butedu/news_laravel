@@ -21,11 +21,31 @@ class AdminPostsController extends Controller
         'body' => 'required',
     ];
 
-    public function index()
+    public function index(Request $request)
     {
+        $search = trim($request->input('search', ''));
+
+        $postsQuery = Post::with('category');
+
+        if ($search !== '') {
+            $postsQuery->where(function ($query) use ($search) {
+                $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('excerpt', 'like', "%{$search}%")
+                    ->orWhere('slug', 'like', "%{$search}%")
+                    ->orWhereHas('category', function ($nested) use ($search) {
+                        $nested->where('name', 'like', "%{$search}%");
+                    })
+                    ->orWhereHas('author', function ($nested) use ($search) {
+                        $nested->where('name', 'like', "%{$search}%");
+                    });
+            });
+        }
+
+        $posts = $postsQuery->orderByDesc('id')->paginate(20)->appends($request->only('search'));
+
         return view('admin_dashboard.posts.index', [
-            // 'posts' => Post::with('category')->get(),
-            'posts' => Post::with('category')->orderBy('id','ASC')->paginate(20),
+            'posts' => $posts,
+            'searchTerm' => $search,
         ]);
     }
 

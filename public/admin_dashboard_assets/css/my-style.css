@@ -128,6 +128,51 @@ a:hover {
     text-align: left;
 }
 
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 12px;
+    transition: all 0.2s ease;
+}
+
+.status-badge i {
+    font-size: 16px;
+}
+
+.status-badge--outlined {
+    background: rgba(15, 23, 42, 0.04);
+    border: 1px dashed rgba(15, 23, 42, 0.14);
+    color: #0f172a;
+}
+
+.status-badge--approved {
+    background: rgba(15, 118, 110, 0.12);
+    border-color: rgba(15, 118, 110, 0.35);
+    color: #0f766e;
+    box-shadow: 0 12px 22px rgba(15, 118, 110, 0.12);
+}
+
+.status-badge--pending {
+    background: rgba(245, 158, 11, 0.12);
+    border-color: rgba(245, 158, 11, 0.35);
+    color: #b45309;
+    box-shadow: 0 12px 22px rgba(245, 158, 11, 0.12);
+}
+
+.status-badge--outlined.status-badge--approved {
+    background: rgba(15, 118, 110, 0.08);
+}
+
+.status-badge--outlined.status-badge--pending {
+    background: rgba(245, 158, 11, 0.08);
+}
+
 .badge-primary,
 .bg-primary {
     background-color: var(--tdq-primary) !important;
