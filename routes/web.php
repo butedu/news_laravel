@@ -23,6 +23,7 @@ use App\Http\Controllers\AdminControllers\AdminRolesController;
 use App\Http\Controllers\AdminControllers\AdminUsersController;
 use App\Http\Controllers\AdminControllers\AdminContactsController;
 use App\Http\Controllers\AdminControllers\AdminSettingController;
+use App\Http\Controllers\AdminControllers\AdminNotificationController;
 
 
 use App\Http\Controllers\HomeController;
@@ -85,6 +86,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','check_permissions'])
 
     Route::get('contacts',[AdminContactsController::class, 'index'])->name('contacts');
     Route::delete('contacts/{contact}',[AdminContactsController::class, 'destroy'])->name('contacts.destroy');
+
+    Route::post('notifications/contacts/read-all', [AdminNotificationController::class, 'markAllContactsRead'])->name('notifications.contacts.read_all');
+    Route::post('notifications/contacts/{contact}/read', [AdminNotificationController::class, 'markContactRead'])->name('notifications.contacts.read');
+    Route::post('notifications/comments/read-all', [AdminNotificationController::class, 'markAllCommentsRead'])->name('notifications.comments.read_all');
+    Route::post('notifications/comments/{comment}/read', [AdminNotificationController::class, 'markCommentRead'])->name('notifications.comments.read');
 
     Route::get('about',[AdminSettingController::class, 'edit'])->name('setting.edit');
     Route::post('about',[AdminSettingController::class, 'update'])->name('setting.update');

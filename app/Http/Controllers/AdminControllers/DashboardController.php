@@ -65,15 +65,26 @@ class DashboardController extends Controller
         $pendingPosts = Post::where('approved', false)->count();
 
         $trafficLabels = [];
-        $trafficViews = [];
+        $trafficPosts = [];
         $trafficComments = [];
 
         for ($i = 6; $i >= 0; $i--) {
             $day = Carbon::today()->subDays($i);
             $trafficLabels[] = $day->format('d/m');
-            $trafficViews[] = (int) Post::whereDate('created_at', $day)->sum('views');
+            $trafficPosts[] = (int) Post::whereDate('created_at', $day)->count();
             $trafficComments[] = (int) Comment::whereDate('created_at', $day)->count();
         }
+
+        $postsWindowTotal = array_sum($trafficPosts);
+        $commentsWindowTotal = array_sum($trafficComments);
+        $dayCount = count($trafficLabels) ?: 1;
+
+        $avgPostsPerDay = round($postsWindowTotal / max($dayCount, 1), 1);
+        $avgCommentsPerDay = round($commentsWindowTotal / max($dayCount, 1), 1);
+
+        $peakIndex = $commentsWindowTotal > 0 ? array_search(max($trafficComments), $trafficComments, true) : null;
+        $peakEngagementDay = $peakIndex !== null ? $trafficLabels[$peakIndex] : null;
+        $peakEngagementComments = $peakIndex !== null ? $trafficComments[$peakIndex] : 0;
 
 
         return view('admin_dashboard.index',[
@@ -100,8 +111,12 @@ class DashboardController extends Controller
             'contactCount' => $contactCount,
             'pendingPosts' => $pendingPosts,
             'trafficLabels' => $trafficLabels,
-            'trafficViews' => $trafficViews,
+            'trafficPosts' => $trafficPosts,
             'trafficComments' => $trafficComments,
+            'avgPostsPerDay' => $avgPostsPerDay,
+            'avgCommentsPerDay' => $avgCommentsPerDay,
+            'peakEngagementDay' => $peakEngagementDay,
+            'peakEngagementComments' => $peakEngagementComments,
         ]);
     }
 

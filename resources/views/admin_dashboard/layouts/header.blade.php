@@ -1,12 +1,21 @@
 <?php
-    use App\Models\Post;
     use App\Models\Comment;
-    use App\Models\Tag;
-    $newComment = Comment::latest()->take(10)->get();
-    foreach ($newComment as $comment) {
-        $posts_comments[] = Post::where('id', $comment->post_id)->get();
-    }
+    use App\Models\Contact;
+    use Illuminate\Support\Str;
 
+    $recentNotifications = Contact::orderByDesc('created_at')->take(7)->get();
+    $unreadNotificationCount = Contact::where('is_read', false)->count();
+
+    $recentComments = Comment::with([
+        'post:id,slug,title',
+        'user:id,name',
+        'user.image'
+    ])->orderByDesc('created_at')->take(10)->get();
+    $unreviewedCommentCount = Comment::where('is_reviewed', false)->count();
+
+    $notificationBadge = $unreadNotificationCount > 99 ? '99+' : $unreadNotificationCount;
+    $commentBadge = $unreviewedCommentCount > 99 ? '99+' : $unreviewedCommentCount;
+    $commentPlaceholder = asset('storage/placeholders/user_placeholder.jpg');
 ?>
 
 <!--start header -->
@@ -66,151 +75,96 @@
                                 </div>
                             </li>
                             <li class="nav-item dropdown dropdown-large">
-                                <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <span class="alert-count">7</span>
+                                <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <span class="alert-count">{{ $notificationBadge }}</span>
                                     <i class='bx bx-bell'></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end">
-                                    <a href="javascript:;">
-                                        <div class="msg-header">
-                                            <p class="msg-header-title">Thông báo</p>
-                                            <p class="msg-header-clear ms-auto">Đánh dấu tất cả đã đọc</p>
-                                        </div>
-                                    </a>
-                                    <div class="header-notifications-list">
-                                        <a class="dropdown-item" href="javascript:;">
-                                            <div class="d-flex align-items-center">
-                                                <div class="notify bg-light-primary text-primary"><i class="bx bx-group"></i>
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <h6 class="msg-name">New Customers<span class="msg-time float-end">14 Sec
-                                                ago</span></h6>
-                                                    <p class="msg-info">5 new user registered</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a class="dropdown-item" href="javascript:;">
-                                            <div class="d-flex align-items-center">
-                                                <div class="notify bg-light-danger text-danger"><i class="bx bx-cart-alt"></i>
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <h6 class="msg-name">New Orders <span class="msg-time float-end">2 min
-                                                ago</span></h6>
-                                                    <p class="msg-info">You have recived new orders</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a class="dropdown-item" href="javascript:;">
-                                            <div class="d-flex align-items-center">
-                                                <div class="notify bg-light-success text-success"><i class="bx bx-file"></i>
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <h6 class="msg-name">24 PDF File<span class="msg-time float-end">19 min
-                                                ago</span></h6>
-                                                    <p class="msg-info">The pdf files generated</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a class="dropdown-item" href="javascript:;">
-                                            <div class="d-flex align-items-center">
-                                                <div class="notify bg-light-warning text-warning"><i class="bx bx-send"></i>
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <h6 class="msg-name">Time Response <span class="msg-time float-end">28 min
-                                                ago</span></h6>
-                                                    <p class="msg-info">5.1 min avarage time response</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a class="dropdown-item" href="javascript:;">
-                                            <div class="d-flex align-items-center">
-                                                <div class="notify bg-light-info text-info"><i class="bx bx-home-circle"></i>
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <h6 class="msg-name">New Product Approved <span
-                                                class="msg-time float-end">2 hrs ago</span></h6>
-                                                    <p class="msg-info">Your new product has approved</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a class="dropdown-item" href="javascript:;">
-                                            <div class="d-flex align-items-center">
-                                                <div class="notify bg-light-danger text-danger"><i class="bx bx-message-detail"></i>
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <h6 class="msg-name">New Comments <span class="msg-time float-end">4 hrs
-                                                ago</span></h6>
-                                                    <p class="msg-info">New customer comments recived</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a class="dropdown-item" href="javascript:;">
-                                            <div class="d-flex align-items-center">
-                                                <div class="notify bg-light-success text-success"><i class='bx bx-check-square'></i>
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <h6 class="msg-name">Your item is shipped <span class="msg-time float-end">5 hrs
-                                                ago</span></h6>
-                                                    <p class="msg-info">Successfully shipped your item</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a class="dropdown-item" href="javascript:;">
-                                            <div class="d-flex align-items-center">
-                                                <div class="notify bg-light-primary text-primary"><i class='bx bx-user-pin'></i>
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <h6 class="msg-name">New 24 authors<span class="msg-time float-end">1 day
-                                                ago</span></h6>
-                                                    <p class="msg-info">24 new authors joined last week</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a class="dropdown-item" href="javascript:;">
-                                            <div class="d-flex align-items-center">
-                                                <div class="notify bg-light-warning text-warning"><i class='bx bx-door-open'></i>
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <h6 class="msg-name">Defense Alerts <span class="msg-time float-end">2 weeks
-                                                ago</span></h6>
-                                                    <p class="msg-info">45% less alerts last 4 weeks</p>
-                                                </div>
-                                            </div>
-                                        </a>
+                                    <div class="msg-header">
+                                        <p class="msg-header-title mb-0">Thông báo</p>
+                                        <form method="POST" action="{{ route('admin.notifications.contacts.read_all') }}" class="ms-auto">
+                                            @csrf
+                                            <button type="submit" class="msg-header-clear ms-auto" {{ $unreadNotificationCount === 0 ? 'disabled' : '' }}>Đánh dấu tất cả đã đọc</button>
+                                        </form>
                                     </div>
-                                    <a href="javascript:;">
+                                    <div class="header-notifications-list">
+                                        @forelse ($recentNotifications as $notification)
+                                            @php
+                                                $isUnreadNotification = ! $notification->is_read;
+                                            @endphp
+                                            <form method="POST" action="{{ route('admin.notifications.contacts.read', $notification) }}" class="dropdown-item-form p-0">
+                                                @csrf
+                                                <input type="hidden" name="redirect_to" value="{{ route('admin.contacts') }}">
+                                                <button type="submit" class="dropdown-item w-100 px-0 py-0 border-0 bg-transparent">
+                                                    <div class="d-flex align-items-center px-3 py-2 {{ $isUnreadNotification ? 'notification-unread' : 'notification-read' }}">
+                                                        <div class="notify bg-light-primary text-primary"><i class="bx bx-envelope"></i>
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <h6 class="msg-name mb-1 {{ $isUnreadNotification ? 'fw-semibold' : '' }}">
+                                                                {{ trim(($notification->first_name ?? '') . ' ' . ($notification->last_name ?? '')) ?: ($notification->email ?? 'Khách') }}
+                                                                <span class="msg-time float-end">{{ optional($notification->created_at)->diffForHumans() }}</span>
+                                                            </h6>
+                                                            <p class="msg-info mb-0">{{ Str::limit($notification->subject ?? 'Không có tiêu đề', 60) }}</p>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </form>
+                                        @empty
+                                        <div class="dropdown-item text-center text-muted py-2">Không có thông báo mới</div>
+                                        @endforelse
+                                    </div>
+                                    <a href="{{ route('admin.contacts') }}">
                                         <div class="text-center msg-footer">Xem tất cả thông báo</div>
                                     </a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown dropdown-large">
-                                <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <span class="alert-count">10</span>
+                                <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <span class="alert-count">{{ $commentBadge }}</span>
                                     <i class='bx bx-comment'></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end">
-                                    <a href="javascript:;">
-                                        <div class="msg-header">
-                                            <p class="msg-header-title">Tin nhắn bình luận</p>
-                                            <p class="msg-header-clear ms-auto">Đánh dấu tất cả đã đọc</p>
-                                        </div>
-                                    </a>
+                                    <div class="msg-header">
+                                        <p class="msg-header-title mb-0">Tin nhắn bình luận</p>
+                                        <form method="POST" action="{{ route('admin.notifications.comments.read_all') }}" class="ms-auto">
+                                            @csrf
+                                            <button type="submit" class="msg-header-clear ms-auto" {{ $unreviewedCommentCount === 0 ? 'disabled' : '' }}>Đánh dấu tất cả đã đọc</button>
+                                        </form>
+                                    </div>
 
                                     <div class="header-message-list">
-                                        @for ($i = 0; $i < 10 ; $i++ )
-                                        <a class="dropdown-item" href="{{ route('posts.show', $posts_comments[$i][0] ) }}">
-                                            <div class="d-flex align-items-center">
-                                                <div class="user-online">
-                                                    <img class="img_admn--user img-avatar " width="50" height="50" style="border-radius: 50% ; margin: auto; background-size: cover ;  background-image: url({{ $posts_comments[$i][0]->comments()->orderBy('id','DESC')->take(1)->get()[0]->user->image ?  asset('storage/' . $posts_comments[$i][0]->comments()->orderBy('id','DESC')->take(1)->get()[0]->user->image->path) : asset('storage/placeholders/user_placeholder.jpg') }})" alt="">
-                                                </div>
-                                                <div style="margin-left: 10px;" class="flex-grow-1">
-                                                    <h6 class="msg-name">{{ $posts_comments[$i][0]->comments()->orderBy('id','DESC')->take(1)->get()[0]->user->name }}<span class="msg-time"> đã bình luận bài viết</span></h6>
-                                                    <h6 class="msg-name">{{ Str::limit($posts_comments[$i][0]->title,32) }}</h6>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        @endfor
-                                     
+                                        @forelse ($recentComments as $recentComment)
+                                            @php
+                                                $commentUser = $recentComment->user;
+                                                $commentPost = $recentComment->post;
+                                                $commentAvatar = $commentUser && $commentUser->image ? $commentUser->image->url : $commentPlaceholder;
+                                                $commentLink = $commentPost ? route('posts.show', $commentPost) : route('admin.comments.index');
+                                                $isUnreadComment = ! $recentComment->is_reviewed;
+                                            @endphp
+                                            <form method="POST" action="{{ route('admin.notifications.comments.read', $recentComment) }}" class="dropdown-item-form p-0">
+                                                @csrf
+                                                <input type="hidden" name="redirect_to" value="{{ $commentLink }}">
+                                                <button type="submit" class="dropdown-item w-100 px-0 py-0 border-0 bg-transparent">
+                                                    <div class="d-flex align-items-center px-3 py-2 {{ $isUnreadComment ? 'notification-unread' : 'notification-read' }}">
+                                                        <div class="user-online">
+                                                            <img class="img_admn--user img-avatar" width="50" height="50" style="border-radius: 50%; margin: auto; object-fit: cover; object-position: center;" src="{{ $commentAvatar }}" alt="Ảnh người dùng" onerror="this.onerror=null;this.src='{{ $commentPlaceholder }}';">
+                                                        </div>
+                                                        <div class="flex-grow-1 ms-2">
+                                                            <h6 class="msg-name mb-1 {{ $isUnreadComment ? 'fw-semibold' : '' }}">
+                                                                {{ $commentUser->name ?? 'Người dùng' }}
+                                                                <span class="msg-time float-end">{{ optional($recentComment->created_at)->diffForHumans() }}</span>
+                                                            </h6>
+                                                            <p class="msg-info mb-1">{{ Str::limit($recentComment->the_comment ?? '', 80) }}</p>
+                                                            @if ($commentPost)
+                                                                <p class="msg-info text-muted mb-0">{{ Str::limit($commentPost->title, 40) }}</p>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </form>
+                                        @empty
+                                            <div class="dropdown-item text-center text-muted py-2">Chưa có bình luận mới</div>
+                                        @endforelse
                                     </div>
-                                    <a href="javascript:;">
+                                    <a href="{{ route('admin.comments.index') }}">
                                         <div class="text-center msg-footer">Xem tất cả</div>
                                     </a>
                                 </div>

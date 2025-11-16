@@ -89,6 +89,45 @@ a:hover {
     color: #ffffff !important;
 }
 
+.header-notifications-list .notification-unread,
+.header-message-list .notification-unread {
+    background-color: rgba(44, 133, 223, 0.08);
+    border-radius: 12px;
+}
+
+.header-notifications-list .notification-read,
+.header-message-list .notification-read {
+    background-color: transparent;
+}
+
+.msg-header-clear[disabled] {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.msg-header-clear {
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-weight: 600;
+    color: var(--tdq-primary);
+    cursor: pointer;
+}
+
+.msg-header-clear:not([disabled]):hover {
+    color: var(--tdq-accent);
+    text-decoration: underline;
+}
+
+.dropdown-menu .dropdown-item-form {
+    margin: 0;
+}
+
+.dropdown-menu .dropdown-item-form .dropdown-item {
+    width: 100%;
+    text-align: left;
+}
+
 .badge-primary,
 .bg-primary {
     background-color: var(--tdq-primary) !important;
@@ -128,8 +167,8 @@ a:hover {
     }
 }
     .sidebar-hero {
-        margin: 0 18px 18px;
-        padding: 20px;
+        margin: 0 18px 1px;
+        padding: 15px;
         border-radius: 20px;
         position: relative;
         background: linear-gradient(140deg, rgba(44, 133, 223, 1) 0%, rgba(9, 89, 171, 1) 70%, rgba(9, 89, 171, 0.85) 100%);
@@ -176,7 +215,7 @@ a:hover {
 
     .sidebar-username {
         margin: 0;
-        font-size: px;
+        font-size: 15px;
         font-weight: 700;
         color: #ffffff;
     }

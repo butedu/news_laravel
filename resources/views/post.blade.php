@@ -10,9 +10,10 @@
 			font-size: 18px;
 		}
 
-		.text.capitalize{
-			text-transform: capitalize !important;
-		}
+        .text.capitalize{
+            text-transform: capitalize !important;
+            color: #ffffff !important;
+        }
 
 		.author-info,
 		.post-time{

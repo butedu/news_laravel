@@ -886,31 +886,37 @@
                             <div class="analytics-header">
                                 <div>
                                     <h5>Hiệu suất nội dung</h5>
-                                    <p>Lượt xem và bình luận theo ngày trong 7 ngày gần nhất</p>
+                                    <p>Bài viết được xuất bản và bình luận mới trong 7 ngày gần nhất</p>
                                 </div>
                                 <div class="analytics-actions">
                                     <a href="{{ route('admin.posts.index') }}" class="btn btn-sm">Xem chi tiết bài viết</a>
                                 </div>
                             </div>
                             <div class="analytics-legend">
-                                <span class="legend-pill"><i class='bx bxs-circle' style="color: #2c85df"></i> Lượt xem</span>
-                                <span class="legend-pill"><i class='bx bxs-circle' style="color: #e63270"></i> Bình luận</span>
+                                <span class="legend-pill"><i class='bx bxs-circle' style="color: #2c85df"></i> Bài viết mới</span>
+                                <span class="legend-pill"><i class='bx bxs-circle' style="color: #e63270"></i> Bình luận mới</span>
                             </div>
                             <div class="chart-wrapper">
                                 <canvas id="trafficChart"></canvas>
                             </div>
                             <div class="analytics-summary">
                                 <div class="summary-item">
-                                    <span>Lượt xem trung bình</span>
-                                    <strong>{{ number_format($avgViewsPerPost) }}</strong>
+                                    <span>Bài viết trung bình/ngày</span>
+                                    <strong>{{ number_format($avgPostsPerDay, 1) }}</strong>
                                 </div>
                                 <div class="summary-item">
-                                    <span>Bình luận / bài viết</span>
-                                    <strong>{{ number_format($avgCommentsPerPost, 1) }}</strong>
+                                    <span>Bình luận trung bình/ngày</span>
+                                    <strong>{{ number_format($avgCommentsPerDay, 1) }}</strong>
                                 </div>
                                 <div class="summary-item">
-                                    <span>Tỉ lệ tương tác</span>
-                                    <strong>{{ number_format($engagementRate, 1) }}%</strong>
+                                    <span>Ngày sôi động nhất</span>
+                                    <strong>
+                                        @if($peakEngagementDay)
+                                            {{ $peakEngagementDay }} • {{ number_format($peakEngagementComments) }} bình luận
+                                        @else
+                                            Đang cập nhật
+                                        @endif
+                                    </strong>
                                 </div>
                             </div>
                         </div>
@@ -1100,7 +1106,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var labels = @json($trafficLabels);
-            var viewsData = @json($trafficViews);
+            var postsData = @json($trafficPosts);
             var commentsData = @json($trafficComments);
 
             var canvas = document.getElementById('trafficChart');
@@ -1109,47 +1115,58 @@
             }
 
             var ctx = canvas.getContext('2d');
-            var viewGradient = ctx.createLinearGradient(0, 0, 0, canvas.height || 340);
-            viewGradient.addColorStop(0, '#2c85df');
-            viewGradient.addColorStop(1, '#0959ab');
+            var postGradient = ctx.createLinearGradient(0, 0, 0, canvas.height || 340);
+            postGradient.addColorStop(0, 'rgba(44, 133, 223, 0.35)');
+            postGradient.addColorStop(1, 'rgba(9, 89, 171, 0.05)');
 
             var commentGradient = ctx.createLinearGradient(0, 0, 0, canvas.height || 340);
-            commentGradient.addColorStop(0, '#e63270');
-            commentGradient.addColorStop(1, '#b4234c');
+            commentGradient.addColorStop(0, 'rgba(230, 50, 112, 0.32)');
+            commentGradient.addColorStop(1, 'rgba(180, 35, 76, 0.05)');
 
             new Chart(ctx, {
-                type: 'bar',
+                type: 'line',
                 data: {
                     labels: labels,
                     datasets: [
                         {
-                            label: 'Lượt xem',
-                            data: viewsData,
-                            backgroundColor: viewGradient,
-                            hoverBackgroundColor: viewGradient,
-                            borderWidth: 0,
+                            label: 'Bài viết mới',
+                            data: postsData,
+                            borderColor: '#2c85df',
+                            backgroundColor: postGradient,
+                            fill: true,
+                            tension: 0.35,
+                            pointRadius: 4,
+                            pointBackgroundColor: '#2c85df',
+                            pointBorderWidth: 0,
                         },
                         {
-                            label: 'Bình luận',
+                            label: 'Bình luận mới',
                             data: commentsData,
                             backgroundColor: commentGradient,
-                            hoverBackgroundColor: commentGradient,
-                            borderWidth: 0,
+                            borderColor: '#e63270',
+                            fill: true,
+                            tension: 0.35,
+                            pointRadius: 4,
+                            pointBackgroundColor: '#e63270',
+                            pointBorderWidth: 0,
                         },
                     ],
                 },
                 options: {
                     maintainAspectRatio: false,
-                    legend: {
-                        display: false,
-                    },
                     tooltips: {
+                        mode: 'index',
+                        intersect: false,
                         callbacks: {
                             label: function (tooltipItem, data) {
                                 var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
-                                return datasetLabel + ': ' + tooltipItem.yLabel.toLocaleString('vi-VN');
+                                var value = tooltipItem.yLabel || 0;
+                                return datasetLabel + ': ' + value.toLocaleString('vi-VN');
                             },
                         },
+                    },
+                    legend: {
+                        display: false,
                     },
                     scales: {
                         xAxes: [
@@ -1160,8 +1177,6 @@
                                 ticks: {
                                     fontFamily: 'Inter, sans-serif',
                                 },
-                                barPercentage: 0.6,
-                                categoryPercentage: 0.6,
                             },
                         ],
                         yAxes: [
@@ -1178,6 +1193,11 @@
                                 },
                             },
                         ],
+                    },
+                    elements: {
+                        line: {
+                            borderWidth: 3,
+                        }
                     },
                 },
             });
