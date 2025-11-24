@@ -276,10 +276,13 @@ $categoryFooter  = Category::where('name','!=','Chưa phân loại')->withCount(
 
 				<div class="news-updates--list" data-marquee="true">
 					<ul class="nav">
-						@foreach ($posts_new as $posts_new)
-							<li>
-								<h3 class="h3"><a href="{{ route('posts.show', $posts_new[0]) }}">{{ $posts_new[0]->title }}</a></h3>
-							</li>
+						@foreach ($posts_new as $freshPosts)
+							@php $headlinePost = $freshPosts[0] ?? null; @endphp
+							@if($headlinePost)
+								<li>
+									<h3 class="h3"><a href="{{ route('posts.show', $headlinePost) }}">{{ $headlinePost->title }}</a></h3>
+								</li>
+							@endif
 						@endforeach
 					</ul>
 				</div>

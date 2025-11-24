@@ -11,11 +11,33 @@ use App\Models\Tag;
 use App\Models\Comment;
 use App\Models\Image;
 
+/**
+ * @property int $id
+ * @property string $title
+ * @property string $slug
+ * @property string|null $excerpt
+ * @property string $body
+ * @property int $user_id
+ * @property int $category_id
+ * @property bool $approved
+ * @property int $views
+ */
 class Post extends Model
 {
     use HasFactory;
     
+    /**
+     * @var array<int, string>
+     */
     protected $fillable = ['title','slug', 'excerpt', 'body', 'user_id','category_id', 'approved'];
+
+    /**
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'approved' => 'boolean',
+        'views' => 'integer',
+    ];
     
     public function author() {
         return $this->belongsTo(User::class, 'user_id');
@@ -47,7 +69,8 @@ class Post extends Model
     }
 
     // scope functions
-    public function scopeApproved($query){
+    public function scopeApproved($query)
+    {
         return $query->where('approved', 1);
     }
 

@@ -100,15 +100,12 @@
             }
         }
 
-        .post--item.post--title-largest .post--info .title .h4{
-            font-size: 36px !important;
-            line-height: 1.24 !important;
-            font-weight: 800 !important;
-            color: #0f172a !important;
-            margin: 16px 0 8px !important;
+        .post--item.post--title-largest .post--info .title .h4,
+        .post--single .post--info .title .h4{
+            font-size: 36px;
         }
 
-        .post--item.post--title-largest .post--info .meta{
+        .post--info .meta{
             display: flex;
             flex-wrap: wrap;
             gap: 16px;
@@ -117,24 +114,25 @@
             margin-bottom: 12px;
         }
 
-        .post--item.post--title-largest .post--info .meta li{
+        .post--info .meta li{
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
 
-        .post--item.post--title-largest .post--info .meta li a,
-        .post--item.post--title-largest .post--info .meta li span{
+        .post--info .meta li a,
+        .post--info .meta li span{
             color: inherit !important;
             font-weight: 600;
         }
 
         @media (max-width: 767px){
-            .post--item.post--title-largest .post--info .title .h4{
-                font-size: 28px !important;
+            .post--item.post--title-largest .post--info .title .h4,
+            .post--single .post--info .title .h4{
+                font-size: 30px;
             }
 
-            .post--item.post--title-largest .post--info .meta{
+            .post--info .meta{
                 gap: 12px;
                 font-size: 14px;
             }
@@ -232,8 +230,8 @@
                             </div>
                             <div class="post-save-panel">
                                 <div class="post-save-panel__info">
-                                    <p class="post-save-panel__title">{{ __('Lưu bài viết để đọc lại sau') }}</p>
-                                    <p class="post-save-panel__desc">{{ __('Theo dõi những bài viết bạn quan tâm và truy cập nhanh trong hồ sơ cá nhân của bạn.') }}</p>
+                                    <p class="post-save-panel__title">Lưu bài viết để đọc lại sau</p>
+                                    <p class="post-save-panel__desc">Theo dõi những bài viết bạn quan tâm và truy cập nhanh trong hồ sơ cá nhân của bạn.</p>
                                 </div>
                                 <div class="post-save-panel__actions">
                                     @auth
@@ -241,18 +239,18 @@
                                             <form action="{{ route('posts.unsave', $post) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="post-save-btn is-active">{{ __('Bỏ lưu bài viết') }}</button>
+                                                <button type="submit" class="post-save-btn is-active">Bỏ lưu bài viết</button>
                                             </form>
                                         @else
                                             <form action="{{ route('posts.save', $post) }}" method="POST">
                                                 @csrf
-                                                <button type="submit" class="post-save-btn">{{ __('Lưu bài viết') }}</button>
+                                                <button type="submit" class="post-save-btn">Lưu bài viết</button>
                                             </form>
                                         @endif
                                     @else
-                                        <a class="post-save-btn" href="{{ route('login') }}">{{ __('Đăng nhập để lưu') }}</a>
+                                        <a class="post-save-btn" href="{{ route('login') }}">Đăng nhập để lưu</a>
                                     @endauth
-                                    <span class="post-save-count">{{ $post->saved_by_count ?? 0 }} {{ __('lượt lưu') }}</span>
+                                    <span class="post-save-count">{{ $post->saved_by_count ?? 0 }} lượt lưu</span>
                                 </div>
                             </div>
                         </div>
@@ -386,14 +384,14 @@
 							<!-- Post Items Start -->
                             <div class="post--items post--items-2" data-ajax-content="outer">
                                 <ul class="nav row" data-ajax-content="inner">
-                                    @foreach($postTheSame as $postTheSame)
+                                    @foreach($postTheSame as $relatedPost)
                                         <li class="col-sm-12 pbottom--30">
 											<!-- Post Item Start -->
 											<div class="post--item post--layout-3">
 												<div class="post--img">
-													<a href="{{ route('posts.show', $postTheSame) }}"
+                                        <a href="{{ route('posts.show', $relatedPost) }}"
 														class="thumb">
-                                                        <img src="{{ optional($postTheSame->image)->url ?? asset('images/placeholder.png') }}"
+                                                        <img src="{{ optional($relatedPost->image)->url ?? asset('images/placeholder.png') }}"
                                                             alt="">
                                                     </a>
 
@@ -401,18 +399,18 @@
 													
 														<div class="title">
 															<h3  class="h4">
-																<a href="{{ route('posts.show', $postTheSame) }}" class="btn-link">{{ $postTheSame->title }}</a>
+                                                <a href="{{ route('posts.show', $relatedPost) }}" class="btn-link">{{ $relatedPost->title }}</a>
 															</h3>
                                                             <p style="font-size:16px" >
-																<span >{{ $postTheSame->excerpt }}</span>
+                                                <span >{{ $relatedPost->excerpt }}</span>
                                                             </p>
 														</div>
 
                                                         <ul style="padding-top:10px" class="nav meta ">
-															<li><a href="javascript:;">{{ $postTheSame->author->name }}</a>
+                                            <li><a href="javascript:;">{{ $relatedPost->author->name }}</a>
 															</li>
-															<li><a href="javascript:;">{{ $postTheSame->created_at->locale('vi')->diffForHumans() }}</a></li>
-                                                            <li><a  href="javascript:;"><i class="fa fm fa-comments"></i>{{ count($postTheSame->comments) }}</a></li>
+                                            <li><a href="javascript:;">{{ $relatedPost->created_at->locale('vi')->diffForHumans() }}</a></li>
+                                                            <li><a  href="javascript:;"><i class="fa fm fa-comments"></i>{{ count($relatedPost->comments) }}</a></li>
 														</ul>
 													</div>
 												</div>
