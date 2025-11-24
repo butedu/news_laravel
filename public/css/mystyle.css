@@ -24,6 +24,15 @@ h6, body h6 { font-size: 1rem !important; line-height: 1.3 !important; }
 .h4, h4 { color: #c60000 !important; }
 .widget--title .h4 { color: #0959AB !important; }
 
+/* Emphasize article headline on post detail page */
+.post--item.post--single .post_title {
+    font-size: 2.5rem !important;
+    line-height: 1.15 !important;
+    font-weight: 700 !important;
+    color: #c60000 !important;
+    margin-bottom: 12px !important;
+}
+
 .header--menu-links, .header--menu-links.nav, .header--menu-links.nav.navbar-nav, .header--menu-links li {
     font-size: 14px !important;
 }

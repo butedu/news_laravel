@@ -221,7 +221,7 @@
                                 </ul>
 
                                 <div class="title">
-                                    <h2 class="post_title h4">{{ $post->title }}</h2>
+                                    <h2 class="post_title">{{ $post->title }}</h2>
                                 </div>
                             </div>
 
