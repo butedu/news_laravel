@@ -49,7 +49,7 @@
 									<div class="border border-3 p-4 rounded">
 										<div class="mb-3">
 											<label for="inputProductTitle" class="form-label">Tiêu đề bài viết</label>
-											<input type="text" value=' {{ old("title" ) }}' name="title" required  class="inputPostTitle form-control" id="inputProductTitle" placeholder="Nhập tiêu đề bài viết">
+											<input type="text" value='{{ old("title") }}' name="title" required  class="inputPostTitle form-control" id="inputProductTitle" placeholder="Nhập tiêu đề bài viết">
 										
 											@error('title')
 												<p class="text-danger">{{ $message }}</p>
@@ -58,7 +58,7 @@
 
 										<div class="mb-3">
 											<label for="inputProductTitle" class="form-label">Slug - liên kết</label>
-											<input type="text" value=' {{ old("slug" ) }}' name="slug" required  class="slugPost form-control" id="inputProductTitle" placeholder="Nhập slug">
+											<input type="text" value='{{ old("slug") }}' name="slug" class="slugPost form-control" id="inputProductTitle" placeholder="Nhập slug">
 										
 											@error('slug')
 												<p class="text-danger">{{ $message }}</p>
@@ -105,13 +105,20 @@
 
 										<!-- <input id="image-uploadify" name="thumbnail" type="file" id="file" accept="image/*" multiple> -->								
 										<div class="mb-3">
-											<label for="inputProductDescription" class="form-label">Hình ảnh bài viết</label>
-											<input id="thumbnail" require name="thumbnail" type="file" id="file">
-										
+											<label for="thumbnail" class="form-label">Hình ảnh bài viết</label>
+											<input id="thumbnail" name="thumbnail" type="file" class="form-control" accept="image/*">
+											<small class="text-muted">Chọn ảnh từ máy hoặc dán đường dẫn ảnh bên dưới.</small>
 											@error('thumbnail')
 												<p class="text-danger">{{ $message }}</p>
 											@enderror
-										
+										</div>
+
+										<div class="mb-3">
+											<label for="thumbnailUrl" class="form-label">Hoặc sử dụng URL ảnh</label>
+											<input id="thumbnailUrl" type="url" class="form-control" name="thumbnail_url" placeholder="https://example.com/thumbnail.jpg" value="{{ old('thumbnail_url') }}">
+											@error('thumbnail_url')
+												<p class="text-danger">{{ $message }}</p>
+											@enderror
 										</div>
 										
 										<div class="mb-3">

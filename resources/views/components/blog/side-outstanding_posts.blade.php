@@ -94,7 +94,7 @@ use App\Models\Category;
                 <li>
                     <div class="sidebar-post-item-simple featured">
                         <a href="{{ route('posts.show', $outstanding_post) }}" class="thumb-sm">
-                            <img src="{{ asset($outstanding_post->image ? 'storage/' .$outstanding_post->image->path : 'storage/placeholders/placeholder-image.png')}}" alt="">
+                            <img src="{{ optional($outstanding_post->image)->url ?? asset('storage/placeholders/placeholder-image.png') }}" alt="">
                         </a>
                         <div class="post-info">
                             <h4><a href="{{ route('posts.show', $outstanding_post) }}">{{ $outstanding_post->title}}</a></h4>
@@ -138,8 +138,8 @@ use App\Models\Category;
                         @foreach($outstanding_posts_hots as $outstanding_posts_hot)
                             <li>
                                 <div class="sidebar-post-item-simple featured">
-                                    <a href="{{ route('posts.show', $outstanding_posts_hot) }}" class="thumb-sm"><img
-                                            src="{{ asset($outstanding_posts_hot->image ? 'storage/' .$outstanding_posts_hot->image->path : 'storage/placeholders/placeholder-image.png')}}"
+                                        <a href="{{ route('posts.show', $outstanding_posts_hot) }}" class="thumb-sm"><img
+                                            src="{{ optional($outstanding_posts_hot->image)->url ?? asset('storage/placeholders/placeholder-image.png') }}"
                                             alt=""></a>
                                     <div class="post-info">
                                         <h4><a href="{{ route('posts.show', $outstanding_posts_hot) }}">{{ $outstanding_posts_hot->title}}</a></h4>
@@ -162,8 +162,8 @@ use App\Models\Category;
                         @foreach($outstanding_posts as $outstanding_post)
                             <li>
                                 <div class="sidebar-post-item-simple featured">
-                                    <a href="{{ route('posts.show', $outstanding_post) }}" class="thumb-sm"><img
-                                            src="{{ asset($outstanding_post->image ? 'storage/' .$outstanding_post->image->path : 'storage/placeholders/placeholder-image.png')}}"
+                                        <a href="{{ route('posts.show', $outstanding_post) }}" class="thumb-sm"><img
+                                            src="{{ optional($outstanding_post->image)->url ?? asset('storage/placeholders/placeholder-image.png') }}"
                                             alt=""></a>
                                     <div class="post-info">
                                         <h4><a href="{{ route('posts.show', $outstanding_post) }}">{{ $outstanding_post->title}}</a></h4>
@@ -186,8 +186,8 @@ use App\Models\Category;
                          @foreach($outstanding_posts_views as $outstanding_posts_view)
                             <li>
                                 <div class="sidebar-post-item-simple featured">
-                                    <a href="{{ route('posts.show', $outstanding_posts_view) }}" class="thumb-sm"><img
-                                            src="{{ asset($outstanding_posts_view->image ? 'storage/' .$outstanding_posts_view->image->path : 'storage/placeholders/placeholder-image.png')}}"
+                                        <a href="{{ route('posts.show', $outstanding_posts_view) }}" class="thumb-sm"><img
+                                            src="{{ optional($outstanding_posts_view->image)->url ?? asset('storage/placeholders/placeholder-image.png') }}"
                                             alt=""></a>
                                     <div class="post-info">
                                         <h4><a href="{{ route('posts.show', $outstanding_posts_view) }}">{{ $outstanding_posts_view->title}}</a></h4>

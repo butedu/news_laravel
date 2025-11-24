@@ -6,7 +6,7 @@
         @foreach($latest_posts as $post)
         <div class="sidebar-post-item-simple">
             <a href="{{ route('posts.show', $post) }}" class="thumb-sm">
-                <img src="{{ asset($post->image ? 'storage/' . $post->image->path : 'storage/placeholders/placeholder-image.png')}}" alt="{{ $post->title }}">
+                <img src="{{ optional($post->image)->url ?? asset('storage/placeholders/placeholder-image.png') }}" alt="{{ $post->title }}">
             </a>
             <div class="post-info">
                 <h4>

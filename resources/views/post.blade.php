@@ -228,7 +228,7 @@
 												<div class="post--img">
 													<a href="{{ route('posts.show', $postTheSame) }}"
 														class="thumb">
-                                                        <img src="{{ $postTheSame->image ? asset('storage/' .$postTheSame->image->path) : asset('images/placeholder.png')}}"
+                                                        <img src="{{ optional($postTheSame->image)->url ?? asset('images/placeholder.png') }}"
                                                             alt="">
                                                     </a>
 

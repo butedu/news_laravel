@@ -225,7 +225,7 @@ $categoryFooter  = Category::where('name','!=','Chưa phân loại')->withCount(
 				<!-- Header Search Form Start -->
 				<form method="POST" action="{{ route('search') }}" class="header--search-form float--right" data-form="validate">
 					@csrf	
-					<input type="search" name="search" placeholder="Search..." class="header--search-control form-control"
+					<input type="search" name="search" placeholder="Tìm kiếm..." class="header--search-control form-control"
                     required>
 	
 					<button type="submit" class="header--search-btn btn"><i

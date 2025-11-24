@@ -17,7 +17,7 @@
                     @if(isset($hero_posts[0]))
                     <div class="hero-main">
                         <a href="{{ route('posts.show', $hero_posts[0]) }}">
-                            <img src="{{ asset($hero_posts[0]->image ? 'storage/' . $hero_posts[0]->image->path : 'storage/placeholders/placeholder-image.png')}}" alt="{{ $hero_posts[0]->title }}">
+                            <img src="{{ optional($hero_posts[0]->image)->url ?? asset('storage/placeholders/placeholder-image.png') }}" alt="{{ $hero_posts[0]->title }}">
                             <div class="overlay">
                                 @if($hero_posts[0]->category)
                                 <span class="category-badge">{{ $hero_posts[0]->category->name }}</span>
@@ -42,7 +42,7 @@
                             @if(isset($hero_posts[$i]))
                             <div class="hero-sub-item">
                                 <a href="{{ route('posts.show', $hero_posts[$i]) }}">
-                                    <img src="{{ asset($hero_posts[$i]->image ? 'storage/' . $hero_posts[$i]->image->path : 'storage/placeholders/placeholder-image.png')}}" alt="{{ $hero_posts[$i]->title }}">
+                                    <img src="{{ optional($hero_posts[$i]->image)->url ?? asset('storage/placeholders/placeholder-image.png') }}" alt="{{ $hero_posts[$i]->title }}">
                                     <div class="overlay">
                                         @if($hero_posts[$i]->category)
                                         <span class="category-badge-sm">{{ $hero_posts[$i]->category->name }}</span>
@@ -90,7 +90,7 @@
                                     @if(isset($categoryPosts[0]))
                                     <article class="feature-main-post">
                                         <a href="{{ route('posts.show', $categoryPosts[0]) }}" class="thumb">
-                                            <img src="{{ asset($categoryPosts[0]->image ? 'storage/' . $categoryPosts[0]->image->path : 'storage/placeholders/placeholder-image.png')}}" alt="{{ $categoryPosts[0]->title }}">
+                                            <img src="{{ optional($categoryPosts[0]->image)->url ?? asset('storage/placeholders/placeholder-image.png') }}" alt="{{ $categoryPosts[0]->title }}">
                                         </a>
                                         <div class="post-content">
                                             <h3>
@@ -113,7 +113,7 @@
                                         @foreach($categoryPosts->slice(1, 4) as $post)
                                         <article class="feature-side-item">
                                             <a href="{{ route('posts.show', $post) }}" class="thumb-sm">
-                                                <img src="{{ asset($post->image ? 'storage/' . $post->image->path : 'storage/placeholders/placeholder-image.png')}}" alt="{{ $post->title }}">
+                                                <img src="{{ optional($post->image)->url ?? asset('storage/placeholders/placeholder-image.png') }}" alt="{{ $post->title }}">
                                             </a>
                                             <div class="post-content-sm">
                                                 <h4>
@@ -133,7 +133,7 @@
                                     @foreach($categoryPosts->take(6) as $post)
                                     <article class="post-item-grid">
                                         <a href="{{ route('posts.show', $post) }}" class="thumb">
-                                            <img src="{{ asset($post->image ? 'storage/' . $post->image->path : 'storage/placeholders/placeholder-image.png')}}" alt="{{ $post->title }}">
+                                            <img src="{{ optional($post->image)->url ?? asset('storage/placeholders/placeholder-image.png') }}" alt="{{ $post->title }}">
                                         </a>
                                         <div class="post-content">
                                             <h3>
@@ -154,7 +154,7 @@
                                     @foreach($categoryPosts->take(4) as $post)
                                     <article class="post-item-list">
                                         <a href="{{ route('posts.show', $post) }}" class="thumb">
-                                            <img src="{{ asset($post->image ? 'storage/' . $post->image->path : 'storage/placeholders/placeholder-image.png')}}" alt="{{ $post->title }}">
+                                            <img src="{{ optional($post->image)->url ?? asset('storage/placeholders/placeholder-image.png') }}" alt="{{ $post->title }}">
                                         </a>
                                         <div class="post-content">
                                             <h3>
@@ -189,7 +189,7 @@
                                 <div class="sidebar-post-item">
                                     <div class="rank-number">{{ $index + 1 }}</div>
                                     <a href="{{ route('posts.show', $post) }}" class="thumb-sm">
-                                        <img src="{{ asset($post->image ? 'storage/' . $post->image->path : 'storage/placeholders/placeholder-image.png')}}" alt="{{ $post->title }}">
+                                        <img src="{{ optional($post->image)->url ?? asset('storage/placeholders/placeholder-image.png') }}" alt="{{ $post->title }}">
                                     </a>
                                     <div class="post-info">
                                         <h4>
@@ -215,7 +215,7 @@
                                     @foreach($latest_posts as $post)
                                     <div class="sidebar-post-item-simple">
                                         <a href="{{ route('posts.show', $post) }}" class="thumb-xs">
-                                            <img src="{{ asset($post->image ? 'storage/' . $post->image->path : 'storage/placeholders/placeholder-image.png')}}" alt="{{ $post->title }}">
+                                            <img src="{{ optional($post->image)->url ?? asset('storage/placeholders/placeholder-image.png') }}" alt="{{ $post->title }}">
                                         </a>
                                         <div class="post-info">
                                             <h4>

@@ -56,7 +56,7 @@
 
 										<div class="mb-3">
 											<label for="inputProductTitle" class="form-label">Slug - liên kết</label>
-											<input type="text" value='{{ old("slug", $post->slug) }}' name="slug" required  class="slugPost form-control" id="inputProductTitle" placeholder="Nhập slug">
+											<input type="text" value='{{ old("slug", $post->slug) }}' name="slug" class="slugPost form-control" id="inputProductTitle" placeholder="Nhập slug">
 										
 											@error('slug')
 												<p class="text-danger">{{ $message }}</p>
@@ -105,23 +105,35 @@
 										<div class="mb-3">
                                             <div class="row">
 												<div class="col-md-5">
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <label for="inputProductDescription" class="form-label">Hình ảnh bài viết</label>
-															<input id="thumbnail" name="thumbnail" type="file" id="file" value="">
-                                                        
-                                                            @error('thumbnail')
-                                                                <p class="text-danger">{{ $message }}</p>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
+													<div class="card">
+														<div class="card-body">
+															<label for="thumbnail" class="form-label">Hình ảnh bài viết</label>
+															<input id="thumbnail" name="thumbnail" type="file" class="form-control" accept="image/*">
+															<small class="text-muted">Chọn ảnh từ máy hoặc dán đường dẫn ảnh bên dưới.</small>
+															@error('thumbnail')
+																<p class="text-danger">{{ $message }}</p>
+															@enderror
+														</div>
+													</div>
                                                 </div>
 
-                                                <div class="col-md-7 text-center">                                                
-													<img style="width: 100%; border-radius: 16px;" src="/storage/{{ $post->image ? $post->image->path : 'placeholders/placeholder-image.jpg' }}" class="img-responsive" alt="All thumbnail">
+												<div class="col-md-7 text-center">
+													@php
+														$currentImageUrl = $post->image ? $post->image->url : asset('storage/placeholders/placeholder-image.jpg');
+														$currentRemoteUrl = $post->image && preg_match('/^https?:\/\//', $post->image->path) ? $post->image->path : '';
+													@endphp
+													<img style="width: 100%; border-radius: 16px;" src="{{ $currentImageUrl }}" class="img-responsive" alt="All thumbnail">
 												</div>
                                             </div>
 										
+											<div class="mt-3">
+												<label for="thumbnailUrl" class="form-label">Hoặc sử dụng URL ảnh</label>
+												<input id="thumbnailUrl" type="url" class="form-control" name="thumbnail_url" placeholder="https://example.com/thumbnail.jpg" value="{{ old('thumbnail_url', $currentRemoteUrl) }}">
+												@error('thumbnail_url')
+													<p class="text-danger">{{ $message }}</p>
+												@enderror
+											</div>
+
 										</div>
 										
 										<div class="mb-3">

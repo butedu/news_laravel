@@ -37,7 +37,7 @@
                                                                     <div class="post--img">
                                                                         <a href="{{ route('posts.show', $hotPosts_category[$j][$i] ) }}"
                                                                             class="thumb"><img
-                                                                                src="{{ asset($hotPosts_category[$j][$i]->image ? 'storage/' . $hotPosts_category[$j][$i]->image->path : 'storage/placeholders/placeholder-image.png'  )}}"
+                                                                                src="{{ optional($hotPosts_category[$j][$i]->image)->url ?? asset('storage/placeholders/placeholder-image.png') }}"
                                                                                 alt=""></a>
                                                                         <a href="{{ route('categories.show', $hotPosts_category[$j][$i]->category) }}"
                                                                             class="cat">{{ $hotPosts_category[$j][$i]->category->name }}</a>
