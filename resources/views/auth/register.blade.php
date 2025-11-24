@@ -32,13 +32,19 @@
 
             <div class="auth-field">
                 <x-label for="password" :value="__('Mật khẩu mới')" class="auth-label" />
-                <x-input id="password" class="auth-input" type="password" name="password" required autocomplete="new-password" placeholder="Ít nhất 8 ký tự" />
+                <div class="auth-password-field">
+                    <x-input id="password" class="auth-input" type="password" name="password" required autocomplete="new-password" placeholder="Ít nhất 8 ký tự" data-password-toggle="input" />
+                    <button type="button" class="auth-password-toggle" data-password-toggle="button" aria-label="{{ __('Hiển thị mật khẩu') }}" aria-pressed="false">{{ __('Hiện') }}</button>
+                </div>
                 <p class="auth-helper">{{ __('Sử dụng tối thiểu 8 ký tự, kết hợp chữ hoa, chữ thường và số để tăng độ an toàn.') }}</p>
             </div>
 
             <div class="auth-field">
                 <x-label for="password_confirmation" :value="__('Xác nhận mật khẩu')" class="auth-label" />
-                <x-input id="password_confirmation" class="auth-input" type="password" name="password_confirmation" required placeholder="Nhập lại mật khẩu" />
+                <div class="auth-password-field">
+                    <x-input id="password_confirmation" class="auth-input" type="password" name="password_confirmation" required placeholder="Nhập lại mật khẩu" data-password-toggle="input" />
+                    <button type="button" class="auth-password-toggle" data-password-toggle="button" aria-label="{{ __('Hiển thị mật khẩu') }}" aria-pressed="false">{{ __('Hiện') }}</button>
+                </div>
             </div>
 
             <x-button class="auth-button">

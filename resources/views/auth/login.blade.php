@@ -29,7 +29,10 @@
 
             <div class="auth-field">
                 <x-label for="password" :value="__('Mật khẩu')" class="auth-label" />
-                <x-input id="password" class="auth-input" type="password" name="password" required autocomplete="current-password" placeholder="********" />
+                <div class="auth-password-field">
+                    <x-input id="password" class="auth-input" type="password" name="password" required autocomplete="current-password" placeholder="********" data-password-toggle="input" />
+                    <button type="button" class="auth-password-toggle" data-password-toggle="button" aria-label="{{ __('Hiển thị mật khẩu') }}" aria-pressed="false">{{ __('Hiện') }}</button>
+                </div>
             </div>
 
             <div class="auth-meta">

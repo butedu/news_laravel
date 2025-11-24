@@ -21,5 +21,29 @@
     </head>
     <body class="auth-body font-sans antialiased">
         {{ $slot }}
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('[data-password-toggle="button"]').forEach(function (button) {
+                    var field = button.closest('.auth-password-field');
+                    if (!field) {
+                        return;
+                    }
+
+                    var input = field.querySelector('[data-password-toggle="input"]');
+                    if (!input) {
+                        return;
+                    }
+
+                    button.addEventListener('click', function () {
+                        var isHidden = input.type === 'password';
+                        input.type = isHidden ? 'text' : 'password';
+                        button.textContent = isHidden ? 'Ẩn' : 'Hiện';
+                        button.setAttribute('aria-pressed', isHidden ? 'true' : 'false');
+                        button.classList.toggle('is-active', isHidden);
+                    });
+                });
+            });
+        </script>
     </body>
 </html>
