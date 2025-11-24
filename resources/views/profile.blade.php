@@ -282,7 +282,14 @@ $posts_new[3] = Post::latest()->approved()
                                             @endif
                                             <div class="profile-post-card__footer">
                                                 <span>{{ $savedPost->pivot->created_at?->locale('vi')->diffForHumans() }}</span>
-                                                <a class="profile-post-card__link" href="{{ route('posts.show', $savedPost) }}">Đọc ngay</a>
+                                                <div class="profile-post-card__actions">
+                                                    <form class="profile-post-card__unsave-form" action="{{ route('posts.unsave', $savedPost) }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="profile-post-card__unsave">Bỏ lưu</button>
+                                                    </form>
+                                                    <a class="profile-post-card__link" href="{{ route('posts.show', $savedPost) }}">Đọc ngay</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </article>
