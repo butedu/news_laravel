@@ -252,7 +252,7 @@ use App\Models\Category;
                                 <li>
                                     <div class="comment--item clearfix">
                                         <div class="comment--img float--left">
-                                            <img style="border-radius: 50%; margin: auto; background-size: cover ;  width: 68px; height: 68px;   background-image: url({{ auth()->user()->image ?  asset('storage/' . auth()->user()->image->path) : asset('storage/placeholders/user_placeholder.jpg') }})"  alt="">
+                                            <img src="{{ optional(auth()->user()->image)->url ?? asset('storage/placeholders/user_placeholder.jpg') }}" style="border-radius: 50%; margin: auto; width: 68px; height: 68px; object-fit: cover; object-position: center;"  alt="Ảnh đại diện" onerror="this.onerror=null;this.src='{{ asset('storage/placeholders/user_placeholder.jpg') }}';">
                                         </div>
                                         <div class="comment--info">
                                             <div class="comment--header clearfix">

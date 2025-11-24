@@ -33,7 +33,7 @@ function checkPermission($name) {
 
     @php
         $user = auth()->user();
-        $avatar = $user && $user->image ? asset('storage/' . $user->image->path) : asset('storage/placeholders/user_placeholder.jpg');
+            $avatar = $user && $user->image ? $user->image->url : asset('storage/placeholders/user_placeholder.jpg');
         $roleName = $user && $user->role ? ($user->role->display_name ?? ucfirst($user->role->name)) : 'Quản trị viên';
         $today = \Carbon\Carbon::now('Asia/Ho_Chi_Minh')->locale('vi');
         $hasContentManagement = checkPermission('admin.posts.index') || checkPermission('admin.posts.create') || checkPermission('admin.categories.index') || checkPermission('admin.categories.create') || checkPermission('admin.tags.index') || checkPermission('admin.comments.index') || checkPermission('admin.comments.create');

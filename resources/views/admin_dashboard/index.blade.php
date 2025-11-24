@@ -1024,7 +1024,7 @@
                                 @forelse($recentComments as $comment)
                                     @php
                                         $commentUser = $comment->user;
-                                        $avatar = $commentUser && $commentUser->image ? asset('storage/' . $commentUser->image->path) : asset('storage/placeholders/user_placeholder.jpg');
+                                        $avatar = $commentUser && $commentUser->image ? $commentUser->image->url : asset('storage/placeholders/user_placeholder.jpg');
                                     @endphp
                                     <div class="activity-item">
                                         <div class="activity-avatar" style="background-image: url('{{ $avatar }}');"></div>
@@ -1054,7 +1054,7 @@
                             <div class="author-list">
                                 @forelse($topAuthors as $author)
                                     @php
-                                        $avatar = $author->image ? asset('storage/' . $author->image->path) : asset('storage/placeholders/user_placeholder.jpg');
+                                        $avatar = $author->image ? $author->image->url : asset('storage/placeholders/user_placeholder.jpg');
                                     @endphp
                                     <div class="author-item">
                                         <div class="author-meta">

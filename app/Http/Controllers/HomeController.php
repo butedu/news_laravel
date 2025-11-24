@@ -312,7 +312,35 @@ class HomeController extends Controller
     }
 
     public function profile(){
-        return view('profile');
+        if (!auth()->check()) {
+            return view('profile');
+        }
+
+        $user = auth()->user()->load('image');
+
+        $savedPosts = $user->savedPosts()
+            ->with(['category', 'image'])
+            ->latest('post_saves.created_at')
+            ->get();
+
+        $recentComments = $user->comments()
+            ->with(['post.category', 'post.image'])
+            ->latest()
+            ->get();
+
+        $commentedPosts = $recentComments
+            ->map(function ($comment) {
+                $post = $comment->post;
+                if ($post) {
+                    $post->setAttribute('latest_user_comment_at', $comment->created_at);
+                }
+                return $post;
+            })
+            ->filter()
+            ->unique('id')
+            ->values();
+
+        return view('profile', compact('user', 'savedPosts', 'commentedPosts'));
     }
 
     private $rules = [

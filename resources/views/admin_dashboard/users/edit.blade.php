@@ -78,7 +78,10 @@
 											</div>
 											<div class="col-md-4">
 												<div class="user_image">
-													<img class="img_admn--user img-avatar" width="220px" height="220px" style="border-radius: 50%; margin: auto; background-size: cover ;  background-image: url({{ $user->image ?  asset('storage/' . $user->image->path) : asset('storage/placeholders/user_placeholder.jpg') }})" alt="">
+													@php
+														$avatar = $user->image ? $user->image->url : asset('storage/placeholders/user_placeholder.jpg');
+													@endphp
+													<img class="img_admn--user img-avatar" width="220" height="220" style="border-radius: 50%; margin: auto; object-fit: cover; object-position: center;" src="{{ $avatar }}" alt="Ảnh đại diện" onerror="this.onerror=null;this.src='{{ asset('storage/placeholders/user_placeholder.jpg') }}';">
 												</div>
 											</div>
 										</div>

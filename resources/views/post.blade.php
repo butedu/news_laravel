@@ -10,6 +10,136 @@
 			font-size: 18px;
 		}
 
+        .post-save-panel{
+            margin-top: 32px;
+            padding: 24px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #f1f5f9, #e0f2fe);
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .post-save-panel__info{
+            max-width: 520px;
+        }
+
+        .post-save-panel__title{
+            font-weight: 700;
+            font-size: 20px;
+            margin-bottom: 6px;
+            color: #0f172a;
+        }
+
+        .post-save-panel__desc{
+            margin: 0;
+            font-size: 15px;
+            color: #475569;
+        }
+
+        .post-save-panel__actions{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .post-save-panel__actions form{
+            margin: 0;
+        }
+
+        .post-save-btn{
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 999px;
+            border: 1px solid rgba(15, 23, 42, 0.12);
+            background: #0f172a;
+            color: #fff;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+            text-decoration: none;
+        }
+
+        .post-save-btn:hover{
+            background: linear-gradient(135deg, #0959AB, #2C85DF);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 12px 24px rgba(9, 89, 171, 0.2);
+        }
+
+        .post-save-btn.is-active{
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .post-save-count{
+            font-size: 14px;
+            color: #475569;
+        }
+
+        @media (max-width: 767px){
+            .post-save-panel{
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .post-save-panel__actions{
+                width: 100%;
+                align-items: stretch;
+            }
+
+            .post-save-btn{
+                justify-content: center;
+                width: 100%;
+            }
+        }
+
+        .post--item.post--title-largest .post--info .title .h4{
+            font-size: 36px !important;
+            line-height: 1.24 !important;
+            font-weight: 800 !important;
+            color: #0f172a !important;
+            margin: 16px 0 8px !important;
+        }
+
+        .post--item.post--title-largest .post--info .meta{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 15px;
+            color: #475569;
+            margin-bottom: 12px;
+        }
+
+        .post--item.post--title-largest .post--info .meta li{
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .post--item.post--title-largest .post--info .meta li a,
+        .post--item.post--title-largest .post--info .meta li span{
+            color: inherit !important;
+            font-weight: 600;
+        }
+
+        @media (max-width: 767px){
+            .post--item.post--title-largest .post--info .title .h4{
+                font-size: 28px !important;
+            }
+
+            .post--item.post--title-largest .post--info .meta{
+                gap: 12px;
+                font-size: 14px;
+            }
+        }
+
         .text.capitalize{
             text-transform: capitalize !important;
             color: #ffffff !important;
@@ -44,6 +174,13 @@
 @endsection
 
 @section('content')
+
+@php
+    $flashStatuses = ['success','info','warning','error'];
+@endphp
+@foreach($flashStatuses as $flashStatus)
+    <x-blog.message :status="$flashStatus" />
+@endforeach
 
 <div class="global-message info d-none"></div>
 
@@ -89,8 +226,34 @@
                                     <h2 class="post_title h4">{{ $post->title }}</h2>
                                 </div>
                             </div>
+
                             <div class="post--body post--content">
 								{!! $post->body !!}
+                            </div>
+                            <div class="post-save-panel">
+                                <div class="post-save-panel__info">
+                                    <p class="post-save-panel__title">{{ __('Lưu bài viết để đọc lại sau') }}</p>
+                                    <p class="post-save-panel__desc">{{ __('Theo dõi những bài viết bạn quan tâm và truy cập nhanh trong hồ sơ cá nhân của bạn.') }}</p>
+                                </div>
+                                <div class="post-save-panel__actions">
+                                    @auth
+                                        @if($isSaved)
+                                            <form action="{{ route('posts.unsave', $post) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="post-save-btn is-active">{{ __('Bỏ lưu bài viết') }}</button>
+                                            </form>
+                                        @else
+                                            <form action="{{ route('posts.save', $post) }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="post-save-btn">{{ __('Lưu bài viết') }}</button>
+                                            </form>
+                                        @endif
+                                    @else
+                                        <a class="post-save-btn" href="{{ route('login') }}">{{ __('Đăng nhập để lưu') }}</a>
+                                    @endauth
+                                    <span class="post-save-count">{{ $post->saved_by_count ?? 0 }} {{ __('lượt lưu') }}</span>
+                                </div>
                             </div>
                         </div>
                         <!-- Post Item End -->
@@ -147,9 +310,12 @@
                                 <li>
                                     <!-- Comment Item Start -->
                                    <div class="comment--item clearfix">
-										<div class="comment--img float--left">
-                                            <img style="border-radius: 50%; margin: auto; background-size: cover ;  width: 68px; height: 68px;   background-image: url({{ $comment->user->image ?  asset('storage/' . $comment->user->image->path) : asset('storage/placeholders/user_placeholder.jpg') }})"  alt="">
-										</div>
+                                        <div class="comment--img float--left">
+                                            @php
+                                                $commentAvatar = optional($comment->user->image)->url ?? asset('storage/placeholders/user_placeholder.jpg');
+                                            @endphp
+                                            <img src="{{ $commentAvatar }}" style="border-radius: 50%; margin: auto; width: 68px; height: 68px; object-fit: cover; object-position: center;"  alt="Ảnh đại diện" onerror="this.onerror=null;this.src='{{ asset('storage/placeholders/user_placeholder.jpg') }}';">
+                                        </div>
 										<div class="comment--info">
 											<div class="comment--header clearfix">
 												<p class="name">{{ $comment->user->name }}</p>
@@ -181,7 +347,6 @@
                             <!-- Post Items Title End -->
 							
                             <div class="comment-respond">
-								<x-blog.message :status="'success'"/>
 								@auth	
 								<!-- <form method="POST" action="{{ route('posts.add_comment', $post )}}"> -->
                                 <form onsubmit="return false;" autocomplete="off" method="POST" >
@@ -298,14 +463,3 @@
 
 @endsection
 
-@section('custom_js')
-
-<script>
-	setTimeout(() => {
-		$(".global-message").fadeOut();
-	}, 5000)
-</script>
-
-
-
-@endsection

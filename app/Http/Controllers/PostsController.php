@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Validator;
 class PostsController extends Controller
 {
     public function show(Post $post){
+        $post->load(['comments.user.image', 'tags', 'category', 'author', 'image']);
+        $post->loadCount('savedBy');
+
+        $isSaved = auth()->check() ? auth()->user()->hasSavedPost($post) : false;
         
         $recent_posts = Post::latest()->take(5)->get();
         
@@ -59,6 +63,7 @@ class PostsController extends Controller
             'posts_new' => $posts_new,
             'postTheSame' =>  $postTheSame, // Bài viết tương tự
             'outstanding_posts' => $outstanding_posts, // bài viết xu hướng
+            'isSaved' => $isSaved,
         ]);
     }
 

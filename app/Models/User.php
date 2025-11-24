@@ -58,4 +58,14 @@ class User extends Authenticatable
     public function categories() {
         return $this->hasMany(Category::class);
     } 
+
+    public function savedPosts()
+    {
+        return $this->belongsToMany(Post::class, 'post_saves')->withTimestamps();
+    }
+
+    public function hasSavedPost(Post $post): bool
+    {
+        return $this->savedPosts()->where('post_id', $post->id)->exists();
+    }
 }

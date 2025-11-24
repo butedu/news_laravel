@@ -41,6 +41,11 @@ class Post extends Model
         return $this->morphOne(Image::class, 'imageable');
     } 
 
+    public function savedBy()
+    {
+        return $this->belongsToMany(User::class, 'post_saves')->withTimestamps();
+    }
+
     // scope functions
     public function scopeApproved($query){
         return $query->where('approved', 1);

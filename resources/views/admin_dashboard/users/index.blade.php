@@ -62,7 +62,10 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <img class="img_admn--user img-avatar" width="60" height="60" style="margin: auto; background-size: cover ;  background-image: url({{ $user->image ?  asset('storage/' . $user->image->path) : asset('storage/placeholders/user_placeholder.jpg') }})" alt="">
+                                    @php
+                                        $avatar = $user->image ? $user->image->url : asset('storage/placeholders/user_placeholder.jpg');
+                                    @endphp
+                                    <img class="img_admn--user img-avatar" width="60" height="60" style="margin: auto; object-fit: cover; object-position: center;" src="{{ $avatar }}" alt="Ảnh đại diện" onerror="this.onerror=null;this.src='{{ asset('storage/placeholders/user_placeholder.jpg') }}';">
                                 </td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>

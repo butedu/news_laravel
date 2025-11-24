@@ -33,6 +33,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\PostSaveController;
 
 
 // Điều hướng cho User
@@ -52,6 +53,11 @@ Route::get('/xem-nhieu-nhat', [HomeController::class,'viewPost'])->name('viewPos
 Route::get('/bai-vet/{post:slug}', [PostsController::class, 'show'])->name('posts.show');
 Route::post('/bai-viet/{post:slug}', [PostsController::class, 'addComment'])->name('posts.add_comment');
 Route::post('/binh-luan', [PostsController::class, 'addCommentUser'])->name('posts.addCommentUser');
+
+Route::middleware('auth')->group(function () {
+    Route::post('/bai-viet/{post:slug}/luu', [PostSaveController::class, 'store'])->name('posts.save');
+    Route::delete('/bai-viet/{post:slug}/luu', [PostSaveController::class, 'destroy'])->name('posts.unsave');
+});
 
 
 Route::get('/gioi-thieu', AboutController::class)->name('about');
