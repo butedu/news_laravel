@@ -27,7 +27,20 @@ class NewsletterPostMail extends Mailable implements ShouldQueue
     {
         $subject = 'Tin mới từ ' . config('app.name') . ': ' . Str::limit($this->post->title, 80);
 
+        $postUrl = $this->buildPostUrl();
+
         return $this->subject($subject)
-            ->view('emails.newsletter.new-post');
+            ->view('emails.newsletter.new-post')
+            ->with([
+                'postUrl' => $postUrl,
+            ]);
+    }
+
+    protected function buildPostUrl(): string
+    {
+        $baseUrl = rtrim(config('newsletter.base_url', config('app.url')), '/');
+        $relativePath = route('posts.show', $this->post, false);
+
+        return $baseUrl . $relativePath;
     }
 }

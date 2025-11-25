@@ -15,7 +15,7 @@
                         <h2 style="font-size: 22px; margin-bottom: 12px; color: #0e73b8;">{{ $post->title }}</h2>
                         <p style="font-size: 15px; line-height: 1.6;">{{ $post->excerpt }}</p>
                         <p style="margin-top: 20px;">
-                            <a href="{{ route('posts.show', $post) }}" style="display: inline-block; padding: 12px 20px; background-color: #0e73b8; color: #ffffff; text-decoration: none; border-radius: 4px;">Đọc ngay</a>
+                            <a href="{{ $postUrl ?? route('posts.show', $post) }}" style="display: inline-block; padding: 12px 20px; background-color: #0e73b8; color: #ffffff; text-decoration: none; border-radius: 4px;">Đọc ngay</a>
                         </p>
                     </td>
                 </tr>
