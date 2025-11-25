@@ -28,33 +28,43 @@
             <div class="card">
 					<div class="card-body">
 						<div class="table-responsive">
-							<table id="example2" class="table table-striped table-bordered">
+							<table id="example2" class="table table-striped table-bordered align-middle">
 								<thead>
 									<tr>
-										<th>Họ và Tên</th>
+										<th>Độc giả</th>
 										<th>Email</th>
 										<th>Tiêu đề</th>
-										<th>Nội dung</th>
+										<th>Ngày gửi</th>
+										<th>Trạng thái</th>
 										<th>Chức năng</th>
 									</tr>
 								</thead>
 								<tbody>
                                     @foreach($contacts as $contact)
 									<tr>
-										<td>{{ $contact->first_name }} {{ $contact->last_name }}</td>
-										<td>{{ $contact->email }}</td>
-										<td>{{ $contact->first_subject }}</td>
-										<td>{{ $contact->message }}</td>
+										<td>
+											<strong>{{ $contact->first_name }} {{ $contact->last_name }}</strong>
+										</td>
+										<td><a href="mailto:{{ $contact->email }}">{{ $contact->email }}</a></td>
+										<td>{{ $contact->subject }}</td>
+										<td>{{ $contact->created_at?->locale('vi')->translatedFormat('d/m/Y H:i') }}</td>
+										<td>
+											@if($contact->last_replied_at)
+												<span class="badge bg-success">Đã phản hồi</span>
+											@else
+												<span class="badge bg-warning text-dark">Chưa phản hồi</span>
+											@endif
+										</td>
                                         <td>
-                                        <div class="d-flex order-actions">
-                                            <a href="#" onclick="event.preventDefault(); document.querySelector('#delete_form_{{  $contact->id }}').submit();" class="ms-3"><i class='bx bxs-trash'></i></a>
+										<div class="d-flex gap-2">
+											<a href="{{ route('admin.contacts.show', $contact) }}" class="btn btn-sm btn-outline-primary"><i class='bx bx-show-alt'></i> Xem</a>
+											<a href="#" onclick="event.preventDefault(); document.querySelector('#delete_form_{{  $contact->id }}').submit();" class="btn btn-sm btn-outline-danger"><i class='bx bxs-trash'></i></a>
 
-                                            <form method="post" action="{{ route('admin.contacts.destroy',  $contact) }}" id="delete_form_{{  $contact->id }}">
-                                                @csrf
-                                                @method('DELETE')
-                                            </form>
-                                        
-                                        </div>
+											<form method="post" action="{{ route('admin.contacts.destroy',  $contact) }}" id="delete_form_{{  $contact->id }}" class="d-none">
+												@csrf
+												@method('DELETE')
+											</form>
+										</div>
                                         </td>
 									</tr>
                                    

@@ -13,6 +13,12 @@ Tiêu đề: {{ $subject }}
 <br>
 Nội dung liên hệ: {{ $message }}
 
+@if(!empty($hasAttachment) && $hasAttachment && !empty($attachmentUrl))
+
+Tệp đính kèm: [{{ $attachmentName ?? 'Xem hình ảnh' }}]({{ $attachmentUrl }})
+
+@endif
+
 @component('mail::button', ['url' => ''])
 Xem tin nhắn
 @endcomponent

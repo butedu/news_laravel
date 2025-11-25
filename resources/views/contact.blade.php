@@ -16,13 +16,126 @@
 .global-message {
 	max-width: 1120px;
 	margin: 0 auto 24px;
-	padding: 16px 20px;
-	border-radius: 14px;
-	box-shadow: 0 16px 32px rgba(12, 37, 83, 0.08);
-	background: rgba(44, 133, 223, 0.1);
+	padding: 18px 22px;
+	border-radius: 18px;
+	box-shadow: 0 18px 44px rgba(9, 30, 66, 0.12);
+	background: #ffffff;
 	color: var(--contact-navy);
-	border: 1px solid rgba(44, 133, 223, 0.3);
-	font-weight: 500;
+	border-left: 6px solid var(--contact-primary);
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	font-size: 16px;
+	line-height: 1.6;
+	transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.3s ease;
+}
+
+.global-message:not(.d-none) {
+	transform: translateY(0);
+}
+
+.global-message--success {
+	border-left-color: #0f9d58;
+	background: linear-gradient(135deg, rgba(15, 157, 88, 0.12) 0%, rgba(44, 133, 223, 0.05) 100%);
+	color: #0c5132;
+}
+
+.global-message--error {
+	border-left-color: #d93025;
+	background: linear-gradient(135deg, rgba(217, 48, 37, 0.12) 0%, rgba(255, 238, 238, 0.7) 100%);
+	color: #7f1d1d;
+}
+
+.global-message--info {
+	border-left-color: var(--contact-primary-dark);
+	background: linear-gradient(135deg, rgba(9, 89, 171, 0.15) 0%, rgba(44, 133, 223, 0.05) 100%);
+	color: var(--contact-navy);
+}
+.contact-uploader {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 18px;
+	padding: 18px 22px;
+	border-radius: 18px;
+	background: #f8fbff;
+	border: 1px dashed rgba(44, 133, 223, 0.35);
+	cursor: pointer;
+	transition: border 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.contact-uploader:hover,
+.contact-uploader:focus-within,
+.contact-uploader.is-active {
+	border-color: var(--contact-primary);
+	background: rgba(44, 133, 223, 0.12);
+	box-shadow: 0 18px 36px rgba(15, 23, 42, 0.08);
+}
+
+.contact-uploader__icon {
+	width: 58px;
+	height: 58px;
+	border-radius: 16px;
+	background: rgba(9, 89, 171, 0.14);
+	display: grid;
+	place-items: center;
+	color: var(--contact-primary-dark);
+	font-size: 24px;
+}
+
+.contact-uploader__icon svg {
+	width: 28px;
+	height: 28px;
+}
+
+.contact-uploader__content {
+	flex: 1;
+}
+
+.contact-uploader__title {
+	margin: 0;
+	font-weight: 600;
+	color: var(--contact-navy);
+	font-size: 16px;
+}
+
+.contact-uploader__subtitle {
+	margin: 4px 0 0;
+	font-size: 14px;
+	color: var(--contact-muted);
+}
+
+.contact-uploader__subtitle span {
+	color: var(--contact-primary-dark);
+	font-weight: 600;
+}
+
+.contact-uploader__button {
+	border: none;
+	background: linear-gradient(135deg, var(--contact-primary) 0%, var(--contact-primary-dark) 100%);
+	color: #ffffff;
+	font-weight: 600;
+	border-radius: 999px;
+	padding: 10px 18px;
+	font-size: 14px;
+	cursor: pointer;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-uploader__button:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 12px 22px rgba(9, 89, 171, 0.22);
+}
+
+.contact-uploader__input {
+	position: absolute;
+	inset: 0;
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	z-index: -1;
 }
 
 .contact-hero {
@@ -338,6 +451,58 @@
 	color: #fff;
 	box-shadow: 0 24px 54px rgba(9, 89, 171, 0.24);
 	transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+}
+
+.contact-form__label {
+	font-weight: 600;
+	margin-bottom: 8px;
+	color: var(--contact-navy);
+}
+
+.contact-form__hint {
+	margin-top: 10px;
+	font-size: 14px;
+	color: var(--contact-muted);
+}
+
+.contact-form__preview {
+	margin-top: 14px;
+	padding: 12px 16px;
+	border-radius: 14px;
+	border: 1px dashed rgba(44, 133, 223, 0.3);
+	background: rgba(44, 133, 223, 0.08);
+	display: none;
+	align-items: center;
+	gap: 14px;
+}
+
+.contact-form__preview.is-visible {
+	display: flex;
+}
+
+.contact-form__preview img {
+	width: 72px;
+	height: 72px;
+	object-fit: cover;
+	border-radius: 12px;
+	box-shadow: 0 12px 24px rgba(9, 89, 171, 0.15);
+}
+
+.contact-form__preview button {
+	margin-left: auto;
+	border: none;
+	background: #c60000;
+	color: #ffffff;
+	font-size: 13px;
+	font-weight: 600;
+	border-radius: 999px;
+	padding: 8px 16px;
+	cursor: pointer;
+	transition: opacity 0.2s ease;
+}
+
+.contact-form__preview button:hover {
+	opacity: 0.85;
 }
 
 .contact-form .send-message-btn:hover {
@@ -667,7 +832,7 @@
 }
 </style>
 
-<div class="global-message info d-none"></div>
+<div class="global-message d-none"></div>
 
 <section class="contact-hero">
 	<div class="container">
@@ -759,6 +924,31 @@
 							<x-blog.form.textarea value='{{ old("message")}}'  placeholder="Nội dung bạn muốn chia sẻ"  name="message"/>
 							<small class="error text-danger message"></small>
 						</div>
+						<div class="contact-field contact-field--full">
+							<label class="contact-form__label" for="contact-attachment">Hình ảnh minh họa (tùy chọn)</label>
+							<div class="contact-uploader" data-input="#contact-attachment" tabindex="0">
+								<div class="contact-uploader__icon" aria-hidden="true">
+									<svg viewBox="0 0 24 24" focusable="false">
+										<path fill="currentColor" d="M9.5 4.5a1.5 1.5 0 0 1 1.3-.75h2.4a1.5 1.5 0 0 1 1.3.75l.64 1.15H18a3 3 0 0 1 3 3V17a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V8.65a3 3 0 0 1 3-3h2.33zm5.13 1.85-.44-.8a.5.5 0 0 0-.44-.25h-2.5a.5.5 0 0 0-.44.25l-.44.8a1 1 0 0 1-.88.55H6a1.5 1.5 0 0 0-1.5 1.5V17A1.5 1.5 0 0 0 6 18.5h12A1.5 1.5 0 0 0 19.5 17V8.65A1.5 1.5 0 0 0 18 7.15h-3.05a1 1 0 0 1-.88-.8zM12 10.5A3.5 3.5 0 1 1 8.5 14 3.5 3.5 0 0 1 12 10.5zm0 2A1.5 1.5 0 1 0 13.5 14 1.5 1.5 0 0 0 12 12.5z" />
+									</svg>
+								</div>
+								<div class="contact-uploader__content">
+									<p class="contact-uploader__title">Kéo &amp; thả ảnh vào đây</p>
+									<p class="contact-uploader__subtitle">hoặc <span>chọn ảnh từ thiết bị</span></p>
+								</div>
+								<button type="button" class="contact-uploader__button" aria-label="Chọn ảnh tải lên">Chọn ảnh</button>
+								<input id="contact-attachment" class="contact-uploader__input" type="file" name="attachment" accept="image/png,image/jpeg,image/jpg,image/gif,image/webp">
+							</div>
+							<small class="error text-danger attachment"></small>
+							<p class="contact-form__hint">Chấp nhận định dạng JPG, PNG, GIF hoặc WEBP với kích thước tối đa 5MB.</p>
+							<div class="contact-form__preview" data-preview="contact-attachment">
+								<img src="" alt="Xem trước ảnh liên hệ">
+								<div class="contact-form__preview-text">
+									<p style="margin:0;font-size:14px;color:#0c2553;font-weight:600;"></p>
+								</div>
+								<button type="button" class="contact-form__preview-remove">Gỡ ảnh</button>
+							</div>
+						</div>
 					</div>
 					<input type="submit" value="Gửi đi" class="send-message-btn">
 				</form>
@@ -823,20 +1013,40 @@
 
 @section('custom_js')
 
+
 <script>
+	let globalMessageTimer = null;
+
 	$(document).on('click', '.send-message-btn', (e) => {
 		e.preventDefault();
 
-		let $this = e.target;
+		const $button = $(e.target);
+		const $form = $button.closest('form');
+		const $globalMessage = $('.global-message');
+		const resetGlobalMessageState = () => {
+			$globalMessage.removeClass('global-message--success global-message--error global-message--info');
+			if (globalMessageTimer) {
+				clearTimeout(globalMessageTimer);
+				globalMessageTimer = null;
+			}
+		};
 
-		let csrf_token = $($this).parents("form").find("input[name='_token']").val();
-		let first_name =  $($this).parents("form").find("input[name='first_name']").val();
-		let last_name =  $($this).parents("form").find("input[name='last_name']").val();
-		let email =  $($this).parents("form").find("input[name='email']").val();
-		let subject =  $($this).parents("form").find("input[name='subject']").val();
-		let message =  $($this).parents("form").find("textarea[name='message']").val();
+		const fields = ['first_name', 'last_name', 'email', 'subject', 'message', 'attachment'];
+		fields.forEach((field) => {
+			$form.find(`small.${field}`).text('');
+		});
 
-		
+		$globalMessage.addClass('d-none').text('');
+		resetGlobalMessageState();
+
+		const csrf_token = $form.find("input[name='_token']").val();
+		const first_name =  $form.find("input[name='first_name']").val();
+		const last_name =  $form.find("input[name='last_name']").val();
+		const email =  $form.find("input[name='email']").val();
+		const subject =  $form.find("input[name='subject']").val();
+		const message =  $form.find("textarea[name='message']").val();
+		const attachmentInput = $form.find("input[name='attachment']")[0];
+
 		let formData = new FormData();
 		formData.append('_token', csrf_token);
 		formData.append('first_name', first_name);
@@ -845,7 +1055,9 @@
 		formData.append('subject', subject);
 		formData.append('message', message);
 
-		console.log(csrf_token);
+		if (attachmentInput && attachmentInput.files[0]) {
+			formData.append('attachment', attachmentInput.files[0]);
+		}
 
 		$.ajax({
 			url: "{{ route('contact.store') }}",
@@ -856,25 +1068,99 @@
 			contentType: false,
 			success: function (data) {
 				if(data.success){
-					$('.global-message').addClass('alert alert-info');
-					$('.global-message').fadeIn();
-					$('.global-message').text(data.message);
+					resetGlobalMessageState();
+					$globalMessage.removeClass('d-none').addClass('global-message--success').text(data.message);
 
-					clearData( $($this).parents("form"), [
-						'first_name', 'last_name', 'email', 'subject', 'message'
+					clearData($form, [
+						'first_name', 'last_name', 'email', 'subject', 'message', 'attachment'
 					]);
 
-					setTimeout(() => {
-						$(".global-message").fadeOut();
-					}, 7000)
+					if (attachmentInput) {
+						attachmentInput.value = '';
+					}
+					const $preview = $form.find('.contact-form__preview');
+					$preview.removeClass('is-visible');
+					$preview.find('img').attr('src', '');
+					$preview.find('p').text('');
+					$form.find('.contact-uploader').removeClass('is-active');
+
+					globalMessageTimer = setTimeout(() => {
+						resetGlobalMessageState();
+						$globalMessage.addClass('d-none').text('');
+					}, 7000);
 				}else{
-					for ( const error in data.errors ){
-						$("small."+error).text(data.errors[error]);
+					for ( const field in data.errors ){
+						$form.find(`small.${field}`).text(data.errors[field] || '');
+					}
+
+					if (data.message) {
+						resetGlobalMessageState();
+						$globalMessage.removeClass('d-none').addClass('global-message--error').text(data.message);
 					}
 				}
+			},
+			error: function () {
+				resetGlobalMessageState();
+				$globalMessage.removeClass('d-none').addClass('global-message--error').text('Đã xảy ra lỗi khi gửi liên hệ. Vui lòng thử lại sau.');
 			}
-		})
+		});
 	})
+
+	$(document).on('click', '.contact-uploader, .contact-uploader__button', function(e) {
+		if ($(e.target).is('.contact-uploader__input')) {
+			return;
+		}
+		e.preventDefault();
+		const $field = $(this).closest('.contact-field');
+		const $input = $field.find('.contact-uploader__input');
+		$input.trigger('click');
+	});
+
+	$(document).on('keydown', '.contact-uploader', function(e) {
+		if (e.key !== 'Enter' && e.key !== ' ') {
+			return;
+		}
+		e.preventDefault();
+		$(this).trigger('click');
+	});
+
+	$(document).on('change', "input[name='attachment']", function() {
+		const file = this.files && this.files[0];
+		const $field = $(this).closest('.contact-field');
+		const $preview = $field.find('.contact-form__preview');
+		const $previewText = $preview.find('p');
+		const $uploader = $field.find('.contact-uploader');
+
+		if (!file) {
+			$preview.removeClass('is-visible');
+			$preview.find('img').attr('src', '');
+			$previewText.text('');
+			$uploader.removeClass('is-active');
+			return;
+		}
+
+		const reader = new FileReader();
+		reader.onload = (event) => {
+			$preview.addClass('is-visible');
+			$preview.find('img').attr('src', event.target.result);
+			$previewText.text(file.name);
+			$uploader.addClass('is-active');
+		};
+		reader.readAsDataURL(file);
+	});
+
+	$(document).on('click', '.contact-form__preview-remove', function() {
+		const $preview = $(this).closest('.contact-form__preview');
+		const inputName = $preview.data('preview');
+		const $input = $(`#${inputName}`);
+		const $field = $preview.closest('.contact-field');
+
+		$input.val('');
+		$preview.removeClass('is-visible');
+		$preview.find('img').attr('src', '');
+		$preview.find('p').text('');
+		$field.find('.contact-uploader').removeClass('is-active');
+	});
 </script>
 
 @endsection

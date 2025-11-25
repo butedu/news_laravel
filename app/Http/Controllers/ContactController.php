@@ -41,55 +41,70 @@ class ContactController extends Controller
         ]);
     }
 
-    public function store(){
-
-        $data = array();
-        $data['success'] = 0;
-        $data['errors'] = [];
- 
- 
-        $rules = [
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required',
-            // 'subject' => 'nullable|min:5|max:50',
-            'subject' => 'required|min:5|max:50',
-            'message' => 'required|min:5|max:500' ,
+    public function store(Request $request)
+    {
+        $data = [
+            'success' => 0,
+            'errors' => [],
         ];
 
-        $validated = Validator::make( request()->all(), $rules);
-  
+        $rules = [
+            'first_name' => 'required|string|max:100',
+            'last_name' => 'required|string|max:100',
+            'email' => 'required|email',
+            'subject' => 'required|string|min:5|max:120',
+            'message' => 'required|string|min:5|max:1000',
+            'attachment' => 'nullable|image|mimes:jpg,jpeg,png,gif,webp|max:5120',
+        ];
 
-        if($validated->fails()){
-            $data['errors']['first_name'] = $validated->errors()->first('first_name');
-            $data['errors']['last_name'] = $validated->errors()->first('last_name');
-            $data['errors']['email'] = $validated->errors()->first('email');
-            $data['errors']['subject'] = $validated->errors()->first('subject');
-            $data['errors']['message'] = $validated->errors()->first('message');
+        $validated = Validator::make($request->all(), $rules);
 
-            $data['message'] = "Thông báo lỗi: kiểm tra thông tin và nhập lại lần nữa";
+        if ($validated->fails()) {
+            foreach (['first_name', 'last_name', 'email', 'subject', 'message', 'attachment'] as $field) {
+                $data['errors'][$field] = $validated->errors()->first($field);
+            }
 
-        }else{
+            $data['message'] = 'Thông báo lỗi: kiểm tra thông tin và nhập lại lần nữa.';
+        } else {
             $attributes = $validated->validated();
-            Contact::create($attributes);
 
-            // Mail::to("anhtuanlop10a2812001@gmail.com")->send(new ContacMail(
-            Mail::to( env('ADMIN_EMAIL') )->send(new ContacMail(
-                $attributes['first_name'],
-                $attributes['last_name'],
-                $attributes['email'],
-                $attributes['subject'],
-                $attributes['message']
-            ));
-    
+            $attachmentPath = null;
+            $attachmentOriginalName = null;
+            $attachmentMime = null;
+
+            if ($request->hasFile('attachment')) {
+                $file = $request->file('attachment');
+                $attachmentPath = $file->store('contact_attachments', 'public');
+                $attachmentOriginalName = $file->getClientOriginalName();
+                $attachmentMime = $file->getClientMimeType();
+            }
+
+            $contact = Contact::create([
+                'first_name' => $attributes['first_name'],
+                'last_name' => $attributes['last_name'],
+                'email' => $attributes['email'],
+                'subject' => $attributes['subject'],
+                'message' => $attributes['message'],
+                'attachment_path' => $attachmentPath,
+                'attachment_original_name' => $attachmentOriginalName,
+                'attachment_mime' => $attachmentMime,
+            ]);
+
+            Mail::to(env('ADMIN_EMAIL'))
+                ->send(new ContacMail(
+                    $contact->first_name,
+                    $contact->last_name,
+                    $contact->email,
+                    $contact->subject,
+                    $contact->message,
+                    $contact->attachment_path,
+                    $contact->attachment_original_name,
+                    $contact->attachment_mime
+                ));
+
             $data['success'] = 1;
-            $data['message'] = "Bạn đã gửi liên hệ thành công. Chúng tôi sẽ phản hổi cho bạn sớm nhất có thể";
-
+            $data['message'] = 'Cảm ơn bạn! Liên hệ đã được gửi thành công. Chúng tôi sẽ phản hồi trong thời gian sớm nhất.';
         }
-        
-
-        // return redirect()->route('contact.create')->with('success', 
-        // 'Bạn đã gửi liên hệ thành công. Chúng tôi sẽ phản hổi cho bạn sớm nhất có thể !');
 
         return response()->json($data);
     }
