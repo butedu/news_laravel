@@ -171,6 +171,36 @@
 	</style>
 @endsection
 
+@section('custom_js')
+<script>
+    document.addEventListener('click', function (event) {
+        const target = event.target.closest('a[data-action="copy-link"]');
+        if (!target) {
+            return;
+        }
+
+        event.preventDefault();
+
+        const linkToCopy = target.getAttribute('href');
+        if (!linkToCopy) {
+            return;
+        }
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(linkToCopy)
+                .then(function () {
+                    window.alert('Đã sao chép liên kết bài viết vào bộ nhớ tạm.');
+                })
+                .catch(function () {
+                    window.prompt('Sao chép thủ công liên kết này:', linkToCopy);
+                });
+        } else {
+            window.prompt('Sao chép thủ công liên kết này:', linkToCopy);
+        }
+    });
+</script>
+@endsection
+
 @section('content')
 
 @php
@@ -275,18 +305,48 @@
                         <!-- Post Tags End -->
 
                         <!-- Post Social Start -->
+                        @php
+                            $absolutePostUrl = route('posts.show', $post);
+                            $encodedPostUrl = urlencode($absolutePostUrl);
+                            $encodedTitle = urlencode($post->title);
+                        @endphp
+
                         <div class="post--social pbottom--30">
                             <span class="title"><i class="fa fa-share-alt"></i> Chia sẻ </span>
                              
                             <!-- Social Widget Start -->
                             <div class="social--widget style--4">
                                 <ul class="nav">
-                                    <li><a href="javascript:"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="javascript:"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="javascript:"><i class="fa fa-google-plus"></i></a></li>
-                                    <li><a href="javascript:"><i class="fa fa-linkedin"></i></a></li>
-                                    <li><a href="javascript:"><i class="fa fa-rss"></i></a></li>
-                                    <li><a href="javascript:"><i class="fa fa-youtube-play"></i></a></li>
+                                    <li>
+                                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ $encodedPostUrl }}" target="_blank" rel="noopener" aria-label="Chia sẻ lên Facebook">
+                                            <i class="fa fa-facebook"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://twitter.com/intent/tweet?url={{ $encodedPostUrl }}&text={{ $encodedTitle }}" target="_blank" rel="noopener" aria-label="Chia sẻ lên Twitter">
+                                            <i class="fa fa-twitter"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ $encodedPostUrl }}&title={{ $encodedTitle }}" target="_blank" rel="noopener" aria-label="Chia sẻ lên LinkedIn">
+                                            <i class="fa fa-linkedin"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://t.me/share/url?url={{ $encodedPostUrl }}&text={{ $encodedTitle }}" target="_blank" rel="noopener" aria-label="Chia sẻ lên Telegram">
+                                            <i class="fa fa-send"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="mailto:?subject={{ $encodedTitle }}&body={{ $encodedPostUrl }}" aria-label="Gửi qua email">
+                                            <i class="fa fa-envelope"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ $absolutePostUrl }}" data-action="copy-link" aria-label="Sao chép liên kết" title="Sao chép liên kết">
+                                            <i class="fa fa-link"></i>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                             <!-- Social Widget End -->

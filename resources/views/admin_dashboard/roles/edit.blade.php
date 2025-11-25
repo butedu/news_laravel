@@ -167,30 +167,30 @@
 										<label class="form-label text-uppercase fw-semibold small text-muted mb-0">Chức năng cho phép</label>
 										<span class="permission-helper">Đánh dấu những chức năng mà quyền <strong>{{ $role->name }}</strong> được truy cập.</span>
 									</div>
-									@php
-										$chunkSize = max(ceil($permissions->count() / 3), 1);
-										$permissionChunks = $permissions->chunk($chunkSize);
-									@endphp
-									<div class="permission-grid">
-										@foreach($permissionChunks as $chunkIndex => $chunk)
-											<div class="permission-card">
-												<span class="permission-card__title">
-													<i class='bx bx-category'></i>
-													Nhóm {{ $chunkIndex + 1 }}
-												</span>
-												<div class="permission-list">
-													@forelse($chunk as $permission)
-														<label class="permission-item form-check mb-0">
-															<input class="form-check-input shadow-none" {{ $role->permissions->contains($permission->id) ? 'checked' : '' }} type="checkbox" name="permissions[]" value="{{ $permission->id }}">
-															<span class="permission-label">{{ $permission->name }}</span>
-														</label>
-													@empty
-														<div class="text-muted small">Chưa có chức năng nào trong nhóm này.</div>
-													@endforelse
+									@if($permissionGroups->isEmpty())
+										<div class="alert alert-info mb-0">Chưa có chức năng nào được cấu hình cho quyền này.</div>
+									@else
+										<div class="permission-grid">
+											@foreach($permissionGroups as $group)
+												<div class="permission-card">
+													<span class="permission-card__title">
+														<i class="{{ $group['icon'] ?? 'bx bx-category' }}"></i>
+														{{ $group['label'] ?? 'Nhóm chức năng' }}
+													</span>
+													<div class="permission-list">
+														@forelse($group['permissions'] as $permission)
+															<label class="permission-item form-check mb-0">
+																<input class="form-check-input shadow-none" {{ $permission['checked'] ? 'checked' : '' }} type="checkbox" name="permissions[]" value="{{ $permission['id'] }}">
+																<span class="permission-label">{{ $permission['label'] }}</span>
+															</label>
+														@empty
+															<div class="text-muted small">Chưa có chức năng nào trong nhóm này.</div>
+														@endforelse
+													</div>
 												</div>
-											</div>
-										@endforeach
-									</div>
+											@endforeach
+										</div>
+									@endif
 								</div>
 							</div>
 						</div>
