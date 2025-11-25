@@ -91,6 +91,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','check_permissions'])
     Route::resource('users', AdminUsersController::class);
 
     Route::get('contacts',[AdminContactsController::class, 'index'])->name('contacts');
+    Route::get('contacts/{contact}/attachment',[AdminContactsController::class, 'attachment'])->name('contacts.attachment');
     Route::get('contacts/{contact}',[AdminContactsController::class, 'show'])->name('contacts.show');
     Route::post('contacts/{contact}/reply',[AdminContactsController::class, 'reply'])->name('contacts.reply');
     Route::delete('contacts/{contact}',[AdminContactsController::class, 'destroy'])->name('contacts.destroy');

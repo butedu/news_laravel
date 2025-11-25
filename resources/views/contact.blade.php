@@ -437,6 +437,7 @@
 	font-size: 14px;
 }
 
+
 .contact-form .send-message-btn {
 	width: 100%;
 	margin-top: 10px;
@@ -451,6 +452,46 @@
 	color: #fff;
 	box-shadow: 0 24px 54px rgba(9, 89, 171, 0.24);
 	transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+	cursor: pointer;
+	position: relative;
+}
+
+.contact-form .send-message-btn:disabled {
+	opacity: 0.9;
+	cursor: not-allowed;
+}
+
+.contact-form .send-message-btn .btn-label {
+	transition: opacity 0.2s ease;
+}
+
+.contact-form .send-message-btn .btn-spinner {
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	border: 2px solid rgba(255, 255, 255, 0.4);
+	border-top-color: #fff;
+	animation: contact-spin 0.8s linear infinite;
+	opacity: 0;
+	transform: scale(0.8);
+	transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.contact-form .send-message-btn.is-loading {
+	opacity: 0.95;
+}
+
+.contact-form .send-message-btn.is-loading .btn-spinner {
+	opacity: 1;
+	transform: scale(1);
+}
+
+.contact-form .send-message-btn.is-loading .btn-label {
+	opacity: 0.82;
 }
 
 .contact-form__label {
@@ -505,10 +546,19 @@
 	opacity: 0.85;
 }
 
-.contact-form .send-message-btn:hover {
+.contact-form .send-message-btn:not(:disabled):hover {
 	transform: translateY(-4px);
 	box-shadow: 0 30px 64px rgba(9, 89, 171, 0.3);
 	opacity: 0.95;
+}
+
+@keyframes contact-spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
 }
 
 .contact-aside {
@@ -950,7 +1000,10 @@
 							</div>
 						</div>
 					</div>
-					<input type="submit" value="Gửi đi" class="send-message-btn">
+					<button type="submit" class="send-message-btn">
+						<span class="btn-label">Gửi đi</span>
+						<span class="btn-spinner" aria-hidden="true"></span>
+					</button>
 				</form>
 				<x-blog.message :status="'success'" />
 			</div>
@@ -1017,10 +1070,15 @@
 <script>
 	let globalMessageTimer = null;
 
-	$(document).on('click', '.send-message-btn', (e) => {
+	$(document).on('click', '.send-message-btn', function(e) {
 		e.preventDefault();
 
-		const $button = $(e.target);
+		const $button = $(this);
+
+		if ($button.data('loading')) {
+			return;
+		}
+
 		const $form = $button.closest('form');
 		const $globalMessage = $('.global-message');
 		const resetGlobalMessageState = () => {
@@ -1031,6 +1089,21 @@
 			}
 		};
 
+		const setLoadingState = () => {
+			$button.data('loading', true).prop('disabled', true).addClass('is-loading');
+			const $label = $button.find('.btn-label');
+			if (!$button.data('original-label')) {
+				$button.data('original-label', $label.text());
+			}
+			$label.text('Đang gửi...');
+		};
+
+		const resetLoadingState = () => {
+			const $label = $button.find('.btn-label');
+			$label.text($button.data('original-label') || 'Gửi đi');
+			$button.prop('disabled', false).removeClass('is-loading').data('loading', false);
+		};
+
 		const fields = ['first_name', 'last_name', 'email', 'subject', 'message', 'attachment'];
 		fields.forEach((field) => {
 			$form.find(`small.${field}`).text('');
@@ -1038,6 +1111,8 @@
 
 		$globalMessage.addClass('d-none').text('');
 		resetGlobalMessageState();
+		setLoadingState();
+		$globalMessage.removeClass('d-none').addClass('global-message--info').text('Đang gửi liên hệ, vui lòng đợi trong giây lát...');
 
 		const csrf_token = $form.find("input[name='_token']").val();
 		const first_name =  $form.find("input[name='first_name']").val();
@@ -1102,9 +1177,12 @@
 			error: function () {
 				resetGlobalMessageState();
 				$globalMessage.removeClass('d-none').addClass('global-message--error').text('Đã xảy ra lỗi khi gửi liên hệ. Vui lòng thử lại sau.');
+			},
+			complete: function () {
+				resetLoadingState();
 			}
 		});
-	})
+	});
 
 	$(document).on('click', '.contact-uploader, .contact-uploader__button', function(e) {
 		if ($(e.target).is('.contact-uploader__input')) {

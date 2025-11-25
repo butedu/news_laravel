@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use App\Models\Contact;
-use App\Mail\ContacMail;
 use Illuminate\Support\Facades\Validator;
+use App\Jobs\SendContactNotification;
 
 use App\Models\Category;
 use App\Models\Post;
@@ -90,17 +89,11 @@ class ContactController extends Controller
                 'attachment_mime' => $attachmentMime,
             ]);
 
-            Mail::to(env('ADMIN_EMAIL'))
-                ->send(new ContacMail(
-                    $contact->first_name,
-                    $contact->last_name,
-                    $contact->email,
-                    $contact->subject,
-                    $contact->message,
-                    $contact->attachment_path,
-                    $contact->attachment_original_name,
-                    $contact->attachment_mime
-                ));
+            $recipient = config('contact.notification_recipient');
+
+            if (!empty($recipient)) {
+                SendContactNotification::dispatch($contact, $recipient)->afterResponse();
+            }
 
             $data['success'] = 1;
             $data['message'] = 'Cảm ơn bạn! Liên hệ đã được gửi thành công. Chúng tôi sẽ phản hồi trong thời gian sớm nhất.';

@@ -19,7 +19,7 @@ Tệp đính kèm: [{{ $attachmentName ?? 'Xem hình ảnh' }}]({{ $attachmentUr
 
 @endif
 
-@component('mail::button', ['url' => ''])
+@component('mail::button', ['url' => $contactShowUrl ?? url('/admin/contacts')])
 Xem tin nhắn
 @endcomponent
 

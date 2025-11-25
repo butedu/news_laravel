@@ -63,6 +63,28 @@ class AdminContactsController extends Controller
         return redirect()->route('admin.contacts.show', $contact)->with('success', 'Đã gửi phản hồi tới độc giả.');
     }
 
+    public function attachment(Request $request, Contact $contact)
+    {
+        if (!$contact->attachment_path || !Storage::disk('public')->exists($contact->attachment_path)) {
+            abort(404);
+        }
+
+        $filename = $contact->attachment_original_name ?? basename($contact->attachment_path);
+        $absolutePath = storage_path('app/public/' . ltrim($contact->attachment_path, '/'));
+
+        if (!is_file($absolutePath)) {
+            abort(404);
+        }
+
+        if ($request->boolean('download')) {
+            return response()->download($absolutePath, $filename);
+        }
+
+        return response()->file($absolutePath, [
+            'Content-Disposition' => 'inline; filename="' . addslashes($filename) . '"',
+        ]);
+    }
+
     public function destroy(Contact $contact)
     {
         DB::transaction(function () use ($contact) {

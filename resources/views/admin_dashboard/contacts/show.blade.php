@@ -85,13 +85,17 @@
                             <div class="p-3 bg-light rounded border" style="white-space: pre-line;">{{ $contact->message }}</div>
                         </div>
                         @if($contact->attachment_path)
+                            @php
+                                $attachmentPreviewUrl = route('admin.contacts.attachment', $contact);
+                            @endphp
                             <div class="mb-0">
                                 <h6 class="text-muted mb-1">Hình ảnh minh họa</h6>
                                 <div class="d-inline-flex align-items-center gap-3 p-3 bg-white border rounded shadow-sm">
-                                    <img src="{{ asset('storage/' . $contact->attachment_path) }}" alt="Ảnh liên hệ" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
+                                    <img src="{{ $attachmentPreviewUrl }}" alt="Ảnh liên hệ" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
                                     <div>
                                         <p class="mb-1 fw-semibold">{{ $contact->attachment_original_name ?? 'contact-image.jpg' }}</p>
-                                        <a class="btn btn-outline-primary btn-sm" href="{{ asset('storage/' . $contact->attachment_path) }}" target="_blank">Xem / tải xuống</a>
+                                        <a class="btn btn-outline-primary btn-sm" href="{{ $attachmentPreviewUrl }}" target="_blank">Xem ảnh</a>
+                                        <a class="btn btn-link btn-sm text-decoration-none" href="{{ $attachmentPreviewUrl }}?download=1">Tải xuống</a>
                                     </div>
                                 </div>
                             </div>
