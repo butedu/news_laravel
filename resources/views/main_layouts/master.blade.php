@@ -350,12 +350,22 @@ $categoryFooter  = Category::where('name','!=','Chưa phân loại')->withCount(
 					<div class="col-lg-3 col-md-6 footer-col">
 						<h4 class="footer-title">Đăng ký nhận tin</h4>
 						<p class="newsletter-desc">Nhận tin tức mới nhất qua email</p>
-						<form class="footer-newsletter-form" onsubmit="event.preventDefault(); alert('Cảm ơn bạn đã đăng ký!');">
+						<form action="{{ route('newsletter.store') }}" method="POST" class="footer-newsletter-form js-newsletter-form">
+							@csrf
+							<div class="newsletter-inline-message" data-role="message" aria-live="assertive" style="display:none;"></div>
 							<div class="input-group">
-								<input type="email" class="form-control" placeholder="Email của bạn" required>
+								<input type="email" class="form-control" name="email" placeholder="Email của bạn" required>
 								<button type="submit" class="btn-subscribe">
 									<i class="fa fa-paper-plane"></i>
 								</button>
+							</div>
+							<div class="footer-newsletter-categories">
+								@foreach($categoryFooter->take(6) as $footerCategory)
+									<label class="footer-newsletter-option">
+										<input type="checkbox" name="categories[]" value="{{ $footerCategory->id }}">
+										<span>{{ $footerCategory->name }}</span>
+									</label>
+								@endforeach
 							</div>
 						</form>
 						<div class="footer-app">
@@ -471,59 +481,58 @@ $categoryFooter  = Category::where('name','!=','Chưa phân loại')->withCount(
 	<script src="{{ asset('kcnew/frontend/js/main.js') }}"></script>
 	
 
-	<script >
-		$(function(){
-
-			function isEmail(email) {
-				var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-				return regex.test(email);
+	<script>
+		$(function () {
+			function renderMessage($target, text, tone) {
+				if (!$target.length) {
+					return;
+				}
+				$target
+					.removeClass('is-success is-error')
+					.addClass(tone === 'success' ? 'is-success' : 'is-error')
+					.text(text)
+					.slideDown(150);
 			}
-			$(document).on("click", "#subscibe-btn", (e) => {
-				e.preventDefault();
-				let _this = $(e.target);
-		
-				let email = _this.parents("form").find("input[name='subscribe-email']").val();
-				if( ! isEmail( email))
-				{
-					$("body").append("<div class='global-message alert alert-danger subscribe-error'>Không đúng định dạng email.</div>");
+
+			function clearMessage($target) {
+				$target.removeClass('is-success is-error').hide().text('');
+			}
+
+			$(document).on('submit', '.js-newsletter-form', function (event) {
+				event.preventDefault();
+				const $form = $(this);
+				const $submit = $form.find('button[type="submit"]');
+				const $message = $form.find('[data-role="message"]');
+				clearMessage($message);
+
+				const selectedCategories = $form.find('input[name="categories[]"]:checked').length;
+				if (selectedCategories === 0) {
+					renderMessage($message, 'Vui lòng chọn ít nhất một chuyên mục.', 'error');
+					return;
 				}
-				else
-				{
-					//send email
-					//1 using ajax
-					let formData = new FormData();
-					let _token = $("meta[name='_token']").attr("content");
-					 
-					formData.append('_token', _token);
-					formData.append('email', email);
 
-					$.ajax({
-						url: "{{ route('newsletter_store') }}",
-						type: "POST",
-						dataType: "JSON",
-						processData: false,
-						contentType: false,
-						data: formData,
-						success: (respond) => {
-							let message = respond.message;
-							$("body").append("<div class='global-message alert alert-danger subscribe-success'>"+ message +"</div>");
-						
-							_this.parents("form").find("input[name='subscribe-email']").val('');
-						},
-						statusCode: {
-							500: () => {								 
-								$("body").append("<div class='global-message alert alert-danger subscribe-error'>Email này đã subscribe website chúng tôi</div>");
+				$submit.prop('disabled', true).addClass('is-loading');
 
-							}
-						} 
-					});
-					 
-				}
-				setTimeout( () => {
-	 
-					$(".global-message.subscribe-error, .global-message.subscribe-success").remove();
-
-				}, 5000 );
+				$.ajax({
+					url: $form.attr('action'),
+					type: 'POST',
+					data: $form.serialize(),
+					success: function (response) {
+						renderMessage($message, response.message || 'Đăng ký thành công!', 'success');
+						$form[0].reset();
+					},
+					error: function (xhr) {
+						let errorText = 'Không thể đăng ký. Vui lòng thử lại sau.';
+						if (xhr.status === 422 && xhr.responseJSON && xhr.responseJSON.errors) {
+							const errors = Object.values(xhr.responseJSON.errors).flat();
+							errorText = errors[0] || errorText;
+						}
+						renderMessage($message, errorText, 'error');
+					},
+					complete: function () {
+						$submit.prop('disabled', false).removeClass('is-loading');
+					}
+				});
 			});
 		});
 	</script>

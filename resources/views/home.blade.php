@@ -295,11 +295,22 @@
                         <div class="sidebar-widget sidebar-newsletter">
                             <h3 class="widget-title"><i class="fa fa-envelope"></i> Nhận tin mới</h3>
                             <div class="widget-content">
-                                <p>Đăng ký để nhận tin tức mới nhất qua email</p>
-                                <form action="#" method="POST" class="newsletter-form" onsubmit="event.preventDefault(); alert('Cảm ơn bạn đã đăng ký! Tính năng này sẽ sớm được kích hoạt.');">
+                                <p>Chọn chuyên mục bạn quan tâm để nhận tin qua email.</p>
+                                <form action="{{ route('newsletter.store') }}" method="POST" class="newsletter-form js-newsletter-form">
                                     @csrf
+                                    <div class="newsletter-inline-message" data-role="message" aria-live="assertive" style="display:none;"></div>
                                     <input type="email" name="email" placeholder="Email của bạn" required>
-                                    <button type="submit"><i class="fa fa-paper-plane"></i> Đăng ký</button>
+                                    <div class="newsletter-checkboxes">
+                                        @foreach($categories->take(6) as $category)
+                                            <label class="newsletter-option">
+                                                <input type="checkbox" name="categories[]" value="{{ $category->id }}">
+                                                <span>{{ $category->name }}</span>
+                                            </label>
+                                        @endforeach
+                                    </div>
+                                    <button type="submit" class="newsletter-submit">
+                                        <i class="fa fa-paper-plane"></i> Đăng ký
+                                    </button>
                                 </form>
                             </div>
                         </div>

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Jobs\SendNewsletterPost;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\Tag;
@@ -66,6 +67,21 @@ class Post extends Model
     public function savedBy()
     {
         return $this->belongsToMany(User::class, 'post_saves')->withTimestamps();
+    }
+
+    protected static function booted(): void
+    {
+        static::created(function (Post $post) {
+            if ($post->approved) {
+                SendNewsletterPost::dispatch($post->id);
+            }
+        });
+
+        static::updated(function (Post $post) {
+            if ($post->wasChanged('approved') && $post->approved) {
+                SendNewsletterPost::dispatch($post->id);
+            }
+        });
     }
 
     // scope functions
