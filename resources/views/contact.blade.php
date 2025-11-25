@@ -52,6 +52,105 @@
 	background: linear-gradient(135deg, rgba(9, 89, 171, 0.15) 0%, rgba(44, 133, 223, 0.05) 100%);
 	color: var(--contact-navy);
 }
+
+.global-message__icon {
+	width: 48px;
+	height: 48px;
+	border-radius: 16px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(44, 133, 223, 0.16);
+	color: var(--contact-primary-dark);
+	box-shadow: 0 14px 32px rgba(9, 30, 66, 0.12);
+	flex-shrink: 0;
+}
+
+.global-message__icon svg {
+	width: 22px;
+	height: 22px;
+}
+
+.global-message--success .global-message__icon {
+	background: rgba(15, 157, 88, 0.18);
+	color: #0f9d58;
+}
+
+.global-message--error .global-message__icon {
+	background: rgba(217, 48, 37, 0.2);
+	color: #d93025;
+}
+
+.global-message--info .global-message__icon {
+	background: rgba(9, 89, 171, 0.22);
+	color: var(--contact-primary-dark);
+}
+
+.global-message__spinner {
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	border: 2px solid rgba(9, 89, 171, 0.28);
+	border-top-color: var(--contact-primary-dark);
+	animation: contact-spin 0.8s linear infinite;
+}
+
+.global-message__content {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	line-height: 1.5;
+}
+
+.global-message__heading {
+	font-size: 15px;
+	font-weight: 700;
+	color: inherit;
+	letter-spacing: 0.3px;
+}
+
+.global-message__text {
+	margin: 0;
+	font-size: 15px;
+	font-weight: 500;
+	color: inherit;
+}
+
+.global-message--error .global-message__text {
+	color: #7f1d1d;
+}
+
+.global-message--success .global-message__text {
+	color: #0c5132;
+}
+
+.global-message--info .global-message__text {
+	color: var(--contact-navy);
+}
+
+.global-message--success .global-message__heading {
+	color: #0b7041;
+}
+
+.global-message--error .global-message__heading {
+	color: #a01919;
+}
+
+.global-message--info .global-message__heading {
+	color: var(--contact-primary-dark);
+}
+
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
 .contact-uploader {
 	position: relative;
 	display: flex;
@@ -1069,6 +1168,81 @@
 
 <script>
 	let globalMessageTimer = null;
+	const $globalMessage = $('.global-message');
+	const globalMessageFallbackError = 'Thông báo lỗi: kiểm tra thông tin và nhập lại lần nữa.';
+
+	const clearGlobalMessageTimer = () => {
+		if (globalMessageTimer) {
+			clearTimeout(globalMessageTimer);
+			globalMessageTimer = null;
+		}
+	};
+
+	const resetGlobalMessageState = () => {
+		clearGlobalMessageTimer();
+		if (!$globalMessage.length) {
+			return;
+		}
+
+		$globalMessage
+			.removeClass('global-message--success global-message--error global-message--info')
+			.addClass('d-none')
+			.removeAttr('role')
+			.removeAttr('aria-live')
+			.attr('aria-hidden', 'true')
+			.empty();
+	};
+
+	const hideGlobalMessage = () => {
+		resetGlobalMessageState();
+	};
+
+	const escapeHtml = (value) => $('<div/>').text(value ?? '').html();
+
+	const renderGlobalMessage = (tone, text) => {
+		const icons = {
+			success: '<span class="global-message__icon global-message__icon--success" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path fill="currentColor" d="M9.4 16.3 5.7 12.6l1.4-1.4 2.3 2.3 7.2-7.2 1.4 1.4z"/></svg></span>',
+			error: '<span class="global-message__icon global-message__icon--error" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path fill="currentColor" d="M12 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18Zm0-10.41 2.89-2.9 1.42 1.42-2.9 2.89 2.9 2.89-1.42 1.42-2.89-2.9-2.89 2.9-1.42-1.42 2.9-2.89-2.9-2.89 1.42-1.42Z"/></svg></span>',
+			info: '<span class="global-message__icon global-message__icon--info" aria-hidden="true"><span class="global-message__spinner"></span></span>',
+		};
+
+		const headings = {
+			success: 'Gửi liên hệ thành công',
+			error: 'Không thể gửi liên hệ',
+			info: 'Đang xử lý yêu cầu',
+		};
+
+		const icon = icons[tone] || icons.info;
+		const heading = headings[tone] ? `<span class="global-message__heading">${headings[tone]}</span>` : '';
+		const safeText = escapeHtml(text || '');
+
+		return `${icon}<div class="global-message__content">${heading}<p class="global-message__text">${safeText}</p></div>`;
+	};
+
+	const applyGlobalMessage = (tone, text, options = {}) => {
+		if (!$globalMessage.length) {
+			return;
+		}
+
+		const { autoHide = false, hideAfter = 7000 } = options;
+
+		resetGlobalMessageState();
+
+		const toneClass = `global-message--${tone}`;
+		$globalMessage
+			.removeClass('d-none')
+			.addClass(toneClass)
+			.attr('aria-hidden', 'false')
+			.attr('role', tone === 'error' ? 'alert' : 'status')
+			.attr('aria-live', tone === 'error' ? 'assertive' : 'polite')
+			.html(renderGlobalMessage(tone, text));
+
+		if (autoHide) {
+			globalMessageTimer = setTimeout(() => {
+				hideGlobalMessage();
+			}, hideAfter);
+		}
+	};
 
 	$(document).on('click', '.send-message-btn', function(e) {
 		e.preventDefault();
@@ -1080,14 +1254,6 @@
 		}
 
 		const $form = $button.closest('form');
-		const $globalMessage = $('.global-message');
-		const resetGlobalMessageState = () => {
-			$globalMessage.removeClass('global-message--success global-message--error global-message--info');
-			if (globalMessageTimer) {
-				clearTimeout(globalMessageTimer);
-				globalMessageTimer = null;
-			}
-		};
 
 		const setLoadingState = () => {
 			$button.data('loading', true).prop('disabled', true).addClass('is-loading');
@@ -1109,10 +1275,8 @@
 			$form.find(`small.${field}`).text('');
 		});
 
-		$globalMessage.addClass('d-none').text('');
-		resetGlobalMessageState();
 		setLoadingState();
-		$globalMessage.removeClass('d-none').addClass('global-message--info').text('Đang gửi liên hệ, vui lòng đợi trong giây lát...');
+		applyGlobalMessage('info', 'Đang gửi liên hệ, vui lòng đợi trong giây lát...');
 
 		const csrf_token = $form.find("input[name='_token']").val();
 		const first_name =  $form.find("input[name='first_name']").val();
@@ -1143,8 +1307,7 @@
 			contentType: false,
 			success: function (data) {
 				if(data.success){
-					resetGlobalMessageState();
-					$globalMessage.removeClass('d-none').addClass('global-message--success').text(data.message);
+					applyGlobalMessage('success', data.message || 'Cảm ơn bạn! Liên hệ đã được gửi thành công.', { autoHide: true });
 
 					clearData($form, [
 						'first_name', 'last_name', 'email', 'subject', 'message', 'attachment'
@@ -1158,25 +1321,20 @@
 					$preview.find('img').attr('src', '');
 					$preview.find('p').text('');
 					$form.find('.contact-uploader').removeClass('is-active');
-
-					globalMessageTimer = setTimeout(() => {
-						resetGlobalMessageState();
-						$globalMessage.addClass('d-none').text('');
-					}, 7000);
 				}else{
 					for ( const field in data.errors ){
 						$form.find(`small.${field}`).text(data.errors[field] || '');
 					}
 
-					if (data.message) {
-						resetGlobalMessageState();
-						$globalMessage.removeClass('d-none').addClass('global-message--error').text(data.message);
+					if (data.message || (data.errors && Object.keys(data.errors).length)) {
+						applyGlobalMessage('error', data.message || globalMessageFallbackError);
+					} else {
+						hideGlobalMessage();
 					}
 				}
 			},
 			error: function () {
-				resetGlobalMessageState();
-				$globalMessage.removeClass('d-none').addClass('global-message--error').text('Đã xảy ra lỗi khi gửi liên hệ. Vui lòng thử lại sau.');
+				applyGlobalMessage('error', 'Đã xảy ra lỗi khi gửi liên hệ. Vui lòng thử lại sau.');
 			},
 			complete: function () {
 				resetLoadingState();
