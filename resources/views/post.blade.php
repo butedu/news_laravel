@@ -364,8 +364,8 @@
                             <!-- Post Items Title End -->
 
                             <ul class="comment--items nav">
-							@foreach($post->comments as $comment)
-                                <li>
+                            @foreach($post->comments as $comment)
+                                <li id="comment_{{ $comment->id }}">
                                     <!-- Comment Item Start -->
                                    <div class="comment--item clearfix">
                                         <div class="comment--img float--left">
@@ -377,8 +377,15 @@
 										<div class="comment--info">
 											<div class="comment--header clearfix">
 												<p class="name">{{ $comment->user->name }}</p>
-												<p class="date">{{ $comment->created_at->locale('vi')->diffForHumans() }}</p>
-												<a href="javascript:;" class="reply"><i class="fa fa-flag"></i></a>
+                                                <p class="date">{{ $comment->created_at->locale('vi')->diffForHumans() }}</p>
+                                                <a href="javascript:;" class="reply"><i class="fa fa-flag"></i></a>
+                                                @if(auth()->check() && auth()->id() === $comment->user_id)
+                                                    <form method="POST" action="{{ route('posts.deleteCommentUser', $comment) }}" class="delete-comment-form d-inline-block" data-comment-id="{{ $comment->id }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="delete-comment-btn btn btn-link btn-sm text-danger p-0 ms-2">Xóa</button>
+                                                    </form>
+                                                @endif
 											</div>
 											<div class="comment--content">
 												<p>{{ $comment->the_comment }}</p>
@@ -405,10 +412,12 @@
                             <!-- Post Items Title End -->
 							
                             <div class="comment-respond">
-								@auth	
-								<!-- <form method="POST" action="{{ route('posts.add_comment', $post )}}"> -->
-                                <form onsubmit="return false;" autocomplete="off" method="POST" >
-									@csrf
+                                @auth	
+                                                <form method="POST" action="{{ route('posts.add_comment', $post) }}" autocomplete="off" class="js-comment-form" data-post-slug="{{ $post->slug }}" data-post-id="{{ $post->id }}">
+                                    @csrf
+
+                                    <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                    <input type="hidden" name="post_slug" value="{{ $post->slug }}">
 
 									<div class="row form-group">
 										<div class="col-md-12">

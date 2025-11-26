@@ -57,6 +57,7 @@ Route::post('/binh-luan', [PostsController::class, 'addCommentUser'])->name('pos
 Route::middleware('auth')->group(function () {
     Route::post('/bai-viet/{post:slug}/luu', [PostSaveController::class, 'store'])->name('posts.save');
     Route::delete('/bai-viet/{post:slug}/luu', [PostSaveController::class, 'destroy'])->name('posts.unsave');
+    Route::delete('/binh-luan/{comment}', [PostsController::class, 'deleteCommentUser'])->name('posts.deleteCommentUser');
 });
 
 

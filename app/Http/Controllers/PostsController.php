@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\Tag;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Validator;
 
 class PostsController extends Controller
@@ -76,7 +77,10 @@ class PostsController extends Controller
 
         $comment = $post->comments()->create($attributes);
 
-        return redirect('/posts/' . $post->slug . '#comment_' . $comment->id)->with('success', 'Bạn vừa bình luận thành công.');
+        $targetUrl = route('posts.show', $post);
+
+        return redirect($targetUrl . '#comment_' . $comment->id)
+            ->with('success', 'Bạn vừa bình luận thành công.');
 
 
     }
@@ -88,34 +92,83 @@ class PostsController extends Controller
 
         $rules = [
             'the_comment' => 'required|min:5|max:300',
-            'post_title' => 'required',
+            'post_id' => 'required|exists:posts,id',
+            'post_slug' => 'required|exists:posts,slug',
         ];
 
         $validated = Validator::make( request()->all(), $rules);
 
         if($validated->fails()){
             $data['errors'] = $validated->errors()->first('the_comment');
-      
-            $data['message'] = "Khổng thể bình luận";
+            $data['message'] = $validated->errors()->first() ?? 'Không thể bình luận. Vui lòng thử lại.';
 
         }else{
             $attributes = $validated->validated();
-            $post = Post::where('title', $attributes['post_title'])->first();
+            $post = Post::find($attributes['post_id']);
+
+            if (!$post || $post->slug !== $attributes['post_slug']) {
+                $data['message'] = 'Không tìm thấy bài viết để bình luận.';
+                return response()->json($data);
+            }
+
+            if (!auth()->check()) {
+                $data['message'] = 'Bạn cần đăng nhập để bình luận.';
+                return response()->json($data, 401);
+            }
 
             $comment['the_comment'] = $attributes['the_comment']; 
-            $comment['post_id'] = $post->id ; 
+            $comment['post_id'] = $post->id; 
             $comment['user_id'] = auth()->id();
 
-            $post->comments()->create($comment);
+            $createdComment = $post->comments()->create($comment);
 
             $data['success'] = 1;
             $data['message'] = "Bạn đã bình luận thành công !";
-            $data['result'] = $comment;
+            $data['result'] = $createdComment->only(['id', 'the_comment']);
         }
   
         return response()->json($data);
     }
 
+        public function deleteCommentUser(Request $request, Comment $comment)
+        {
+            if (! auth()->check()) {
+                $message = 'Bạn cần đăng nhập để xóa bình luận.';
+
+                if ($request->expectsJson()) {
+                    return response()->json([
+                        'success' => 0,
+                        'message' => $message,
+                    ], 401);
+                }
+
+                return redirect()->route('login');
+            }
+
+            if ($comment->user_id !== auth()->id()) {
+                $message = 'Bạn không có quyền xóa bình luận này.';
+
+                if ($request->expectsJson()) {
+                    return response()->json([
+                        'success' => 0,
+                        'message' => $message,
+                    ], 403);
+                }
+
+                abort(403, $message);
+            }
+
+            $comment->delete();
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => 1,
+                    'message' => 'Bình luận đã được xóa.',
+                ]);
+            }
+
+            return redirect()->back()->with('success', 'Bạn đã xóa bình luận.');
+        }
     
 
    

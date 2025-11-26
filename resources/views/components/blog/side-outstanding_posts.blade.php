@@ -113,6 +113,7 @@ use App\Models\Category;
 </div>
 
 @section('custom_js')
+@parent
 
 <script>
 	setTimeout(() => {
@@ -211,88 +212,177 @@ use App\Models\Category;
 </script>
 
 <script>
-	$(document).on('click', '.send-comment-btn', (e) => {
-		e.preventDefault();
-		let $this = e.target;
+    $(document).on('submit', '.js-comment-form', function (event) {
+        const $form = $(this);
+        const postSlug = $form.data('post-slug') || $form.find("input[name='post_slug']").val();
+        const postId = $form.data('post-id') || $form.find("input[name='post_id']").val();
 
-		let csrf_token = $($this).parents("form").find("input[name='_token']").val();
-		let the_comment =  $($this).parents("form").find("textarea[name='the_comment']").val();
-		let post_title =  $('.post_title').text() ; 
+        if (!postSlug || !postId) {
+            return; // Thiếu dữ liệu, để form submit bình thường
+        }
 
-		let count_comment =  $('.post_count_comment').text() ; 
-        let ListComment = $('.comment--items');
+        event.preventDefault();
 
-		let formData = new FormData();
-		formData.append('_token', csrf_token);
-		formData.append('the_comment', the_comment);
-		formData.append('post_title', post_title);
-	
+        const $error = $form.find('.comment_error');
+        const $message = $('.global-message');
+        const $commentField = $form.find("textarea[name='the_comment']");
+        const commentText = ($commentField.val() || '').trim();
 
+        if (commentText.length === 0) {
+            $error.text('Vui lòng nhập nội dung bình luận.');
+            return;
+        }
 
-		$.ajax({
-			url: "{{ route('posts.addCommentUser') }}",
-			data: formData,
-			type: 'POST',
-			dataType: 'JSON',
-			processData: false,
-			contentType: false,
-			success: function (data) {
-				if(data.success){
+        $error.text('');
 
-                    console.log(data.result);
-                  
-                    // Xử lý thêm comment vào bài viết tạm thời
-                    count_comment = Number(count_comment) + 1;
-                    $('.comment_error').text('');
+        let commentCount = parseInt($('.post_count_comment').text(), 10);
+        if (Number.isNaN(commentCount)) {
+            commentCount = 0;
+        }
 
-                    $('.post_count_comment').text(count_comment);
-                    const htmls  = (() =>{
-                    return `
-                            @auth
-                                <li>
-                                    <div class="comment--item clearfix">
-                                        <div class="comment--img float--left">
-                                            <img src="{{ optional(auth()->user()->image)->url ?? asset('storage/placeholders/user_placeholder.jpg') }}" style="border-radius: 50%; margin: auto; width: 68px; height: 68px; object-fit: cover; object-position: center;"  alt="Ảnh đại diện" onerror="this.onerror=null;this.src='{{ asset('storage/placeholders/user_placeholder.jpg') }}';">
-                                        </div>
-                                        <div class="comment--info">
-                                            <div class="comment--header clearfix">
-                                            <p class="name">{{ auth()->user()->name }}</p> 
-                                                <p class="date">vừa xong</p>
-                                                <a href="javascript:;" class="reply"><i class="fa fa-flag"></i></a>
-                                            </div>
-                                            <div class="comment--content">
-                                                <p>${data.result['the_comment']}</p>
-                                                <p class="star">
-                                                    <span class="text-left"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
-                                                </p>
-                                            </div>
-                                        </div>
+        const commentList = $('.comment--items');
+        const formData = new FormData($form[0]);
+
+        $.ajax({
+            url: "{{ route('posts.addCommentUser') }}",
+            type: 'POST',
+            dataType: 'json',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                if (data.success) {
+                    commentCount += 1;
+                    $('.post_count_comment').text(commentCount);
+
+                    const escapedComment = $('<div>').text(data.result.the_comment).html();
+
+                    const newCommentHtml = `
+                        @auth
+                        <li id="comment_${data.result.id}">
+                            <div class="comment--item clearfix">
+                                <div class="comment--img float--left">
+                                    <img src="{{ optional(auth()->user()->image)->url ?? asset('storage/placeholders/user_placeholder.jpg') }}" style="border-radius: 50%; margin: auto; width: 68px; height: 68px; object-fit: cover; object-position: center;"  alt="Ảnh đại diện" onerror="this.onerror=null;this.src='{{ asset('storage/placeholders/user_placeholder.jpg') }}';">
+                                </div>
+                                <div class="comment--info">
+                                    <div class="comment--header clearfix">
+                                        <p class="name">{{ auth()->user()->name }}</p>
+                                        <p class="date">vừa xong</p>
+                                        <a href="javascript:;" class="reply"><i class="fa fa-flag"></i></a>
+                                        <form method="POST" action="{{ url('/binh-luan') }}/${data.result.id}" class="delete-comment-form d-inline-block" data-comment-id="${data.result.id}">
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <button type="submit" class="delete-comment-btn btn btn-link btn-sm text-danger p-0 ms-2">Xóa</button>
+                                        </form>
                                     </div>
-                                </li>
-                            @endauth
-                        `
-                        });
-                    ListComment.append(htmls);
+                                    <div class="comment--content">
+                                        <p>${escapedComment}</p>
+                                        <p class="star">
+                                            <span class="text-left"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        @endauth
+                    `;
 
+                    commentList.append(newCommentHtml);
 
-					$('.global-message').addClass('alert alert-info');
-					$('.global-message').fadeIn();
-					$('.global-message').text(data.message);
+                    if ($message.length) {
+                        $message.removeClass('alert-success alert-danger').addClass('alert alert-info').text(data.message).fadeIn();
+                        setTimeout(() => {
+                            $(".global-message").fadeOut();
+                        }, 5000);
+                    }
 
-					clearData( $($this).parents("form"), [
-						'the_comment',
-					]);
+                    clearData($form, ['the_comment']);
+                    $commentField.focus();
+                } else {
+                    const errorText = data.errors || data.message || 'Không thể bình luận. Vui lòng thử lại.';
+                    $error.text(errorText);
+                }
+            },
+            error: function () {
+                $error.text('Đã xảy ra lỗi trong quá trình gửi bình luận. Vui lòng thử lại.');
+            }
+        });
+    });
 
-					setTimeout(() => {
-						$(".global-message").fadeOut();
-					}, 5000)
+    $(document).on('submit', '.delete-comment-form', function (event) {
+        const $form = $(this);
+        const actionUrl = $form.attr('action');
+        const commentId = $form.data('comment-id');
 
-				}else{
-                    $('.comment_error').text(data.errors);
-				}
-			}
-		})
-	})
+        if (!actionUrl || !commentId) {
+            return;
+        }
+
+        if (!$form.find('input[name="_token"]').length) {
+            return; // Thiếu CSRF token nên để form submit bình thường
+        }
+
+        event.preventDefault();
+
+        const $button = $form.find('.delete-comment-btn');
+        const $message = $('.global-message');
+        const requestData = $form.serialize();
+
+        $button.prop('disabled', true);
+
+        $.ajax({
+            url: actionUrl,
+            type: 'POST',
+            dataType: 'json',
+            data: requestData,
+            headers: {
+                'Accept': 'application/json',
+            },
+            success: function (response) {
+                if (response.success) {
+                    const $commentItem = $('#comment_' + commentId);
+                    if ($commentItem.length) {
+                        $commentItem.remove();
+                    }
+
+                    let commentCount = parseInt($('.post_count_comment').text(), 10);
+                    if (Number.isNaN(commentCount) || commentCount <= 0) {
+                        commentCount = 0;
+                    } else {
+                        commentCount -= 1;
+                    }
+                    $('.post_count_comment').text(commentCount);
+
+                    if ($message.length) {
+                        $message.removeClass('alert-success alert-danger').addClass('alert alert-info').text(response.message || 'Bình luận đã được xóa.').fadeIn();
+                        setTimeout(() => {
+                            $(".global-message").fadeOut();
+                        }, 5000);
+                    }
+                } else if (response.message) {
+                    if ($message.length) {
+                        $message.removeClass('alert-info alert-success').addClass('alert alert-danger').text(response.message).fadeIn();
+                        setTimeout(() => {
+                            $(".global-message").fadeOut();
+                        }, 5000);
+                    }
+                }
+            },
+            error: function (xhr) {
+                const errorMessage = xhr?.responseJSON?.message || 'Không thể xóa bình luận. Vui lòng thử lại.';
+
+                if ($message.length) {
+                    $message.removeClass('alert-info alert-success').addClass('alert alert-danger').text(errorMessage).fadeIn();
+                    setTimeout(() => {
+                        $(".global-message").fadeOut();
+                    }, 5000);
+                }
+            },
+            complete: function () {
+                $button.prop('disabled', false);
+            }
+        });
+    });
 </script>
 
 @endsection
