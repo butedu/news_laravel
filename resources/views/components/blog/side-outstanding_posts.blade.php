@@ -240,7 +240,8 @@ use App\Models\Category;
             commentCount = 0;
         }
 
-        const commentList = $('.comment--items');
+        let commentList = $('.comment-list');
+        const commentSection = $('.comment-section');
         const formData = new FormData($form[0]);
 
         $.ajax({
@@ -259,33 +260,42 @@ use App\Models\Category;
 
                     const newCommentHtml = `
                         @auth
-                        <li id="comment_${data.result.id}">
-                            <div class="comment--item clearfix">
-                                <div class="comment--img float--left">
-                                    <img src="{{ optional(auth()->user()->image)->url ?? asset('storage/placeholders/user_placeholder.jpg') }}" style="border-radius: 50%; margin: auto; width: 68px; height: 68px; object-fit: cover; object-position: center;"  alt="Ảnh đại diện" onerror="this.onerror=null;this.src='{{ asset('storage/placeholders/user_placeholder.jpg') }}';">
+                        <li class="comment-item" id="comment_${data.result.id}">
+                            <div class="comment-card">
+                                <div class="comment-card__avatar">
+                                    <img src="{{ optional(auth()->user()->image)->url ?? asset('storage/placeholders/user_placeholder.jpg') }}" alt="Ảnh đại diện" onerror="this.onerror=null;this.src='{{ asset('storage/placeholders/user_placeholder.jpg') }}';">
                                 </div>
-                                <div class="comment--info">
-                                    <div class="comment--header clearfix">
-                                        <p class="name">{{ auth()->user()->name }}</p>
-                                        <p class="date">vừa xong</p>
-                                        <a href="javascript:;" class="reply"><i class="fa fa-flag"></i></a>
-                                        <form method="POST" action="{{ url('/binh-luan') }}/${data.result.id}" class="delete-comment-form d-inline-block" data-comment-id="${data.result.id}">
-                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <button type="submit" class="delete-comment-btn btn btn-link btn-sm text-danger p-0 ms-2">Xóa</button>
-                                        </form>
+                                <div class="comment-card__body">
+                                    <div class="comment-card__header">
+                                        <div class="comment-card__author">
+                                            <span class="comment-card__name">{{ auth()->user()->name }}</span>
+                                            <span class="comment-card__meta">vừa xong</span>
+                                        </div>
+                                        <div class="comment-card__actions">
+                                            <a href="javascript:;" class="comment-card__action comment-card__action--icon" aria-label="Báo cáo bình luận">
+                                                <i class="fa fa-flag"></i>
+                                            </a>
+                                            <form method="POST" action="{{ url('/binh-luan') }}/${data.result.id}" class="delete-comment-form" data-comment-id="${data.result.id}">
+                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <button type="submit" class="comment-card__action comment-card__delete delete-comment-btn">Xóa</button>
+                                            </form>
+                                        </div>
                                     </div>
-                                    <div class="comment--content">
+                                    <div class="comment-card__content">
                                         <p>${escapedComment}</p>
-                                        <p class="star">
-                                            <span class="text-left"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
-                                        </p>
                                     </div>
                                 </div>
                             </div>
                         </li>
                         @endauth
                     `;
+
+                    if (!commentList.length && commentSection.length) {
+                        commentSection.find('.comment-empty').remove();
+                        commentList = $('<ul class="comment-list"></ul>');
+                        commentSection.append(commentList);
+                    }
 
                     commentList.append(newCommentHtml);
 
@@ -313,6 +323,7 @@ use App\Models\Category;
         const $form = $(this);
         const actionUrl = $form.attr('action');
         const commentId = $form.data('comment-id');
+        const commentSection = $('.comment-section');
 
         if (!actionUrl || !commentId) {
             return;
@@ -352,6 +363,11 @@ use App\Models\Category;
                         commentCount -= 1;
                     }
                     $('.post_count_comment').text(commentCount);
+
+                    const commentList = $('.comment-list');
+                    if (!commentList.children().length && commentSection.length) {
+                        commentSection.append('<div class="comment-empty">Hiện chưa có bình luận nào. Hãy là người đầu tiên chia sẻ cảm nhận của bạn!</div>');
+                    }
 
                     if ($message.length) {
                         $message.removeClass('alert-success alert-danger').addClass('alert alert-info').text(response.message || 'Bình luận đã được xóa.').fadeIn();

@@ -161,6 +161,310 @@
             box-shadow: 0 12px 24px rgba(9, 89, 171, 0.25);
         }
 
+        .comment-section{
+            margin-top: 48px;
+        }
+
+        .comment-section__header{
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .comment-section__title{
+            margin: 0;
+            font-size: 26px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .comment-section__subtitle{
+            margin: 6px 0 0;
+            color: #475569;
+            font-size: 15px;
+        }
+
+        .comment-section__count{
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(9, 89, 171, 0.08);
+            color: #0959ab;
+            font-weight: 600;
+        }
+
+        .comment-list{
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .comment-item{
+            list-style: none;
+        }
+
+        .comment-card{
+            display: flex;
+            gap: 18px;
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            background: linear-gradient(135deg, #ffffff, rgba(241, 245, 249, 0.6));
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+        }
+
+        .comment-card__avatar img{
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center;
+            border: 3px solid rgba(9, 89, 171, 0.15);
+        }
+
+        .comment-card__body{
+            flex: 1;
+            min-width: 0;
+        }
+
+        .comment-card__header{
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .comment-card__author{
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .comment-card__name{
+            font-weight: 700;
+            font-size: 16px;
+            color: #0f172a;
+        }
+
+        .comment-card__meta{
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .comment-card__actions{
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .comment-card__action{
+            font-size: 14px;
+            color: #64748b;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s ease;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .comment-card__action:hover{
+            color: #0959ab;
+        }
+
+        .comment-card__action--icon{
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(9, 89, 171, 0.08);
+        }
+
+        .comment-card__action--icon:hover{
+            background: rgba(9, 89, 171, 0.16);
+        }
+
+        .comment-card__delete{
+            font-weight: 600;
+        }
+
+        .comment-card__content p{
+            margin: 0;
+            color: #1e293b;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .comment-empty{
+            padding: 32px;
+            text-align: center;
+            border-radius: 14px;
+            border: 1px dashed rgba(148, 163, 184, 0.6);
+            background: rgba(248, 250, 252, 0.85);
+            color: #475569;
+            font-weight: 600;
+        }
+
+        .comment-compose{
+            margin-top: 48px;
+            padding: 28px;
+            border-radius: 20px;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            background: linear-gradient(135deg, rgba(9, 89, 171, 0.08), rgba(15, 118, 110, 0.05));
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+        }
+
+        .comment-compose__header{
+            margin-bottom: 20px;
+        }
+
+        .comment-compose__title{
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .comment-compose__subtitle{
+            margin: 6px 0 0;
+            color: #475569;
+            font-size: 15px;
+        }
+
+        .comment-compose__field{
+            margin-bottom: 16px;
+        }
+
+        .comment-compose__field label{
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #0f172a;
+        }
+
+        .comment-compose__textarea{
+            width: 100%;
+            min-height: 140px;
+            border-radius: 16px;
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            padding: 16px;
+            font-size: 15px;
+            resize: vertical;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            background: rgba(255, 255, 255, 0.92);
+        }
+
+        .comment-compose__textarea:focus{
+            outline: none;
+            border-color: #0959ab;
+            box-shadow: 0 0 0 3px rgba(9, 89, 171, 0.12);
+        }
+
+        .comment-compose__error{
+            display: block;
+            min-height: 18px;
+            font-size: 13px;
+            color: #dc2626;
+            margin-top: 6px;
+        }
+
+        .comment-compose__footer{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .comment-compose__hint{
+            font-size: 14px;
+            color: #475569;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .comment-compose__submit{
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 28px;
+            border-radius: 999px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #2c85df, #0959ab);
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .comment-compose__submit:hover{
+            transform: translateY(-1px);
+            box-shadow: 0 12px 24px rgba(9, 89, 171, 0.3);
+            color: #fff;
+        }
+
+        .comment-compose__auth-prompt{
+            padding: 20px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .comment-compose__auth-prompt a{
+            font-weight: 700;
+            color: #0959ab;
+        }
+
+        .comment-compose__auth-prompt a:hover{
+            text-decoration: underline;
+        }
+
+        @media (max-width: 767px){
+            .comment-card{
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .comment-card__header{
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .comment-card__actions{
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .comment-compose{
+                padding: 20px;
+            }
+
+            .comment-compose__footer{
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .comment-compose__submit{
+                width: 100%;
+            }
+        }
+
 		.author-info,
 		.post-time{
 			margin: 0;
@@ -354,93 +658,93 @@
                         <!-- Post Social End -->
 
                     
-                        <!-- Comment List Start -->
-                        <div class="comment--list pd--30-0">
-                            <!-- Post Items Title Start -->
-                            <div class="post--items-title">
-                                <h2 class="h4"><span class="post_count_comment h4" >{{ count($post->comments) }} </span> bình luận</h2>
-                                <i class="icon fa fa-comments-o"></i>
+                        <section class="comment-section">
+                            <div class="comment-section__header">
+                                <div>
+                                    <h2 class="comment-section__title">Bình luận</h2>
+                                    <p class="comment-section__subtitle">Chia sẻ suy nghĩ của bạn về bài viết này.</p>
+                                </div>
+                                <span class="comment-section__count"><span class="post_count_comment">{{ count($post->comments) }}</span> ý kiến</span>
                             </div>
-                            <!-- Post Items Title End -->
 
-                            <ul class="comment--items nav">
-                            @foreach($post->comments as $comment)
-                                <li id="comment_{{ $comment->id }}">
-                                    <!-- Comment Item Start -->
-                                   <div class="comment--item clearfix">
-                                        <div class="comment--img float--left">
-                                            @php
-                                                $commentAvatar = optional($comment->user->image)->url ?? asset('storage/placeholders/user_placeholder.jpg');
-                                            @endphp
-                                            <img src="{{ $commentAvatar }}" style="border-radius: 50%; margin: auto; width: 68px; height: 68px; object-fit: cover; object-position: center;"  alt="Ảnh đại diện" onerror="this.onerror=null;this.src='{{ asset('storage/placeholders/user_placeholder.jpg') }}';">
+                            @if($post->comments->isEmpty())
+                                <div class="comment-empty">Hiện chưa có bình luận nào. Hãy là người đầu tiên chia sẻ cảm nhận của bạn!</div>
+                            @else
+                                <ul class="comment-list">
+                                @foreach($post->comments as $comment)
+                                    <li class="comment-item" id="comment_{{ $comment->id }}">
+                                        <div class="comment-card">
+                                            <div class="comment-card__avatar">
+                                                @php
+                                                    $commentAvatar = optional($comment->user->image)->url ?? asset('storage/placeholders/user_placeholder.jpg');
+                                                @endphp
+                                                <img src="{{ $commentAvatar }}" alt="Ảnh đại diện" onerror="this.onerror=null;this.src='{{ asset('storage/placeholders/user_placeholder.jpg') }}';">
+                                            </div>
+                                            <div class="comment-card__body">
+                                                <div class="comment-card__header">
+                                                    <div class="comment-card__author">
+                                                        <span class="comment-card__name">{{ $comment->user->name }}</span>
+                                                        <span class="comment-card__meta">{{ $comment->created_at->locale('vi')->diffForHumans() }}</span>
+                                                    </div>
+                                                    <div class="comment-card__actions">
+                                                        <a href="javascript:;" class="comment-card__action comment-card__action--icon" aria-label="Báo cáo bình luận">
+                                                            <i class="fa fa-flag"></i>
+                                                        </a>
+                                                        @if(auth()->check() && auth()->id() === $comment->user_id)
+                                                            <form method="POST" action="{{ route('posts.deleteCommentUser', $comment) }}" class="delete-comment-form" data-comment-id="{{ $comment->id }}">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="comment-card__action comment-card__delete delete-comment-btn">Xóa</button>
+                                                            </form>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="comment-card__content">
+                                                    <p>{{ $comment->the_comment }}</p>
+                                                </div>
+                                            </div>
                                         </div>
-										<div class="comment--info">
-											<div class="comment--header clearfix">
-												<p class="name">{{ $comment->user->name }}</p>
-                                                <p class="date">{{ $comment->created_at->locale('vi')->diffForHumans() }}</p>
-                                                <a href="javascript:;" class="reply"><i class="fa fa-flag"></i></a>
-                                                @if(auth()->check() && auth()->id() === $comment->user_id)
-                                                    <form method="POST" action="{{ route('posts.deleteCommentUser', $comment) }}" class="delete-comment-form d-inline-block" data-comment-id="{{ $comment->id }}">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="delete-comment-btn btn btn-link btn-sm text-danger p-0 ms-2">Xóa</button>
-                                                    </form>
-                                                @endif
-											</div>
-											<div class="comment--content">
-												<p>{{ $comment->the_comment }}</p>
-												<p class="star">
-													<span class="text-left"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
-												</p>
-											</div>
-										</div>
-                                    </div>
-                                    <!-- Comment Item End -->
-                                </li>
-								@endforeach
-                            </ul>
-                        </div>
-                        <!-- Comment List End -->
+                                    </li>
+                                @endforeach
+                                </ul>
+                            @endif
+                        </section>
 
-                        <!-- Comment Form Start -->
-                        <div class="comment--form pd--30-0">
-                            <!-- Post Items Title Start -->
-                            <div class="post--items-title">
-								<h2 class="h4">Viết bình luận</h2>
-                                <i class="icon fa fa-pencil-square-o"></i>
+                        <section class="comment-compose">
+                            <div class="comment-compose__header">
+                                <h3 class="comment-compose__title">Viết bình luận của bạn</h3>
+                                <p class="comment-compose__subtitle">Chúng tôi rất mong nhận được ý kiến đóng góp để bài viết ngày càng tốt hơn.</p>
                             </div>
-                            <!-- Post Items Title End -->
-							
-                            <div class="comment-respond">
-                                @auth	
-                                                <form method="POST" action="{{ route('posts.add_comment', $post) }}" autocomplete="off" class="js-comment-form" data-post-slug="{{ $post->slug }}" data-post-id="{{ $post->id }}">
+
+                            @auth
+                                <form method="POST" action="{{ route('posts.add_comment', $post) }}" autocomplete="off" class="js-comment-form" data-post-slug="{{ $post->slug }}" data-post-id="{{ $post->id }}">
                                     @csrf
 
                                     <input type="hidden" name="post_id" value="{{ $post->id }}">
                                     <input type="hidden" name="post_slug" value="{{ $post->slug }}">
 
-									<div class="row form-group">
-										<div class="col-md-12">
-											<textarea name="the_comment" id="message" cols="30" rows="5" class="form-control" placeholder="Đánh giá bài viết này"></textarea>
-										</div>
-									</div>
-                                    <small style="color: red; font-size: 14px;" class="comment_error"> </small>
-									<div class="form-group">
-										<input id="input_comment" type="submit" value="Bình luận" class="send-comment-btn btn btn-primary">
-									</div>
+                                    <div class="comment-compose__field">
+                                        <label for="comment-message">Nội dung bình luận</label>
+                                        <textarea name="the_comment" id="comment-message" class="comment-compose__textarea" placeholder="Chia sẻ cảm nhận, câu hỏi hoặc góp ý của bạn..."></textarea>
+                                        <small class="comment-compose__error comment_error"></small>
+                                    </div>
+
+                                    <div class="comment-compose__footer">
+                                        <span class="comment-compose__hint"><i class="fa fa-lightbulb-o"></i> Nội dung nên lịch sự, tôn trọng và không quá 300 ký tự.</span>
+                                        <button type="submit" class="comment-compose__submit send-comment-btn">Gửi bình luận</button>
+                                    </div>
                                 </form>
-								@endauth
+                            @endauth
 
-								@guest
-								<p class="h4">
-									<a href="{{ route('login') }}">Đăng nhập</a> hoặc 
-									<a href="{{ route('register') }}">Đăng ký</a> để bình luận bài viết
-								</p>
-								@endguest
-                            </div>
-
-                        </div>
-                        <!-- Comment Form End -->
+                            @guest
+                                <div class="comment-compose__auth-prompt">
+                                    <strong>Bạn cần đăng nhập để bình luận.</strong>
+                                    <div>
+                                        <a href="{{ route('login') }}">Đăng nhập</a> hoặc <a href="{{ route('register') }}">Đăng ký tài khoản</a> để tham gia thảo luận.
+                                    </div>
+                                </div>
+                            @endguest
+                        </section>
 
 						    <!-- Post Related Start -->
 						<div class="post--related ptop--30">
