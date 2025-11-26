@@ -231,6 +231,178 @@
                             </div>
                         </div>
 
+                        @php
+                            $utilities = $sidebarUtilities ?? [];
+                            $weatherData = $utilities['weather'] ?? [];
+                            $airQualityData = $utilities['air_quality'] ?? [];
+                            $goldData = $utilities['gold'] ?? null;
+                            $fuelData = $utilities['fuel'] ?? null;
+                            $exchangeData = $utilities['exchange'] ?? [];
+                            $hasUtilitiesContent = !empty($weatherData) || !empty($airQualityData) || $goldData || $fuelData || !empty($exchangeData);
+                        @endphp
+                        <div class="sidebar-widget sidebar-utilities">
+                            <h3 class="widget-title"> Tiện ích</h3>
+                            <div class="widget-content">
+                                @if($hasUtilitiesContent)
+                                <div class="utility-grid">
+                                    @if(!empty($weatherData))
+                                        @php
+                                            $weatherUpdated = $weatherData[0]['updated_at'] ?? null;
+                                        @endphp
+                                        <section class="utility-card utility-card--wide utility-card--weather">
+                                            <div class="utility-card__header">
+                                                <span class="utility-card__title"><i class="fa fa-sun-o"></i> Thời tiết</span>
+                                                @if($weatherUpdated instanceof \Carbon\CarbonInterface)
+                                                    <span class="utility-card__timestamp">Cập nhật {{ $weatherUpdated->locale('vi')->diffForHumans() }}</span>
+                                                @endif
+                                            </div>
+                                            <ul class="utility-weather-list">
+                                                @foreach($weatherData as $weather)
+                                                <li class="utility-weather-row">
+                                                    <div class="utility-weather-main">
+                                                        <span class="utility-weather-icon"><i class="fa {{ $weather['icon'] ?? 'fa-cloud' }}"></i></span>
+                                                        <div class="utility-weather-text">
+                                                            <span class="utility-weather-city">{{ $weather['name'] }}</span>
+                                                            <span class="utility-weather-desc">{{ $weather['description'] }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="utility-weather-meta">
+                                                        <span class="utility-weather-temp">{{ $weather['temperature'] !== null ? $weather['temperature'].'°C' : '—' }}</span>
+                                                        @if(isset($weather['humidity']) && $weather['humidity'] !== null)
+                                                        <span class="utility-badge utility-badge--soft"><i class="fa fa-tint"></i> {{ $weather['humidity'] }}%</span>
+                                                        @endif
+                                                    </div>
+                                                </li>
+                                                @endforeach
+                                            </ul>
+                                        </section>
+                                    @endif
+
+                                    @if(!empty($airQualityData))
+                                        @php
+                                            $airUpdated = collect($airQualityData)->firstWhere('updated_at');
+                                        @endphp
+                                        <section class="utility-card utility-card--air">
+                                            <div class="utility-card__header">
+                                                <span class="utility-card__title"><i class="fa fa-leaf"></i> Chỉ số không khí</span>
+                                                @if($airUpdated && ($airUpdated['updated_at'] instanceof \Carbon\CarbonInterface))
+                                                    <span class="utility-card__timestamp">Cập nhật {{ $airUpdated['updated_at']->locale('vi')->diffForHumans() }}</span>
+                                                @endif
+                                            </div>
+                                            <ul class="utility-air-list">
+                                                @foreach($airQualityData as $air)
+                                                <li class="utility-air-item">
+                                                    <div class="utility-air-top">
+                                                        <span class="utility-air-city">{{ $air['name'] }}</span>
+                                                        <span class="utility-air-badge {{ $air['badge_class'] ?? 'is-unknown' }}">{{ $air['category'] }}</span>
+                                                    </div>
+                                                    <div class="utility-air-metrics">
+                                                        <span class="utility-air-aqi">AQI: {{ $air['aqi'] ?? '—' }}</span>
+                                                        <span class="utility-air-detail">PM2.5: {{ is_numeric($air['pm25'] ?? null) ? $air['pm25'] : '—' }}</span>
+                                                        <span class="utility-air-detail">PM10: {{ is_numeric($air['pm10'] ?? null) ? $air['pm10'] : '—' }}</span>
+                                                    </div>
+                                                </li>
+                                                @endforeach
+                                            </ul>
+                                        </section>
+                                    @endif
+
+                                    @if($goldData)
+                                        @php
+                                            $goldUpdated = $goldData['updated_at'] ?? null;
+                                        @endphp
+                                        <section class="utility-card utility-card--gold">
+                                            <div class="utility-card__header">
+                                                <span class="utility-card__title"><i class="fa fa-diamond"></i> Giá vàng</span>
+                                                @if($goldUpdated instanceof \Carbon\CarbonInterface)
+                                                    <span class="utility-card__timestamp">Cập nhật {{ $goldUpdated->locale('vi')->diffForHumans() }}</span>
+                                                @endif
+                                            </div>
+                                            <div class="utility-stat">
+                                                <div class="utility-stat__value">
+                                                    {{ isset($goldData['price_vnd_per_luong']) && $goldData['price_vnd_per_luong'] ? number_format($goldData['price_vnd_per_luong'], 0, ',', '.') : '—' }} đ/lượng
+                                                </div>
+                                                <div class="utility-stat__meta">
+                                                    @if(isset($goldData['price_usd']))
+                                                    ~ {{ number_format($goldData['price_usd'], 2, '.', ',') }} USD/oz
+                                                    @else
+                                                    ~ — USD/oz
+                                                    @endif
+                                                </div>
+                                                @if(isset($goldData['price_vnd_per_ounce']) && $goldData['price_vnd_per_ounce'])
+                                                <div class="utility-stat__note">{{ number_format($goldData['price_vnd_per_ounce'], 0, ',', '.') }} đ/oz</div>
+                                                @endif
+                                            </div>
+                                            <p class="utility-card__note">Nguồn: AwesomeAPI &amp; tỷ giá USD/VND cập nhật tự động.</p>
+                                        </section>
+                                    @endif
+
+                                    @if($fuelData)
+                                        @php
+                                            $fuelUpdated = $fuelData['updated_at'] ?? null;
+                                        @endphp
+                                        <section class="utility-card utility-card--fuel">
+                                            <div class="utility-card__header">
+                                                <span class="utility-card__title"><i class="fa fa-tint"></i> Giá dầu</span>
+                                                @if($fuelUpdated instanceof \Carbon\CarbonInterface)
+                                                    <span class="utility-card__timestamp">Cập nhật {{ $fuelUpdated->locale('vi')->diffForHumans() }}</span>
+                                                @endif
+                                            </div>
+                                            <div class="utility-stat">
+                                                <div class="utility-stat__value">
+                                                    {{ isset($fuelData['vnd_per_liter']) && $fuelData['vnd_per_liter'] ? number_format($fuelData['vnd_per_liter'], 0, ',', '.') : '—' }} đ/lít
+                                                </div>
+                                                <div class="utility-stat__meta">
+                                                    @if(isset($fuelData['usd_per_barrel']))
+                                                    {{ number_format($fuelData['usd_per_barrel'], 2, '.', ',') }} USD/thùng
+                                                    @else
+                                                    — USD/thùng
+                                                    @endif
+                                                </div>
+                                                @if(isset($fuelData['usd_per_liter']) && $fuelData['usd_per_liter'])
+                                                <div class="utility-stat__note">{{ number_format($fuelData['usd_per_liter'], 3, '.', ',') }} USD/lít</div>
+                                                @endif
+                                            </div>
+                                            <p class="utility-card__note">Quy đổi theo giá WTI (Alpha Vantage), 1 thùng ≈ 159 lít &amp; tỷ giá USD/VND hiện hành.</p>
+                                        </section>
+                                    @endif
+
+                                    @if(!empty($exchangeData))
+                                        @php
+                                            $exchangeUpdated = collect($exchangeData)->firstWhere('updated_at');
+                                        @endphp
+                                        <section class="utility-card utility-card--exchange">
+                                            <div class="utility-card__header">
+                                                <span class="utility-card__title"><i class="fa fa-line-chart"></i> Tỷ giá</span>
+                                                @if($exchangeUpdated && ($exchangeUpdated['updated_at'] instanceof \Carbon\CarbonInterface))
+                                                    <span class="utility-card__timestamp">Cập nhật {{ $exchangeUpdated['updated_at']->locale('vi')->diffForHumans() }}</span>
+                                                @endif
+                                            </div>
+                                            <ul class="utility-exchange-list">
+                                                @foreach($exchangeData as $rate)
+                                                <li class="utility-chip">
+                                                    <div class="utility-chip__label">{{ $rate['label'] }}</div>
+                                                    <div class="utility-chip__value">
+                                                        {{ isset($rate['rate']) && $rate['rate'] !== null ? number_format($rate['rate'], $rate['precision'] ?? 2, ',', '.') : '—' }}
+                                                    </div>
+                                                    @if(isset($rate['inverse_rate']) && $rate['inverse_rate'])
+                                                    <div class="utility-chip__sub">
+                                                        1 {{ $rate['quote'] }} = {{ number_format($rate['inverse_rate'], $rate['inverse_precision'] ?? 4, ',', '.') }} {{ $rate['base'] }}
+                                                    </div>
+                                                    @endif
+                                                </li>
+                                                @endforeach
+                                            </ul>
+                                        </section>
+                                    @endif
+
+                                </div>
+                                @else
+                                <p class="utility-empty">Không thể tải dữ liệu tiện ích lúc này.</p>
+                                @endif
+                            </div>
+                        </div>
+
                         <!-- Chuyên mục -->
                         <div class="sidebar-widget">
                             <h3 class="widget-title"><i class="fa fa-list-ul"></i> Chuyên mục</h3>

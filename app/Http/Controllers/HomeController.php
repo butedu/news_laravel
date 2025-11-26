@@ -9,6 +9,7 @@ use App\Models\Comment;
 use App\Models\User;
 use App\Models\Image;
 use App\Models\Newsletter;
+use App\Services\ExternalWidgetService;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -17,6 +18,13 @@ use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
+    protected ExternalWidgetService $widgetService;
+
+    public function __construct(ExternalWidgetService $widgetService)
+    {
+        $this->widgetService = $widgetService;
+    }
+
     public function index(){
         
         $posts = Post::latest()
@@ -160,6 +168,7 @@ class HomeController extends Controller
             'category_home' => $category_home, 
             'tags' => $tags,
             'top_commnents' => $top_commnents, // Lấy ý kiến người đọc mới nhất
+            'sidebarUtilities' => $this->widgetService->getSidebarData(),
         ]);
     }
 

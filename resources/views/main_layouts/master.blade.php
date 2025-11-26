@@ -105,14 +105,33 @@ $categoryFooter  = Category::where('name','!=','Chưa phân loại')->withCount(
 			<div class="container">
 				<div class="float--left float--xs-none text-xs-center">
 					<!-- Header Topbar Info Start -->
+					@php
+						$headerLocationName = $headerWeather['name'] ?? 'TP. Hồ Chí Minh';
+						$headerTemperature = $headerWeather['temperature'] ?? null;
+						$headerCondition = $headerWeather['description'] ?? null;
+						$headerHumidity = $headerWeather['humidity'] ?? null;
+					@endphp
 					<ul class="header--topbar-info nav">
 						<li>
 							<a href="{{ route('home') }}">
 								<img style="border-radius: 12px; height: 40px;" src="{{ asset('kcnew/frontend/img/image_iconLogo.png') }}" alt="logo">
 							</a>
 						</li>
-						<li><i class="fa fm fa-map-marker"></i>Hồ Chí Minh</li>
-						<li><i class="fa fm fa-mixcloud"></i>28<sup>0</sup> C</li>
+						<li><i class="fa fm fa-map-marker"></i>{{ $headerLocationName }}</li>
+						<li>
+							<i class="fa fm fa-sun-o"></i>
+							@if($headerTemperature !== null)
+								{{ $headerTemperature }}&deg;C
+							@else
+								<span>—</span>
+							@endif
+							@if($headerCondition)
+								<span class="header-topbar-weather__desc">{{ $headerCondition }}</span>
+							@endif
+							@if($headerHumidity !== null)
+								<span class="header-topbar-weather__meta">| Độ ẩm {{ $headerHumidity }}%</span>
+							@endif
+						</li>
 						<li style="text-transform: capitalize" ><i class="fa fm fa-calendar"></i>Hôm nay ( {{ $now->translatedFormat('l') }}, Ngày {{ $now->translatedFormat('jS F')}} Năm {{ $now->translatedFormat('Y')}} )</li>
 					</ul>
 					<!-- Header Topbar Info End -->

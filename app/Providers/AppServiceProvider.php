@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Category;
 use App\Models\Setting;
+use App\Services\ExternalWidgetService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +34,19 @@ class AppServiceProvider extends ServiceProvider
             View::Share('setting',$setting);
 
         }
+
+        View::composer('main_layouts.master', function ($view) {
+            $headerWeather = null;
+
+            try {
+                $service = app(ExternalWidgetService::class);
+                $headerWeather = $service->getPrimaryWeatherLocation();
+            } catch (\Throwable $exception) {
+                $headerWeather = null;
+            }
+
+            $view->with('headerWeather', $headerWeather);
+        });
 
     }
 }
