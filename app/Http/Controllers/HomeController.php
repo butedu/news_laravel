@@ -8,6 +8,7 @@ use App\Models\Tag;
 use App\Models\Comment;
 use App\Models\User;
 use App\Models\Image;
+use App\Models\Newsletter;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -340,7 +341,18 @@ class HomeController extends Controller
             ->unique('id')
             ->values();
 
-        return view('profile', compact('user', 'savedPosts', 'commentedPosts'));
+        $newsletterSubscription = Newsletter::with('categories')->firstWhere('email', $user->email);
+        $newsletterCategories = Category::where('name', '!=', 'Chưa phân loại')
+            ->orderBy('name')
+            ->get();
+
+        return view('profile', compact(
+            'user',
+            'savedPosts',
+            'commentedPosts',
+            'newsletterSubscription',
+            'newsletterCategories'
+        ));
     }
 
     private $rules = [

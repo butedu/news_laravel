@@ -164,6 +164,115 @@ $posts_new[3] = Post::latest()->approved()
         margin: 0;
         font-size: 15px;
     }
+    .profile-alert{
+        padding: 14px 18px;
+        border-radius: 12px;
+        margin-bottom: 24px;
+        font-weight: 500;
+    }
+    .profile-alert--success{
+        background: rgba(34, 197, 94, 0.1);
+        color: #047857;
+        border: 1px solid rgba(34, 197, 94, 0.2);
+    }
+    .profile-alert--error{
+        background: rgba(248, 113, 113, 0.1);
+        color: #b91c1c;
+        border: 1px solid rgba(248, 113, 113, 0.2);
+    }
+    .newsletter-preference-card{
+        background: #ffffff;
+        border-radius: 16px;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        padding: 18px 20px;
+        box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+        margin-bottom: 28px;
+    }
+    .newsletter-preference-header{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 14px;
+    }
+    .newsletter-preference-title{
+        margin: 0;
+        font-size: 20px;
+        font-weight: 700;
+        color: #0f172a;
+    }
+    .newsletter-preference-meta{
+        font-size: 13px;
+        color: #64748b;
+    }
+    .newsletter-category-grid{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .newsletter-category-option{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        background: #f8fafc;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        transition: background 0.2s ease, border-color 0.2s ease;
+        flex: 0 1 240px;
+    }
+    .newsletter-category-option:hover{
+        background: #eef2ff;
+        border-color: rgba(59, 130, 246, 0.6);
+    }
+    .newsletter-category-option input[type="checkbox"]{
+        margin: 0;
+    }
+    .newsletter-category-label{
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        color: #0f172a;
+        font-weight: 500;
+    }
+    .newsletter-category-label span{
+        font-size: 12px;
+        color: #64748b;
+    }
+    .newsletter-preference-actions{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 20px;
+    }
+    .newsletter-btn{
+        padding: 8px 18px;
+        border-radius: 999px;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+    .newsletter-btn--primary{
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        color: #fff;
+    }
+    .newsletter-btn--secondary{
+        background: #e2e8f0;
+        color: #334155;
+    }
+    .newsletter-btn:hover{
+        transform: translateY(-1px);
+    }
+    @media (max-width: 767px){
+        .newsletter-preference-card{
+            padding: 18px;
+        }
+        .newsletter-category-option{
+            flex: 1 1 100%;
+        }
+    }
     @media (max-width: 767px){
         .profile-collection{
             padding: 20px;
@@ -181,6 +290,11 @@ $posts_new[3] = Post::latest()->approved()
     $profileUser = $user ?? auth()->user();
     $savedPosts = $savedPosts ?? collect();
     $commentedPosts = $commentedPosts ?? collect();
+    $newsletterSubscription = $newsletterSubscription ?? null;
+    $newsletterCategories = $newsletterCategories ?? collect();
+    $subscribedCategoryIds = $newsletterSubscription
+        ? $newsletterSubscription->categories->pluck('id')->all()
+        : [];
 @endphp
 <div class="main--breadcrumb">
     <div class="container">
@@ -195,6 +309,16 @@ $posts_new[3] = Post::latest()->approved()
 	<div class="main-content--section pbottom--30">
 		<div class="container">
             <h3 class="page-header">Thông tin cá nhân</h3>
+            @if(session('success'))
+                <div class="profile-alert profile-alert--success" role="alert">
+                    {{ session('success') }}
+                </div>
+            @endif
+            @if(session('error'))
+                <div class="profile-alert profile-alert--error" role="alert">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="row">
              
                 <form action="{{ route('update') }}" method="post"  enctype="multipart/form-data" >
@@ -260,6 +384,48 @@ $posts_new[3] = Post::latest()->approved()
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
+                    <div class="newsletter-preference-card">
+                        <div class="newsletter-preference-header">
+                            <div>
+                                <h3 class="newsletter-preference-title">Danh mục nhận bản tin</h3>
+                                <small class="permission-helper">Bật/tắt chuyên mục để nhận email phù hợp.</small>
+                            </div>
+                            <span class="newsletter-preference-meta">
+                                @if(!empty($subscribedCategoryIds))
+                                    Đang theo dõi {{ count($subscribedCategoryIds) }} chuyên mục
+                                @else
+                                    Chưa đăng ký nhận tin
+                                @endif
+                            </span>
+                        </div>
+
+                        @if($newsletterCategories->isEmpty())
+                            <p class="permission-helper mb-0">Hiện chưa có chuyên mục nào để đăng ký.</p>
+                        @else
+                            <form action="{{ route('newsletter.store') }}" method="POST" class="newsletter-preference-form">
+                                @csrf
+                                <input type="hidden" name="email" value="{{ $profileUser->email }}">
+                                <div class="newsletter-category-grid">
+                                    @foreach($newsletterCategories as $newsletterCategory)
+                                        @php
+                                            $isChecked = in_array($newsletterCategory->id, $subscribedCategoryIds, true);
+                                        @endphp
+                                        <label class="newsletter-category-option">
+                                            <input type="checkbox" name="categories[]" value="{{ $newsletterCategory->id }}" {{ $isChecked ? 'checked' : '' }}>
+                                            <div class="newsletter-category-label">
+                                                <strong>{{ $newsletterCategory->name }}</strong>
+                                            </div>
+                                        </label>
+                                    @endforeach
+                                </div>
+                                <div class="newsletter-preference-actions">
+                                    <button type="submit" class="newsletter-btn newsletter-btn--primary">Cập nhật đăng ký</button>
+                                    <button type="button" class="newsletter-btn newsletter-btn--secondary" data-role="unsubscribe">Hủy đăng ký</button>
+                                </div>
+                                <small class="permission-helper">Bỏ chọn toàn bộ hoặc dùng nút “Hủy đăng ký” để dừng nhận mail.</small>
+                            </form>
+                        @endif
+                    </div>
                     @if($savedPosts->isNotEmpty())
                         <div class="profile-collection">
                             <div class="profile-collection__header">

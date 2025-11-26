@@ -60,7 +60,7 @@
                 'highlight' => 'Lương từ 12 triệu',
                 'description' => 'Gia nhập đội ngũ sáng tạo nội dung chuyên nghiệp, môi trường năng động và cơ hội phát triển rõ ràng.',
                 'image' => 'banner_quangcao.png',
-                'url' => 'https://www.topcv.vn/viec-lam/bien-tap-vien-noi-dung',
+                'url' => 'https://www.topcv.vn/',
                 'features' => [
                     'Làm việc hybrid linh hoạt',
                     'Thưởng KPI hàng quý',
