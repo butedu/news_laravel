@@ -15,6 +15,8 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Illuminate\Http\UploadedFile;
 
 class HomeController extends Controller
 {
@@ -364,49 +366,108 @@ class HomeController extends Controller
         ));
     }
 
-    private $rules = [
-        'name' => 'required|min:3',
-        'email' => 'required|email|unique:users,email',
-        'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+    private array $rules = [
+        'name' => ['required', 'min:3'],
+        'email' => ['required', 'email'],
+        'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+        'image_url' => ['nullable', 'url'],
+        'current_password' => ['nullable', 'required_with:password,password_confirmation', 'current_password'],
+        'password' => ['nullable', 'confirmed', 'min:8'],
     ];
 
     public function update(Request $request)
     {
         $user = auth()->user();
         
-        if($request->email !== $user->email){
-            $this->rules['email'] = ['required','email', Rule::unique('users')->ignore($user)];
-        }else{
-            $this->rules['email'] = '';
+        $rules = $this->rules;
+        $rules['email'][] = Rule::unique('users')->ignore($user->id);
+        $rules['image'][0] = $request->hasFile('image') ? 'required' : 'nullable';
+
+        $validated = $request->validate($rules);
+
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($validated['password']);
+            $user->setRememberToken(Str::random(60));
         }
-        
-        $validated = $request->validate($this->rules);
-        $user->update($validated);
+
+        $user->save();
+
+        $imageUrl = isset($validated['image_url']) ? trim($validated['image_url']) : '';
 
         if ($request->hasFile('image')) {
-            $existingImage = $user->image;
-            if ($existingImage) {
-                if ($existingImage->path && Storage::disk('public')->exists($existingImage->path)) {
-                    Storage::disk('public')->delete($existingImage->path);
-                }
-                $existingImage->delete();
-            }
-
-            $image = $request->file('image');
-            $filename = $image->getClientOriginalName();
-            $file_extension = $image->getClientOriginalExtension();
-            $path   = $image->store('images', 'public');
-            
-            $user->image()->create([
-                'name' => $filename,
-                'extension' => $file_extension,
-                'path' => $path,
-            ]);
+            $this->storeUploadedAvatar($user, $request->file('image'));
+        } elseif ($imageUrl !== '') {
+            $this->storeExternalAvatar($user, $imageUrl);
         }
 
         $user->refresh();
         
         return redirect()->route('profile')->with('success', 'Sửa tài khoản thành công.');
+    }
+
+    private function storeExternalAvatar(User $user, string $imageUrl): void
+    {
+        $existingImage = $user->image;
+
+        $parsedPath = parse_url($imageUrl, PHP_URL_PATH) ?? '';
+        $filename = $parsedPath ? basename($parsedPath) : 'external-avatar';
+        $extension = $parsedPath ? pathinfo($parsedPath, PATHINFO_EXTENSION) : null;
+
+        $payload = [
+            'name' => $filename ?: 'external-avatar',
+            'extension' => $extension,
+            'path' => $imageUrl,
+        ];
+
+        if ($existingImage) {
+            $this->deleteImageFileIfLocal($existingImage);
+            $existingImage->update($payload);
+        } else {
+            $user->image()->create($payload);
+        }
+    }
+
+    private function storeUploadedAvatar(User $user, UploadedFile $image): void
+    {
+        $existingImage = $user->image;
+        $this->deleteImageFileIfLocal($existingImage);
+
+        $filename = $image->getClientOriginalName();
+        $fileExtension = $image->getClientOriginalExtension();
+        $storedPath = $image->store('images', 'public');
+        $normalizedPath = str_replace('\\', '/', $storedPath);
+
+        $payload = [
+            'name' => $filename,
+            'extension' => $fileExtension,
+            'path' => $normalizedPath,
+        ];
+
+        if ($existingImage) {
+            $existingImage->update($payload);
+        } else {
+            $user->image()->create($payload);
+        }
+    }
+
+    private function deleteImageFileIfLocal(?Image $image): void
+    {
+        if (!$image || !$image->path) {
+            return;
+        }
+
+        if (Str::startsWith($image->path, ['http://', 'https://'])) {
+            return;
+        }
+
+        $normalizedPath = str_replace('\\', '/', $image->path);
+
+        if (Storage::disk('public')->exists($normalizedPath)) {
+            Storage::disk('public')->delete($normalizedPath);
+        }
     }
 
     private function getUnclassifiedCategoryId(): ?int

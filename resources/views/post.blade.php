@@ -161,6 +161,70 @@
             box-shadow: 0 12px 24px rgba(9, 89, 171, 0.25);
         }
 
+        .post-meta{
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            padding: 16px 0;
+        }
+
+        .post-meta__item{
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(9, 89, 171, 0.08);
+            color: #0f172a;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .post-meta__item i{
+            color: #0959ab;
+        }
+
+        .post-meta__item time{
+            font-weight: 600;
+        }
+
+        .post-meta__item small{
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            color: #64748b;
+        }
+
+        .post-meta.post-meta--compact{
+            padding: 6px 0 0;
+            gap: 12px;
+        }
+
+        .post-meta.post-meta--compact .post-meta__item{
+            background: transparent;
+            padding: 0;
+            color: #475569;
+            font-weight: 500;
+            font-size: 13px;
+        }
+
+        .post-meta.post-meta--compact .post-meta__item i{
+            color: #64748b;
+        }
+
+        @media (max-width: 767px){
+            .post-meta{
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .post-meta__item{
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+
         .comment-section{
             margin-top: 48px;
         }
@@ -547,15 +611,29 @@
                             </div>
 
                             <div class="post--info">
-                                <ul class="nav meta">
-									<li class="text capitalize"><a href="#">{{ $post->created_at->locale('vi')->translatedFormat('l') }} {{  $post->created_at->locale('vi')->format('d/m/Y') }}</a></li>
-                                    <li><a href="#">{{ $post->author->name }}</a></li>
-                                    <li><span><i class="fa fm fa-eye"></i>{{ $post->views }}</span></li>
-                                    <li><a href="#"><i class="fa fm fa-comments-o"></i>{{ count($post->comments) }}</a></li>
-                                </ul>
+                                <div class="post-meta">
+                                    <span class="post-meta__item">
+                                        <i class="fa fa-calendar"></i>
+                                        <span>
+                                            <time datetime="{{ $post->created_at->toDateString() }}">{{ $post->created_at->locale('vi')->translatedFormat('l, d/m/Y') }}</time>
+                                        </span>
+                                    </span>
+                                    <span class="post-meta__item">
+                                        <i class="fa fa-user-circle"></i>
+                                        <span>{{ $post->author->name }}</span>
+                                    </span>
+                                    <span class="post-meta__item">
+                                        <i class="fa fa-eye"></i>
+                                        <span>{{ number_format($post->views) }} lượt xem</span>
+                                    </span>
+                                    <span class="post-meta__item">
+                                        <i class="fa fa-comments-o"></i>
+                                        <span><span class="post_count_comment">{{ count($post->comments) }}</span> bình luận</span>
+                                    </span>
+                                </div>
 
                                 <div class="title">
-                                    <h2 class="post_title">{{ $post->title }}</h2>
+                                    <h2 class="post_title"><strong>{{ $post->title }}</strong></h2>
                                 </div>
                             </div>
 
@@ -779,12 +857,20 @@
                                                             </p>
 														</div>
 
-                                                        <ul style="padding-top:10px" class="nav meta ">
-                                            <li><a href="javascript:;">{{ $relatedPost->author->name }}</a>
-															</li>
-                                            <li><a href="javascript:;">{{ $relatedPost->created_at->locale('vi')->diffForHumans() }}</a></li>
-                                                            <li><a  href="javascript:;"><i class="fa fm fa-comments"></i>{{ count($relatedPost->comments) }}</a></li>
-														</ul>
+                                                        <div class="post-meta post-meta--compact">
+                                                            <span class="post-meta__item">
+                                                                <i class="fa fa-user-circle"></i>
+                                                                <span>{{ $relatedPost->author->name }}</span>
+                                                            </span>
+                                                            <span class="post-meta__item">
+                                                                <i class="fa fa-clock-o"></i>
+                                                                <span>{{ $relatedPost->created_at->locale('vi')->diffForHumans() }}</span>
+                                                            </span>
+                                                            <span class="post-meta__item">
+                                                                <i class="fa fa-comments-o"></i>
+                                                                <span>{{ count($relatedPost->comments) }}</span>
+                                                            </span>
+                                                        </div>
 													</div>
 												</div>
 											</div>
